@@ -6,9 +6,6 @@ module Devise
       end
       
       module ClassMethods
-        mattr_reader :cas_extra_attributes_mapping
-        @@cas_extra_attributes_mapping = {}
-        
         def authenticate_with_cas_ticket(ticket)
           ::Devise.cas_client.validate_service_ticket(ticket) unless ticket.has_been_validated?
           
@@ -21,17 +18,17 @@ module Devise
             return nil unless resource
             
             if resource.new_record?
-              @@cas_extra_attributes_mapping.each do |cas_attr, model_attr|
-                conditions[model_attr] = ticket.response.extra_attributes[cas_attr]
+              if resource.respond_to? :cas_extra_attributes=
+                resource.cas_extra_attributes = ticket.response.extra_attributes
               end
               
               create(conditions)
             else
               if ::Devise.cas_update_user
-                @@cas_extra_attributes_mapping.each do |cas_attr, model_attr|
-                  resource.send("#{model_attr}=", ticket.response.extra_attributes[cas_attr])
+                if resource.respond_to? :cas_extra_attributes=
+                  resource.cas_extra_attributes = ticket.response.extra_attributes
+                  resource.save
                 end
-                resource.save
               end
               
               resource

@@ -22,9 +22,6 @@ module Devise
   mattr_accessor :cas_create_user
   @@cas_create_user = true
   
-  mattr_accessor :cas_update_user
-  @@cas_update_user = true
-  
   def self.cas_client
     @@cas_client ||= CASClient::Client.new(
         :cas_base_url => @@cas_base_url,
