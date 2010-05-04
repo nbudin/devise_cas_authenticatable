@@ -35,4 +35,5 @@ end
 Devise.add_module(:cas_authenticatable,
   :strategy => true,
   :controller => :cas_sessions,
+  :route => :cas,
   :model => 'devise_cas_authenticatable/model')

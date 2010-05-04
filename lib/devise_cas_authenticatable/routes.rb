@@ -1,9 +1,13 @@
-ActionController::Routing::RouteSet::Mapper.class_eval do
-  protected
+module ActionDispatch::Routing
+  class RouteSet
+    class Mapper
+    protected
   
-  def cas_authenticatable(routes, mapping)
-    routes.with_options(:controller => 'cas_sessions', :name_prefix => nil) do |session|
-      session.send(:"destroy_#{mapping.name}_session", mapping.path_names[:sign_out], :action => 'destroy', :conditions => { :method => :get })
+      def devise_cas(mapping, controllers)
+        scope mapping.full_path do
+          get mapping.path_names[:sign_out], :to => "#{controllers[:cas]}#destroy", :as => :"destroy_#{mapping.name}_session"
+        end
+      end
     end
   end
 end
