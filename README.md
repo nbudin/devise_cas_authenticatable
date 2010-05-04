@@ -14,7 +14,7 @@ Requirements
 ------------
 
 - Rails 2.3
-- Devise 1.0.6
+- Devise 1.0 (tested on 1.0.6)
 - rubycas-client 2.1
 
 Installation
