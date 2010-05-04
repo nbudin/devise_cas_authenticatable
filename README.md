@@ -98,6 +98,7 @@ See also
 TODO
 ----
 
+* Implement CAS single sign-off support (maybe via a Rack middleware?)
 * Write test suite
 * Test on non-ActiveRecord ORMs
 * Test on Rails 3/Devise 1.1            
