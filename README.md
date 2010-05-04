@@ -1,7 +1,7 @@
 devise_cas_authenticatable
 ==========================
 
-Written by Nat Budin
+Written by Nat Budin<br/>
 Taking a lot of inspiration from [devise_ldap_authenticatable](http://github.com/cschiewek/devise_ldap_authenticatable)
 
 devise_cas_authenticatable is [CAS](http://www.jasig.org/cas) single sign-on support for
