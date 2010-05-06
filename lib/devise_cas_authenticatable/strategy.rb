@@ -9,6 +9,7 @@ module Devise
       
       def authenticate!
         ticket = read_ticket(params)
+        RAILS_DEFAULT_LOGGER.debug "Received CAS ticket: #{ticket.inspect}"
         if ticket
           if resource = mapping.to.authenticate_with_cas_ticket(ticket)
             success!(resource)
