@@ -11,7 +11,7 @@ module Devise
             conditions = {:username => ticket.response.user}
             puts conditions.inspect
             
-            resource = find_for_cas_authentication(conditions)
+            resource = find_for_authentication(conditions)
             resource = new(conditions) if (resource.nil? and ::Devise.cas_create_user)
             return nil unless resource
             
@@ -32,11 +32,6 @@ module Devise
               resource
             end
           end
-        end
-        
-        protected
-        def find_for_cas_authentication(conditions)
-          find(:first, :conditions => conditions)
         end
       end
     end
