@@ -26,11 +26,10 @@ module Devise
               
               create(conditions)
             else
-              if ::Devise.cas_update_user
-                if resource.respond_to? :cas_extra_attributes=
-                  resource.cas_extra_attributes = ticket.response.extra_attributes
-                  resource.save
-                end
+              if resource.respond_to? :cas_extra_attributes=
+                logger.debug "Updating existing user record"
+                resource.cas_extra_attributes = ticket.response.extra_attributes
+                resource.save
               end
               
               resource
