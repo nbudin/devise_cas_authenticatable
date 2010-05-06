@@ -25,6 +25,12 @@ Installation
 and in your config/environment.rb:
 
     config.gem 'devise_cas_authenticatable'
+
+Example
+-------
+
+I've modified the devise_example application to work with this gem.  You can find the results
+[here](http://github.com/nbudin/devise_cas_example).
     
 Setup
 -----
