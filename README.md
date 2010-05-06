@@ -20,7 +20,7 @@ Requirements
 Installation
 ------------
 
-    gem install devise_cas_authenticatable
+    gem install --pre devise_cas_authenticatable
     
 and in your config/environment.rb:
 
