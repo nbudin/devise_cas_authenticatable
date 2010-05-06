@@ -1,9 +1,7 @@
 module Devise
   module Models
     module CasAuthenticatable
-      def self.included(base)
-        base.extend ClassMethods
-      end
+      extend ActiveSupport::Concern
       
       module ClassMethods
         def authenticate_with_cas_ticket(ticket)
