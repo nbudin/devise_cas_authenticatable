@@ -42,7 +42,7 @@ module Devise
         
         protected
         def find_for_cas_authentication(conditions)
-          find(:first, :conditions => conditions)
+          self.find(:first, :conditions => conditions)
         end
       end
     end
