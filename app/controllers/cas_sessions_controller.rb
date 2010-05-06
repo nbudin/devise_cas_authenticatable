@@ -1,7 +1,17 @@
 class CasSessionsController < ApplicationController
-  prepend_before_filter :require_no_authentication, :only => [:login]
   include Devise::Controllers::InternalHelpers
   
+  def create
+    resource = authenticate(resource_name)
+    if resource
+      sign_in_and_redirect(resource)
+    elsif warden.result == :redirect
+      throw :warden, :scope => resource_name
+    else
+      throw InvalidCasTicketException.new(params[:ticket])
+    end
+  end
+      
   def destroy
     sign_out(resource_name)
     destination = request.protocol
