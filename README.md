@@ -22,9 +22,9 @@ Installation
 
     gem install devise_cas_authenticatable
     
-and in your config/environment.rb:
+and in your Gemfile:
 
-    config.gem 'devise_cas_authenticatable'
+    gem 'devise_cas_authenticatable', :git => 'git://github.com/nbudin/devise_cas_authenticatable.git', :branch => 'devise1.1'
     
 Setup
 -----
