@@ -30,15 +30,22 @@ module Devise
       def login_url
         ::Devise.cas_client.add_service_to_login_url(request.url)
       end
+      
+      def service_url
+        u = URI.parse(request.url)
+        u.query = nil
+        u.path = mapping.full_path
+        u.to_s
+      end
   
       def read_ticket(params)
         ticket = params[:ticket]
         return nil unless ticket
-      
+              
         if ticket =~ /^PT-/
-          ::CASClient::ProxyTicket.new(ticket, request.url, params[:renew])
+          ::CASClient::ProxyTicket.new(ticket, service_url, params[:renew])
         else
-          ::CASClient::ServiceTicket.new(ticket, request.url, params[:renew])
+          ::CASClient::ServiceTicket.new(ticket, service_url, params[:renew])
         end
       end
     end
