@@ -28,7 +28,7 @@ module Devise
       end
      
       def login_url
-        ::Devise.cas_client.add_service_to_login_url(request.url)
+        ::Devise.cas_client.add_service_to_login_url(service_url)
       end
       
       def service_url
