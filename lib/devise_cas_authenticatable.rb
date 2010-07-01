@@ -6,7 +6,15 @@ require 'devise_cas_authenticatable/strategy'
 
 require 'rubycas-client'
 
-module Devise
+require 'rails'
+
+module DeviseCasAuthenticatable
+  class Engine < Rails::Engine
+    engine_name :devise_cas_authenticatable
+  end
+end
+
+module Devise  
   mattr_accessor :cas_base_url
   @@cas_base_url = nil
   
