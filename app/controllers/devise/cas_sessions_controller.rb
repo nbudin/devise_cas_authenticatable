@@ -1,7 +1,4 @@
-class Devise::CasSessionsController < ApplicationController
-  prepend_before_filter :require_no_authentication, :only => [:login]
-  include Devise::Controllers::InternalHelpers
-  
+class Devise::CasSessionsController < Devise::SessionsController  
   def service
     if signed_in?(resource_name)
       redirect_to after_sign_in_path_for(resource_name)
