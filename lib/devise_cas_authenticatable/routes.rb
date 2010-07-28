@@ -6,7 +6,7 @@ module ActionDispatch::Routing
   
     def devise_cas(mapping, controllers)
       # service endpoint for CAS server
-      get mapping.fullpath, :to => "#{controllers[:cas_sessions]}#service"
+      get "/", :to => "#{controllers[:cas_sessions]}#service"
       
       get mapping.path_names[:sign_in], :to => "#{controllers[:cas_sessions]}#create", :as => :"new_#{mapping.name}_session"
       post mapping.path_names[:sign_in], :to => "#{controllers[:cas_sessions]}#create", :as => :"#{mapping.name}_session"
