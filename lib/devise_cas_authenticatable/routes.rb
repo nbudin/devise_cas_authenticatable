@@ -8,9 +8,9 @@ module ActionDispatch::Routing
       # service endpoint for CAS server
       get "/", :to => "#{controllers[:cas_sessions]}#service"
       
-      get mapping.path_names[:sign_in], :to => "#{controllers[:cas_sessions]}#create", :as => :"new_#{mapping.name}_session"
-      post mapping.path_names[:sign_in], :to => "#{controllers[:cas_sessions]}#create", :as => :"#{mapping.name}_session"
-      get mapping.path_names[:sign_out], :to => "#{controllers[:cas_sessions]}#destroy", :as => :"destroy_#{mapping.name}_session"
+      get :new, :path => mapping.path_names[:sign_in], :to => "#{controllers[:cas_sessions]}#create"
+      get :create, :path => mapping.path_names[:sign_in], :as => ""
+      get :destroy, :path => mapping.path_names[:sign_out]
     end
   end
 end
