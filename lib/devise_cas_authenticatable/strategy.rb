@@ -34,7 +34,7 @@ module Devise
       def service_url
         u = URI.parse(request.url)
         u.query = nil
-        u.path = mapping.full_path
+        u.path = mapping.fullpath
         u.to_s
       end
   
