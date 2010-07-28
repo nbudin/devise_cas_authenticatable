@@ -32,7 +32,7 @@ begin
     gemspec.email = "natbudin@gmail.com"
     gemspec.homepage = "http://github.com/nbudin/devise_cas_authenticatable"
     gemspec.authors = ["Nat Budin"]
-    gemspec.add_runtime_dependency "devise", "~> 1.1.rc1"
+    gemspec.add_runtime_dependency "devise", "~> 1.1.0"
     gemspec.add_runtime_dependency "rubycas-client", "~> 2.1.0"
   end
   Jeweler::GemcutterTasks.new
