@@ -10,7 +10,6 @@ require 'rails'
 
 module DeviseCasAuthenticatable
   class Engine < Rails::Engine
-    engine_name :devise_cas_authenticatable
   end
 end
 
