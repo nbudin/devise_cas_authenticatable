@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{devise_cas_authenticatable}
-  s.version = "1.0.0.alpha2"
+  s.version = "0.0.0"
 
-  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nat Budin"]
-  s.date = %q{2010-05-06}
+  s.date = %q{2010-08-26}
   s.description = %q{CAS authentication module for Devise}
   s.email = %q{natbudin@gmail.com}
   s.extra_rdoc_files = [
@@ -20,10 +20,9 @@ Gem::Specification.new do |s|
      "README.md",
      "Rakefile",
      "VERSION",
-     "app/controllers/cas_sessions_controller.rb",
+     "app/controllers/devise/cas_sessions_controller.rb",
      "devise_cas_authenticatable.gemspec",
      "lib/devise_cas_authenticatable.rb",
-     "lib/devise_cas_authenticatable/exceptions.rb",
      "lib/devise_cas_authenticatable/model.rb",
      "lib/devise_cas_authenticatable/routes.rb",
      "lib/devise_cas_authenticatable/schema.rb",
@@ -33,22 +32,22 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/nbudin/devise_cas_authenticatable}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{CAS authentication module for Devise}
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<devise>, ["~> 1.0.6"])
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<devise>, [">= 1.0.6"])
       s.add_runtime_dependency(%q<rubycas-client>, ["~> 2.1.0"])
     else
-      s.add_dependency(%q<devise>, ["~> 1.0.6"])
+      s.add_dependency(%q<devise>, [">= 1.0.6"])
       s.add_dependency(%q<rubycas-client>, ["~> 2.1.0"])
     end
   else
-    s.add_dependency(%q<devise>, ["~> 1.0.6"])
+    s.add_dependency(%q<devise>, [">= 1.0.6"])
     s.add_dependency(%q<rubycas-client>, ["~> 2.1.0"])
   end
 end

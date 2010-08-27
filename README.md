@@ -13,18 +13,22 @@ using [rubycas-server](http://github.com/gunark/rubycas-server)).
 Requirements
 ------------
 
-- Rails 2.3
-- Devise 1.0 (tested on 1.0.6)
-- rubycas-client 2.1
+- Rails 2.3 or 3.0
+- Devise 1.0 (for Rails 2.3) or 1.1 (for Rails 3.0)
+- rubycas-client
 
 Installation
 ------------
 
     gem install --pre devise_cas_authenticatable
     
-and in your config/environment.rb:
+and in your config/environment.rb (on Rails 2.3):
 
     config.gem 'devise_cas_authenticatable'
+
+or Gemfile (Rails 3.0):
+
+    gem 'devise_cas_authenticatable'
 
 Example
 -------
@@ -107,4 +111,3 @@ TODO
 * Implement CAS single sign-off support (maybe via a Rack middleware?)
 * Write test suite
 * Test on non-ActiveRecord ORMs
-* Test on Rails 3/Devise 1.1            
