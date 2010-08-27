@@ -12,7 +12,13 @@ module Devise
           if ticket.is_valid?
             conditions = {:username => ticket.response.user}
             
-            resource = find_for_authentication(conditions)
+            # We don't want to override Devise 1.1's find_for_authentication
+            resource = if respond_to?(:find_for_authentication)
+              find_for_authentication(conditions)
+            else
+              find(:first, :conditions => conditions)
+            end
+            
             resource = new(conditions) if (resource.nil? and ::Devise.cas_create_user)
             return nil unless resource
             
