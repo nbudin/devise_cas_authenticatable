@@ -24,10 +24,12 @@ Installation
     
 and in your config/environment.rb (on Rails 2.3):
 
+    config.gem 'devise', :version => '~> 1.0.6'
     config.gem 'devise_cas_authenticatable'
 
 or Gemfile (Rails 3.0):
 
+    gem 'devise', '~> 1.1.1'
     gem 'devise_cas_authenticatable'
 
 Example
