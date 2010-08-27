@@ -6,10 +6,14 @@ require 'devise_cas_authenticatable/strategy'
 
 require 'rubycas-client'
 
-require 'rails'
-
-module DeviseCasAuthenticatable
-  class Engine < Rails::Engine
+# Register as a Rails engine if Rails::Engine exists
+begin
+  Rails::Engine
+rescue
+else
+  module DeviseCasAuthenticatable
+    class Engine < Rails::Engine
+    end
   end
 end
 
@@ -42,5 +46,5 @@ end
 Devise.add_module(:cas_authenticatable,
   :strategy => true,
   :controller => :cas_sessions,
-  :route => :cas,
+  :route => :cas_authenticatable,
   :model => 'devise_cas_authenticatable/model')
