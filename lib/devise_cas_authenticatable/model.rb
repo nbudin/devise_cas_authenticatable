@@ -11,7 +11,6 @@ module Devise
           
           if ticket.is_valid?
             conditions = {:username => ticket.response.user}
-            puts conditions.inspect
             
             resource = find_for_authentication(conditions)
             resource = new(conditions) if (resource.nil? and ::Devise.cas_create_user)
