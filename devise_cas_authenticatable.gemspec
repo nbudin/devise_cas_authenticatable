@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{devise_cas_authenticatable}
-  s.version = "0.0.0"
+  s.version = "1.0.0.alpha3"
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nat Budin"]
-  s.date = %q{2010-08-26}
+  s.date = %q{2010-08-27}
   s.description = %q{CAS authentication module for Devise}
   s.email = %q{natbudin@gmail.com}
   s.extra_rdoc_files = [
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
      "app/controllers/devise/cas_sessions_controller.rb",
      "devise_cas_authenticatable.gemspec",
      "lib/devise_cas_authenticatable.rb",
+     "lib/devise_cas_authenticatable/exceptions.rb",
      "lib/devise_cas_authenticatable/model.rb",
      "lib/devise_cas_authenticatable/routes.rb",
      "lib/devise_cas_authenticatable/schema.rb",
