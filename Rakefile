@@ -1,17 +1,12 @@
 require 'rake'
-require 'rake/testtask'
 require 'rake/rdoctask'
+require 'rspec/mocks/version'
+require 'rspec/core/rake_task'
 
-desc 'Default: run unit tests.'
-task :default => :test
+RSpec::Core::RakeTask.new(:spec)
 
-desc 'Test the devise_cas_authenticatable plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
+desc 'Default: run specs.'
+task :default => :spec
 
 desc 'Generate documentation for the devise_cas_authenticatable plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
