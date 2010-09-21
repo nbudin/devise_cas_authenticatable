@@ -1,4 +1,6 @@
 class Devise::CasSessionsController < Devise::SessionsController  
+  unloadable
+  
   def service
     if signed_in?(resource_name)
       redirect_to after_sign_in_path_for(resource_name)
