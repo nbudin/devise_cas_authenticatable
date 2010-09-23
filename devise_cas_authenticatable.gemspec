@@ -5,18 +5,21 @@
 
 Gem::Specification.new do |s|
   s.name = %q{devise_cas_authenticatable}
-  s.version = "1.0.0.alpha3"
+  s.version = "1.0.0.alpha4"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nat Budin"]
-  s.date = %q{2010-08-27}
+  s.date = %q{2010-09-23}
   s.description = %q{CAS authentication module for Devise}
   s.email = %q{natbudin@gmail.com}
   s.extra_rdoc_files = [
     "README.md"
   ]
   s.files = [
-    ".project",
+    ".gitignore",
+     ".project",
+     "Gemfile",
+     "Gemfile.lock",
      "README.md",
      "Rakefile",
      "VERSION",
@@ -28,13 +31,58 @@ Gem::Specification.new do |s|
      "lib/devise_cas_authenticatable/routes.rb",
      "lib/devise_cas_authenticatable/schema.rb",
      "lib/devise_cas_authenticatable/strategy.rb",
-     "rails/init.rb"
+     "rails/init.rb",
+     "spec/routes_spec.rb",
+     "spec/scenario/.gitignore",
+     "spec/scenario/app/controllers/application_controller.rb",
+     "spec/scenario/app/controllers/home_controller.rb",
+     "spec/scenario/app/models/user.rb",
+     "spec/scenario/app/views/layouts/application.html.erb",
+     "spec/scenario/config.ru",
+     "spec/scenario/config/application.rb",
+     "spec/scenario/config/boot.rb",
+     "spec/scenario/config/database.yml",
+     "spec/scenario/config/environment.rb",
+     "spec/scenario/config/environments/development.rb",
+     "spec/scenario/config/environments/production.rb",
+     "spec/scenario/config/environments/test.rb",
+     "spec/scenario/config/initializers/backtrace_silencers.rb",
+     "spec/scenario/config/initializers/inflections.rb",
+     "spec/scenario/config/initializers/mime_types.rb",
+     "spec/scenario/config/initializers/secret_token.rb",
+     "spec/scenario/config/initializers/session_store.rb",
+     "spec/scenario/config/locales/en.yml",
+     "spec/scenario/config/routes.rb",
+     "spec/scenario/db/migrate/20100401102949_create_tables.rb",
+     "spec/spec_helper.rb",
+     "spec/support/migrations.rb"
   ]
   s.homepage = %q{http://github.com/nbudin/devise_cas_authenticatable}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{CAS authentication module for Devise}
+  s.test_files = [
+    "spec/routes_spec.rb",
+     "spec/scenario/app/controllers/application_controller.rb",
+     "spec/scenario/app/controllers/home_controller.rb",
+     "spec/scenario/app/models/user.rb",
+     "spec/scenario/config/application.rb",
+     "spec/scenario/config/boot.rb",
+     "spec/scenario/config/environment.rb",
+     "spec/scenario/config/environments/development.rb",
+     "spec/scenario/config/environments/production.rb",
+     "spec/scenario/config/environments/test.rb",
+     "spec/scenario/config/initializers/backtrace_silencers.rb",
+     "spec/scenario/config/initializers/inflections.rb",
+     "spec/scenario/config/initializers/mime_types.rb",
+     "spec/scenario/config/initializers/secret_token.rb",
+     "spec/scenario/config/initializers/session_store.rb",
+     "spec/scenario/config/routes.rb",
+     "spec/scenario/db/migrate/20100401102949_create_tables.rb",
+     "spec/spec_helper.rb",
+     "spec/support/migrations.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
