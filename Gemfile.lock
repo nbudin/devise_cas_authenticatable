@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    devise_cas_authenticatable (1.0.0.alpha3)
+    devise_cas_authenticatable (1.0.0.alpha4)
       devise (>= 1.0.6)
       rubycas-client (~> 2.1.0)
 
@@ -37,12 +37,12 @@ GEM
     activesupport (3.0.0)
     arel (1.0.1)
       activesupport (~> 3.0.0)
-    bcrypt-ruby (2.1.2)
+    bcrypt-ruby (2.1.4)
     builder (2.1.2)
     columnize (0.3.1)
-    devise (1.1.2)
+    devise (1.1.5)
       bcrypt-ruby (~> 2.1.2)
-      warden (~> 0.10.7)
+      warden (~> 1.0.2)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -111,7 +111,7 @@ GEM
     treetop (1.4.8)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
-    warden (0.10.7)
+    warden (1.0.3)
       rack (>= 1.0.0)
     webrat (0.7.1)
       nokogiri (>= 1.2.0)
@@ -122,7 +122,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  devise (>= 1.0.6)
   devise_cas_authenticatable!
   jeweler
   mocha
@@ -130,7 +129,6 @@ DEPENDENCIES
   rspec (>= 2.0.0.beta.17)
   rspec-rails (>= 2.0.0.beta.17)
   ruby-debug
-  rubycas-client (~> 2.1.0)
   sham_rack
   shoulda
   sqlite3-ruby

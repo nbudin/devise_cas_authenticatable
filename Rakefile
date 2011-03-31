@@ -1,10 +1,11 @@
+require 'bundler'
+
+Bundler.setup
+
 require 'rake'
 require 'rake/rdoctask'
 require 'rspec/mocks/version'
 require 'rspec/core/rake_task'
-require 'bundler'
-
-Bundler.setup
 
 RSpec::Core::RakeTask.new(:spec)
 
