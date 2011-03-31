@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    devise_cas_authenticatable (1.0.0.alpha4)
+    devise_cas_authenticatable (1.0.0.alpha5)
       devise (>= 1.0.6)
-      rubycas-client (~> 2.1.0)
+      rubycas-client (>= 2.2.1)
 
 GEM
   remote: http://rubygems.org/
@@ -100,7 +100,7 @@ GEM
       ruby-debug-base (~> 0.10.3.0)
     ruby-debug-base (0.10.3)
       linecache (>= 0.3)
-    rubycas-client (2.1.0)
+    rubycas-client (2.2.1)
       activesupport
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
