@@ -2,6 +2,9 @@ require 'rake'
 require 'rake/rdoctask'
 require 'rspec/mocks/version'
 require 'rspec/core/rake_task'
+require 'bundler'
+
+Bundler.setup
 
 RSpec::Core::RakeTask.new(:spec)
 
@@ -28,9 +31,15 @@ begin
     gemspec.homepage = "http://github.com/nbudin/devise_cas_authenticatable"
     gemspec.authors = ["Nat Budin"]
     gemspec.add_runtime_dependency "devise", ">= 1.0.6"
-    gemspec.add_runtime_dependency "rubycas-client", "~> 2.1.0"
+    gemspec.add_runtime_dependency "rubycas-client", ">= 2.2.1"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
+end
+
+namespace :scenario do
+  require File.expand_path('../spec/scenario/config/application', __FILE__)
+
+  Scenario::Application.load_tasks
 end
