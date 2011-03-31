@@ -3,10 +3,16 @@ require 'devise/strategies/base'
 module Devise
   module Strategies
     class CasAuthenticatable < Base
+      # True if the mapping supports authenticate_with_cas_ticket.
       def valid?
         mapping.to.respond_to?(:authenticate_with_cas_ticket)
       end
       
+      # Try to authenticate a user using the CAS ticket passed in params.
+      # If the ticket is valid and the model's authenticate_with_cas_ticket method
+      # returns a user, then return success.  If the ticket is invalid, then either
+      # fail (if we're just returning from the CAS server, based on the referrer)
+      # or attempt to redirect to the CAS server's login URL.
       def authenticate!
         ticket = read_ticket(params)
         if ticket

@@ -1,3 +1,5 @@
+# Thrown when a user attempts to pass a CAS ticket that the server
+# says is invalid.
 class InvalidCasTicketException < Exception
   attr_reader :ticket
   

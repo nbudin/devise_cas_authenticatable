@@ -18,22 +18,29 @@ else
   end
 end
 
-module Devise  
-  mattr_accessor :cas_base_url
+module Devise
+  # The base URL of the CAS server.  For example, http://cas.example.com.  Specifying this
+  # is mandatory.
   @@cas_base_url = nil
   
-  mattr_accessor :cas_login_url
+  # The login URL of the CAS server.  If undefined, will default based on cas_base_url.
   @@cas_login_url = nil
   
-  mattr_accessor :cas_logout_url
+  # The login URL of the CAS server.  If undefined, will default based on cas_base_url.
   @@cas_logout_url = nil
   
-  mattr_accessor :cas_validate_url
+  # The login URL of the CAS server.  If undefined, will default based on cas_base_url.
   @@cas_validate_url = nil
   
-  mattr_accessor :cas_create_user
+  # Should devise_cas_authenticatable attempt to create new user records for
+  # unknown usernames?  True by default.
   @@cas_create_user = true
   
+  mattr_accessor :cas_base_url, :cas_login_url, :cas_logout_url, :cas_validate_url
+  mattr_reader :cas_create_user
+  module_eval { alias_method :cas_create_user?, :cas_create_user }
+  
+  # Return a CASClient::Client instance based on configuration parameters.
   def self.cas_client
     @@cas_client ||= CASClient::Client.new(
         :cas_base_url => @@cas_base_url,

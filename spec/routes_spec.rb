@@ -9,7 +9,8 @@ describe Devise::CasSessionsController do
   it { should route(:get, "/users/sign_out").to(:action => "destroy") }
   
   it "should have the right route names" do
-    controller.should respond_to("new_user_session_path", "user_session_path", "destroy_user_session_path")
+    controller.should respond_to("user_path", "new_user_session_path", "user_session_path", "destroy_user_session_path")
+    controller.user_path.should == "/users"
     controller.new_user_session_path.should == "/users/sign_in"
     controller.user_session_path.should == "/users/sign_in"
     controller.destroy_user_session_path.should == "/users/sign_out"

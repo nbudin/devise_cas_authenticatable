@@ -1,0 +1,13 @@
+url_path: /cas_server
+
+log:
+    level: DEBUG
+   
+database:
+    adapter: sqlite3
+    database: db/cas.sqlite3
+    pool: 5
+    timeout: 5000
+       
+authenticator:
+    class: TestAuthenticator

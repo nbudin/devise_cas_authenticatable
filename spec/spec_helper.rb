@@ -6,11 +6,7 @@ require "scenario/config/environment"
 require "rails/test_help"
 require 'rspec/rails'
 require 'sham_rack'
-
-Webrat.configure do |config|
-  config.mode = :rails
-  config.open_error_files = false
-end
+require 'capybara/rspec'
 
 RSpec.configure do |config| 
   config.mock_with :mocha 
