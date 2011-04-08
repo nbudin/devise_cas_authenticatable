@@ -56,7 +56,7 @@ You'll also need to set up the database schema for this:
 
 and, optionally, indexes:
 
-    add_index :username, :unique => true
+    add_index :users, :username, :unique => true
 
 Finally, you'll need to add some configuration to your config/initializers/devise.rb in order
 to tell your app how to talk to your CAS server:
