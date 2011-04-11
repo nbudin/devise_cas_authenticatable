@@ -14,10 +14,8 @@ PATH
   specs:
     devise_cas_authenticatable (1.0.0.alpha6)
       devise (>= 1.0.6)
+      devise
       devise_cas_authenticatable
-      jeweler
-      rails (= 3.0.0)
-      ruby-debug
       rubycas-client (>= 2.2.1)
 
 GEM
