@@ -36,9 +36,11 @@ module Devise
   # unknown usernames?  True by default.
   @@cas_create_user = true
   
-  mattr_accessor :cas_base_url, :cas_login_url, :cas_logout_url, :cas_validate_url
-  mattr_reader :cas_create_user
-  module_eval { alias_method :cas_create_user?, :cas_create_user }
+  mattr_accessor :cas_base_url, :cas_login_url, :cas_logout_url, :cas_validate_url, :cas_create_user
+
+  def self.cas_create_user?
+    cas_create_user
+  end
   
   # Return a CASClient::Client instance based on configuration parameters.
   def self.cas_client
