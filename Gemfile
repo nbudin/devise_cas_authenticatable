@@ -10,15 +10,14 @@ group :development do
 end
 
 group :test do
-  gem "rails", ">= 3.0.0"
-  gem "rspec", ">= 2.0.0.beta.17"
-  gem "rspec-rails", ">= 2.0.0.beta.17"
+  gem "rails", ">= 3.0.7"
+  gem "rspec-rails", ">= 2.5.0"
   gem "mocha"
   gem "shoulda"
   gem "sqlite3-ruby"
   gem "sham_rack"
   gem "capybara"
-  gem 'rubycas-server', :git => 'https://github.com/gunark/rubycas-server.git', :branch => 'sinatra'
+  gem 'castronaut', :git => 'https://github.com/nbudin/castronaut.git', :branch => 'dam5s-merge'
   gem 'crypt-isaac'
   gem 'launchy'
 end

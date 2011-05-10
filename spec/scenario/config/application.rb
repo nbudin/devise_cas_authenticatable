@@ -4,15 +4,8 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-require "devise"
-require "devise_cas_authenticatable"
-
-Devise.setup do |config|
-  require "devise/orm/active_record"
-end
-
-require 'casserver/authenticators/base'
-class TestAuthenticator < CASServer::Authenticators::Base
+require 'castronaut'
+class TestAdapter
   def self.reset_valid_users!
     @@valid_users = {
       "joeuser" => "joepassword"
@@ -24,10 +17,19 @@ class TestAuthenticator < CASServer::Authenticators::Base
     @@valid_users[username] = password
   end
   
-  def validate(credentials)
-    @@valid_users[credentials[:username]] == credentials[:password]
+  def self.authenticate(username, password)
+    error_message = if @@valid_users[username] == password
+      nil
+    else
+      "Invalid password"
+    end
+    
+    Castronaut::AuthenticationResult.new(username, error_message)
   end  
 end
+
+Castronaut::Adapters.register("test_adapter", TestAdapter)
+Castronaut.config = Castronaut::Configuration.load(File.expand_path(File.join(File.dirname(__FILE__), "castronaut.yml")))
 
 module Scenario
   class Application < Rails::Application

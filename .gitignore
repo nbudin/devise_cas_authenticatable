@@ -3,3 +3,5 @@
 pkg/*
 spec/scenario/db/*.sqlite3
 spec/scenario/tmp/*
+log/*
+db/*

@@ -1,8 +1,8 @@
-ENV['CONFIG_FILE'] = File.expand_path('../rubycas-server.yml', __FILE__)
-require 'casserver'
+require 'castronaut/application'
+Castronaut::Application.set(:path, "/cas_server")
 
 Scenario::Application.routes.draw do
   devise_for :users
-  match "/cas_server/*args" => CASServer::Server, :as => "cas_server"
+  mount Castronaut::Application, :at => "/cas_server"
   root :to => "home#index"
 end

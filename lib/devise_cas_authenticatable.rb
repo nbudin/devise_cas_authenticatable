@@ -55,6 +55,17 @@ module Devise
         :validate_url => @@cas_validate_url
       )
   end
+  
+  def self.cas_service_url(base_url, mapping)
+    u = URI.parse(base_url)
+    u.query = nil
+    u.path = if mapping.respond_to?(:fullpath)
+      mapping.fullpath
+    else
+      mapping.raw_path
+    end
+    u.to_s
+  end
 end
 
 Devise.add_module(:cas_authenticatable,

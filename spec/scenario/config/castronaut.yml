@@ -1,0 +1,32 @@
+organization_name: Foo Bar Baz Industries, LLC Inc. A division of Holdings Co.
+
+environment: development
+# The port the CAS webserver will start on
+server_port: 4567
+
+log_directory: log
+
+log_level: Logger::DEBUG
+
+ssl_enabled: false
+
+cas_database:
+  adapter: sqlite3
+  database: db/cas.sqlite3
+  timeout: 5000
+
+cas_adapter:
+  adapter: test_adapter
+
+# Use this example if you are using LDAP as your authentication source
+# cas_adapter:
+#   adapter: ldap
+#   host: localhost
+#   port: 389
+#   prefix: cn=
+#   base: dc=example, dc=com
+
+# Uncomment these to enable authentication callbacks
+# callbacks:
+#  on_authentication_success: http://example.com/authentication/success
+#  on_authentication_failed: http://example.com/authentication/failed

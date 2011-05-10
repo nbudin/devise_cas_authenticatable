@@ -1,12 +1,18 @@
 class Devise::CasSessionsController < Devise::SessionsController  
   unloadable
   
-  def service
-    if signed_in?(resource_name)
-      redirect_to after_sign_in_path_for(resource_name)
-    else
-      redirect_to root_url
+  def new
+    unless returning_from_cas?
+      redirect_to(cas_login_url)
     end
+  end
+  
+  def service
+    warden.authenticate!(:scope => resource_name)
+    redirect_to after_sign_in_path_for(resource_name)
+  end
+  
+  def unregistered
   end
   
   def destroy
@@ -23,4 +29,14 @@ class Devise::CasSessionsController < Devise::SessionsController
     destination << after_sign_out_path_for(resource_name)
     redirect_to(::Devise.cas_client.logout_url(destination))
   end
+  
+  private  
+  def returning_from_cas?
+    params[:ticket] || request.referer =~ /^#{::Devise.cas_client.cas_base_url}/
+  end
+  
+  def cas_login_url
+    ::Devise.cas_client.add_service_to_login_url(::Devise.cas_service_url(request.url, devise_mapping))
+  end
+  helper_method :cas_login_url
 end
