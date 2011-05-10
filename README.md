@@ -14,7 +14,7 @@ Requirements
 ------------
 
 - Rails 2.3 or 3.0
-- Devise 1.0 (for Rails 2.3) or 1.1 (for Rails 3.0)
+- Devise 1.0 or greater
 - rubycas-client
 
 Installation
@@ -29,7 +29,7 @@ and in your config/environment.rb (on Rails 2.3):
 
 or Gemfile (Rails 3.0):
 
-    gem 'devise', '~> 1.1.1'
+    gem 'devise'
     gem 'devise_cas_authenticatable'
 
 Example
