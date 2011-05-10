@@ -111,5 +111,4 @@ TODO
 ----
 
 * Implement CAS single sign-off support (maybe via a Rack middleware?)
-* Write test suite
 * Test on non-ActiveRecord ORMs
