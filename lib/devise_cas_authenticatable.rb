@@ -35,6 +35,8 @@ module Devise
   # Should devise_cas_authenticatable attempt to create new user records for
   # unknown usernames?  True by default.
   @@cas_create_user = true
+  
+  @@cas_username_column = :username
 
   # Name of the parameter passed in the logout query 
   @@cas_destination_logout_param_name = nil
