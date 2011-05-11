@@ -19,7 +19,7 @@ module Devise
           ::Devise.cas_client.validate_service_ticket(ticket) unless ticket.has_been_validated?
           
           if ticket.is_valid?
-            conditions = {:email => ticket.response.user}
+            conditions = {::Devise.cas_username_column => ticket.response.user}
             
             # We don't want to override Devise 1.1's find_for_authentication
             resource = if respond_to?(:find_for_authentication)
