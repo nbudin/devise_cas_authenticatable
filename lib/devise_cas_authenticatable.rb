@@ -36,6 +36,8 @@ module Devise
   # unknown usernames?  True by default.
   @@cas_create_user = true
   
+  # The model attribute used for query conditions. Should be the same as
+  # the rubycas-server username_column. :username by default
   @@cas_username_column = :username
 
   # Name of the parameter passed in the logout query 
