@@ -61,6 +61,15 @@ module Devise
   end
   
   def self.cas_service_url(base_url, mapping)
+    cas_action_url(base_url, mapping, "service")
+  end
+  
+  def self.cas_unregistered_url(base_url, mapping)
+    cas_action_url(base_url, mapping, "unregistered")
+  end
+  
+  private
+  def self.cas_action_url(base_url, mapping, action)
     u = URI.parse(base_url)
     u.query = nil
     u.path = if mapping.respond_to?(:fullpath)
@@ -68,6 +77,8 @@ module Devise
     else
       mapping.raw_path
     end
+    u.path << "/"
+    u.path << action
     u.to_s
   end
 end

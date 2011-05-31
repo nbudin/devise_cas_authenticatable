@@ -20,7 +20,7 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
   def cas_login_url
     @cas_login_url ||= begin
       uri = URI.parse(Devise.cas_base_url + "/login")
-      uri.query = Rack::Utils.build_nested_query(:service => user_url)
+      uri.query = Rack::Utils.build_nested_query(:service => user_service_url)
       uri.to_s
     end
   end
