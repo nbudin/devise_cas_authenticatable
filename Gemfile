@@ -1,7 +1,5 @@
 source "http://rubygems.org"
 
-gemspec
-
 gem 'devise'
 
 group :development do

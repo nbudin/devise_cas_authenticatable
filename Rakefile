@@ -34,7 +34,7 @@ begin
     gemspec.add_runtime_dependency "devise", ">= 1.0.6"
     gemspec.add_runtime_dependency "rubycas-client", ">= 2.2.1"
   end
-  Jeweler::GemcutterTasks.new
+  Jeweler::RubygemsDotOrgTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
