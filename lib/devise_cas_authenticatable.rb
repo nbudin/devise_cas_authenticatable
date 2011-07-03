@@ -73,14 +73,17 @@ module Devise
     u = URI.parse(base_url)
     u.query = nil
     u.path = if mapping.respond_to?(:fullpath)
-      mapping.fullpath
-    else
-      mapping.raw_path
-    end
+        mapping.fullpath
+      else
+        mapping.raw_path
+      end
     u.path << "/"
     u.path << action
     u.to_s
+
+    return u.to_s
   end
+
 end
 
 Devise.add_module(:cas_authenticatable,

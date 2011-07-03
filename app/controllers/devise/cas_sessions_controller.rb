@@ -10,7 +10,7 @@ class Devise::CasSessionsController < Devise::SessionsController
   def service
     warden.authenticate!(:scope => resource_name)
 
-    if (params[:redirect] =~ URI::regexp)
+    if params[:redirect]
       return redirect_to params[:redirect]
     end
 
@@ -41,7 +41,12 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
   
   def cas_login_url
-    ::Devise.cas_client.add_service_to_login_url(::Devise.cas_service_url(request.url, devise_mapping))
+
+    login_url = ::Devise.cas_client.add_service_to_login_url(::Devise.cas_service_url(request.url, devise_mapping))
+    user_return = session['user_return_to'].nil? ? '/' : session['user_return_to'].to_s
+    redirect_url = "&redirect=#{user_return}"
+
+    return "#{login_url}#{redirect_url}"
   end
   helper_method :cas_login_url
 end
