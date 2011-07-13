@@ -43,6 +43,9 @@ module Devise
             return nil unless resource
 
             resource.cas_extra_attributes = ticket.response.extra_attributes if resource.respond_to? :cas_extra_attributes=
+
+            # puts "resource.cas_extra_attributes = #{resource.cas_extra_attributes.inspect}"
+
             resource.save
             resource
           end
