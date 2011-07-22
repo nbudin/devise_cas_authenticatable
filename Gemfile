@@ -3,7 +3,9 @@ source "http://rubygems.org"
 gem 'devise'
 
 group :development do
-  gem "ruby-debug"
+  gem 'linecache', '0.43', :platforms => :mri_18
+  gem 'ruby-debug', :platforms => :mri_18
+  gem 'ruby-debug19', :platforms => :mri_19
   gem "jeweler"
 end
 
