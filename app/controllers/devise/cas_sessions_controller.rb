@@ -36,11 +36,15 @@ class Devise::CasSessionsController < Devise::SessionsController
     params[:ticket] || request.referer =~ /^#{::Devise.cas_client.cas_base_url}/
   end
 
-  def cas_login_url
+  def cas_return_to_url
+    resource_or_scope = ::Devise.mappings.keys.first rescue 'user'
+    session["#{resource_or_scope}_return_to"].nil? ? '/' : session["#{resource_or_scope}_return_to"].to_s
+  end
 
+  def cas_login_url
     login_url = ::Devise.cas_client.add_service_to_login_url(::Devise.cas_service_url(request.url, devise_mapping))
-    user_return = session['user_return_to'].nil? ? '/' : session['user_return_to'].to_s
-    redirect_url = "&redirect=#{user_return}"
+
+    redirect_url = "&redirect=#{cas_return_to_url}"
 
     return "#{login_url}#{redirect_url}"
   end
