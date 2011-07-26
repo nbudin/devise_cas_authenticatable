@@ -17,7 +17,6 @@ group :test do
   gem "sqlite3-ruby"
   gem "sham_rack"
   gem "capybara"
-  gem 'castronaut', :git => 'https://github.com/nbudin/castronaut.git', :branch => 'dam5s-merge'
   gem 'crypt-isaac'
   gem 'launchy'
 end
