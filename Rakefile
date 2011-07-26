@@ -39,8 +39,8 @@ rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
 
-namespace :scenario do
-  require File.expand_path('../spec/scenario/config/application', __FILE__)
-
-  Scenario::Application.load_tasks
-end
+# namespace :scenario do
+#   require File.expand_path('../spec/scenario/config/application', __FILE__)
+# 
+#   Scenario::Application.load_tasks
+# end
