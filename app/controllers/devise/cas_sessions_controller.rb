@@ -16,13 +16,14 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
   
   def destroy
+    # Delete the ticket->session ID mapping if one exists for this session
+    if ticket = session['cas_last_valid_ticket']
+      ::DeviseCasAuthenticatable::SingleSignOut::Strategies.current_strategy.delete_session_index(ticket)
+    end
+
     # if :cas_create_user is false a CAS session might be open but not signed_in
     # in such case we destroy the session here
     if signed_in?(resource_name)
-      # Delete the ticket->session ID mapping if one exists for this session
-      if ticket = session['cas_last_valid_ticket']
-        ::DeviseCasAuthenticatable::SingleSignOut::Strategies.current_strategy.delete_session_index(ticket)
-      end
       sign_out(resource_name)
     else
       reset_session
