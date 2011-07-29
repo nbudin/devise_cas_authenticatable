@@ -96,6 +96,8 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<devise>, [">= 0"])
+      s.add_runtime_dependency(%q<nestful>, [">= 0"])
+      s.add_runtime_dependency(%q<bushido>, [">= 0"])
       s.add_development_dependency(%q<linecache>, ["= 0.43"])
       s.add_development_dependency(%q<ruby-debug>, [">= 0"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
@@ -104,6 +106,8 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rubycas-client>, [">= 2.2.1"])
     else
       s.add_dependency(%q<devise>, [">= 0"])
+      s.add_dependency(%q<nestful>, [">= 0"])
+      s.add_dependency(%q<bushido>, [">= 0"])
       s.add_dependency(%q<linecache>, ["= 0.43"])
       s.add_dependency(%q<ruby-debug>, [">= 0"])
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
@@ -113,6 +117,8 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<devise>, [">= 0"])
+    s.add_dependency(%q<nestful>, [">= 0"])
+    s.add_dependency(%q<bushido>, [">= 0"])
     s.add_dependency(%q<linecache>, ["= 0.43"])
     s.add_dependency(%q<ruby-debug>, [">= 0"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])
