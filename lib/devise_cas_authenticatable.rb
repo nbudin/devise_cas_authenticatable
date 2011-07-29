@@ -5,6 +5,16 @@ require 'devise_cas_authenticatable/routes'
 require 'devise_cas_authenticatable/strategy'
 require 'devise_cas_authenticatable/exceptions'
 
+require 'devise_cas_authenticatable/single_sign_out'
+
+if defined?(ActiveRecord::SessionStore)
+  require 'devise_cas_authenticatable/single_sign_out/session_store/active_record'
+end
+
+if defined?(Redis::Store)
+  require 'devise_cas_authenticatable/single_sign_out/session_store/redis'
+end
+
 require 'rubycas-client'
 
 # Register as a Rails engine if Rails::Engine exists
@@ -31,7 +41,16 @@ module Devise
   
   # The login URL of the CAS server.  If undefined, will default based on cas_base_url.
   @@cas_validate_url = nil
-  
+
+  # Should devise_cas_authenticatable enable single-sign-out? Requires use of a supported
+  # session_store. Currently supports active_record or redis.
+  # True by default.
+  @@cas_enable_single_sign_out = true
+
+  # What strategy should single sign out use for tracking token->session ID mapping.
+  # :rails_cache by default.
+  @@cas_single_sign_out_mapping_strategy = :rails_cache
+
   # Should devise_cas_authenticatable attempt to create new user records for
   # unknown usernames?  True by default.
   @@cas_create_user = true
@@ -43,12 +62,12 @@ module Devise
   # Name of the parameter passed in the logout query 
   @@cas_destination_logout_param_name = nil
   
-  mattr_accessor :cas_base_url, :cas_login_url, :cas_logout_url, :cas_validate_url, :cas_create_user, :cas_destination_logout_param_name, :cas_username_column
+  mattr_accessor :cas_base_url, :cas_login_url, :cas_logout_url, :cas_validate_url, :cas_create_user, :cas_destination_logout_param_name, :cas_username_column, :cas_enable_single_sign_out, :cas_single_sign_out_mapping_strategy
 
   def self.cas_create_user?
     cas_create_user
   end
-  
+
   # Return a CASClient::Client instance based on configuration parameters.
   def self.cas_client
     @@cas_client ||= CASClient::Client.new(
@@ -56,7 +75,8 @@ module Devise
         :cas_base_url => @@cas_base_url,
         :login_url => @@cas_login_url,
         :logout_url => @@cas_logout_url,
-        :validate_url => @@cas_validate_url
+        :validate_url => @@cas_validate_url,
+        :enable_single_sign_out => @@cas_enable_single_sign_out
       )
   end
   
