@@ -4,7 +4,7 @@ if ActionController::Routing.name =~ /ActionDispatch/
   ActionDispatch::Routing::Mapper.class_eval do
     protected
   
-    def devise_cas_authenticatable(mapping, controllers)
+    def devise_bushido_authenticatable(mapping, controllers)
       # service endpoint for CAS server
       get "service", :to => "#{controllers[:cas_sessions]}#service", :as => "service"
       
@@ -22,7 +22,7 @@ else
   ActionController::Routing::RouteSet::Mapper.class_eval do
     protected
     
-    def cas_authenticatable(routes, mapping)
+    def bushido_authenticatable(routes, mapping)
       routes.with_options(:controller => 'devise/cas_sessions', :name_prefix => nil) do |session|
         session.send(:"#{mapping.name}_service", '/', :action => 'service', :conditions => {:method => :get})
         session.send(:"unregistered_#{mapping.name}_session", '/unregistered', :action => "unregistered", :conditions => {:method => :get})

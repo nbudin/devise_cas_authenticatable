@@ -38,7 +38,7 @@ module Devise
 
   # The model attribute used for query conditions. Should be the same as
   # the rubycas-server username_column. :username by default
-  @@cas_username_column = :username
+  @@cas_username_column = :ido_id
 
   # Name of the parameter passed in the logout query
   @@cas_destination_logout_param_name = nil
@@ -86,8 +86,8 @@ module Devise
 
 end
 
-Devise.add_module(:cas_authenticatable,
+Devise.add_module(:bushido_authenticatable,
   :strategy => true,
   :controller => :cas_sessions,
-  :route => :cas_authenticatable,
+  :route => :bushido_authenticatable,
   :model => 'devise_cas_authenticatable/model')

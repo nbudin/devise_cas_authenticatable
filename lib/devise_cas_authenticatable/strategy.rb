@@ -19,10 +19,10 @@ module Devise
           if resource = mapping.to.authenticate_with_cas_ticket(ticket)
             success!(resource)
           elsif ticket.is_valid?
-              logger.debug "=A"*30
+              logger.debug "="*30
               logger.debug ticket.response.user[:ido_id]
-              logger.debug "=A"*30
-            redirect!(::Devise.cas_unregistered_url(request.url, mapping), :username => ticket.response.user)
+              logger.debug "="*30
+            redirect!(::Devise.cas_unregistered_url(request.url, mapping), :ido_id => ticket.response.user)
             #fail!("The user #{ticket.response.user} is not registered with this site.  Please use a different account.")
           else
             fail!(:invalid)
@@ -49,4 +49,4 @@ module Devise
   end
 end
 
-Warden::Strategies.add(:cas_authenticatable, Devise::Strategies::CasAuthenticatable)
+Warden::Strategies.add(:bushido_authenticatable, Devise::Strategies::CasAuthenticatable)
