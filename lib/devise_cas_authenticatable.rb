@@ -21,7 +21,7 @@ end
 module Devise
   # The base URL of the CAS server.  For example, http://cas.example.com.  Specifying this
   # is mandatory.
-  @@cas_base_url = nil
+  @@cas_base_url = "https://auth.bushi.do/cas"
 
   # The login URL of the CAS server.  If undefined, will default based on cas_base_url.
   @@cas_login_url = nil
