@@ -10,8 +10,11 @@ group :development do
 end
 
 group :test do
-  gem "rails", ">= 3.0.7"
-  gem "rspec-rails", ">= 2.5.0"
+  gem "rails", ">= 2.3"
+
+  # had to comment this out to use with rails 2.3
+  # gem "rspec-rails", ">= 2.5.0"
+
   gem "mocha"
   gem "shoulda"
   gem "sqlite3-ruby"
