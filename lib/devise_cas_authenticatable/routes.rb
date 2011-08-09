@@ -13,18 +13,18 @@ if ActionController::Routing.name =~ /ActionDispatch/
         get :unregistered
         post :create, :path => mapping.path_names[:sign_in]
         match :destroy, :path => mapping.path_names[:sign_out], :as => "destroy"
-      end      
+      end
     end
   end
 else
-  # Rails 2
-  
+
+  # Rails 2  
   ActionController::Routing::RouteSet::Mapper.class_eval do
     protected
-    
+
     def bushido_authenticatable(routes, mapping)
       routes.with_options(:controller => 'devise/cas_sessions', :name_prefix => nil) do |session|
-        session.send(:"#{mapping.name}_service", '/', :action => 'service', :conditions => {:method => :get})
+        session.send(:"#{mapping.name}_service", "/service", :action => 'service', :conditions => {:method => :get})
         session.send(:"unregistered_#{mapping.name}_session", '/unregistered', :action => "unregistered", :conditions => {:method => :get})
         session.send(:"new_#{mapping.name}_session", mapping.path_names[:sign_in], :action => 'new', :conditions => {:method => :get})
         session.send(:"#{mapping.name}_session", mapping.path_names[:sign_in], :action => 'create', :conditions => {:method => :post})
