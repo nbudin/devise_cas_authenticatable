@@ -14,6 +14,7 @@ group :test do
 
   # had to comment this out to use with rails 2.3
   # gem "rspec-rails", ">= 2.5.0"
+  gem 'rspec'
 
   gem "mocha"
   gem "shoulda"
