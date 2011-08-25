@@ -27,6 +27,8 @@ Gem::Specification.new do |s|
     "app/views/devise/cas_sessions/unregistered.html.erb",
     "devise_bushido_authenticatable.gemspec",
     "devise_cas_authenticatable.gemspec",
+    "devise_bushido_authenticatable.gemspec",
+    "lib/devise_bushido_authenticatable.rb",
     "lib/devise_cas_authenticatable.rb",
     "lib/devise_cas_authenticatable/exceptions.rb",
     "lib/devise_cas_authenticatable/model.rb",
@@ -73,7 +75,8 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<devise>, [">= 0"])
+      s.add_runtime_dependency(%q<rest-client>, [">= 0"])
+      # s.add_runtime_dependency(%q<bushido>, [">= 0"])
       s.add_development_dependency(%q<linecache>, ["= 0.43"])
       s.add_development_dependency(%q<ruby-debug>, [">= 0"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
@@ -81,7 +84,8 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<devise>, [">= 1.0.6"])
       s.add_runtime_dependency(%q<rubycas-client>, [">= 2.2.1"])
     else
-      s.add_dependency(%q<devise>, [">= 0"])
+      s.add_dependency(%q<rest-client>, [">= 0"])
+      # s.add_dependency(%q<bushido>, [">= 0"])
       s.add_dependency(%q<linecache>, ["= 0.43"])
       s.add_dependency(%q<ruby-debug>, [">= 0"])
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
@@ -90,7 +94,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rubycas-client>, [">= 2.2.1"])
     end
   else
-    s.add_dependency(%q<devise>, [">= 0"])
+    s.add_dependency(%q<rest-client>, [">= 0"])
+    # s.add_dependency(%q<bushido>, [">= 0"])
     s.add_dependency(%q<linecache>, ["= 0.43"])
     s.add_dependency(%q<ruby-debug>, [">= 0"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])

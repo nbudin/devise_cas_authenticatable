@@ -1,13 +1,13 @@
 module Devise
   module Models
     # Extends your User class with support for CAS ticket authentication.
-    module CasAuthenticatable
+    module BushidoAuthenticatable
       def self.included(base)
         base.extend ClassMethods
 
         if defined?(Mongoid)
           base.class_eval do
-            field :username
+            field :ido_id  # TODO check with someone who's using Mongoid
           end
         end
       end
@@ -27,6 +27,7 @@ module Devise
           puts "ticket = #{ticket.inspect}"
 
           if ticket.is_valid?
+            
             conditions = {::Devise.cas_username_column => ticket.response.user}
 
             # We don't want to override Devise 1.1's find_for_authentication
@@ -42,7 +43,7 @@ module Devise
 
             return nil unless resource
 
-            resource.cas_extra_attributes = ticket.response.extra_attributes if resource.respond_to? :cas_extra_attributes=
+            resource.bushido_extra_attributes(ticket.response.extra_attributes) if resource.respond_to? :bushido_extra_attributes
 
             # puts "resource.cas_extra_attributes = #{resource.cas_extra_attributes.inspect}"
 
