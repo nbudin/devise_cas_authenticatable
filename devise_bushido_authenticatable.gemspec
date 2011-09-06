@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Akash Manohar J", "Sean Grove", "Didier Lafforgue"]
-  s.date = %q{2011-08-25}
+  s.date = %q{2011-09-06}
   s.description = %q{Bushido SSO authentication module for Devise. A slight variant of the excellent work from Nat Budlin on devise_cas_authenticatable.}
   s.email = %q{s@bushi.do}
   s.extra_rdoc_files = [
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "app/controllers/devise/cas_sessions_controller.rb",
     "app/views/devise/cas_sessions/new.html.erb",
     "app/views/devise/cas_sessions/unregistered.html.erb",
+    "app/views/devise/cas_sessions/unregistered.html.erb.old",
     "devise_bushido_authenticatable.gemspec",
     "devise_cas_authenticatable.gemspec",
     "lib/devise_bushido_authenticatable.rb",
