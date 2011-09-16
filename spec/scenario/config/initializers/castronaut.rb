@@ -1,0 +1,1 @@
+Castronaut.config.connect_activerecord

@@ -1,2 +1,3 @@
 <p>The user <%=h params[:username] %> is not registered with this site.  
-  Please <%= link_to "sign in using a different account", Devise.cas_client.logout_url(new_session_url(resource_name)) %>.</p>
+  Please <%= link_to "sign in using a different account", 
+  Devise.cas_client.logout_url(send("new_#{resource_name}_session_url")) %>.</p>
