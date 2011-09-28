@@ -1,4 +1,5 @@
 .bundle/*
+.idea/*
 .yardoc/*
 pkg/*
 spec/scenario/db/*.sqlite3
