@@ -110,5 +110,4 @@ See also
 TODO
 ----
 
-* Implement CAS single sign-off support (maybe via a Rack middleware?)
 * Test on non-ActiveRecord ORMs
