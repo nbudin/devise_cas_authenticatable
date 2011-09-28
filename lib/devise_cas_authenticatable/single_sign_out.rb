@@ -13,14 +13,16 @@ module DeviseCasAuthenticatable
   end
 end
 
-# Need to make a small extension to rails to expose the session_store to our controllers
-require 'action_dispatch/middleware/session/abstract_store'
-ActionDispatch::Session::AbstractStore.class_eval do
-  def prepare_with_session_store!(env)
-    prepare_without_session_store!(env)
-    env[:session_store] = self
+if defined?(ActionDispatch)
+  # Need to make a small extension to rails to expose the session_store to our controllers
+  require 'action_dispatch/middleware/session/abstract_store'
+  ActionDispatch::Session::AbstractStore.class_eval do
+    def prepare_with_session_store!(env)
+      prepare_without_session_store!(env)
+      env[:session_store] = self
+    end
+    alias_method_chain :prepare!, :session_store
   end
-  alias_method_chain :prepare!, :session_store
 end
 
 require 'devise_cas_authenticatable/single_sign_out/session_store/redis'
