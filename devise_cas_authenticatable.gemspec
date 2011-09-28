@@ -2,10 +2,10 @@
 
 Gem::Specification.new do |s|
   s.name = %q{devise_cas_authenticatable}
-  s.version = "1.0.0.alpha11"
+  s.version = "1.0.0.alpha12"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Nat Budin"]
+  s.authors = ["Nat Budin", "Jeremy Haile"]
   s.description = %q{CAS authentication module for Devise}
   s.email = %q{natbudin@gmail.com}
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
