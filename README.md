@@ -1,4 +1,4 @@
-devise_cas_authenticatable
+devise_cas_authenticatable [![Build Status](https://secure.travis-ci.org/nbudin/devise_cas_authenticatable.png)](http://travis-ci.org/nbudin/devise_cas_authenticatable)
 ==========================
 
 Written by Nat Budin<br/>
