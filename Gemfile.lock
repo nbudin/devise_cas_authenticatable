@@ -17,7 +17,7 @@ GIT
 PATH
   remote: .
   specs:
-    devise_cas_authenticatable (1.0.0.alpha11)
+    devise_cas_authenticatable (1.0.0.alpha12)
       devise (>= 1.0.6)
       rubycas-client (>= 2.2.1)
 
@@ -69,7 +69,7 @@ GEM
     configuration (1.2.0)
     crypt-isaac (0.9.1)
     culerity (0.2.15)
-    devise (1.4.5)
+    devise (1.4.7)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)
