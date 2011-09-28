@@ -44,8 +44,8 @@ module Devise
 
   # Should devise_cas_authenticatable enable single-sign-out? Requires use of a supported
   # session_store. Currently supports active_record or redis.
-  # True by default.
-  @@cas_enable_single_sign_out = true
+  # False by default.
+  @@cas_enable_single_sign_out = false
 
   # What strategy should single sign out use for tracking token->session ID mapping.
   # :rails_cache by default.
