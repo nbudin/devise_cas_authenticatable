@@ -3,7 +3,4 @@ rvm:
   - 1.9.2
 gemfile:
   - Gemfile
-env:
-  - ISOLATED=true
-  - ISOLATED=false
 script: "bundle exec rake spec"
