@@ -68,8 +68,8 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
 
   def destroy_cas_session(session_id, session_index)
-    if env[:session_store] && env[:session_store].respond_to?(:destroy_session)
-      if env[:session_store].destroy_session(session_id)
+    if session_store && session_store.respond_to?(:destroy_session)
+      if session_store.destroy_session(session_id)
         logger.debug "Destroyed session #{session_id} corresponding to service ticket #{session_index}."
       else
         logger.debug "Data for session #{session_id} was not found. It may have already been cleared by a local CAS logout request."
@@ -79,6 +79,10 @@ class Devise::CasSessionsController < Devise::SessionsController
     end
 
     ::DeviseCasAuthenticatable::SingleSignOut::Strategies.current_strategy.delete_session_index(session_index)
+  end
+  
+  def session_store
+  	@session_store ||= (Rails.respond_to?(:application) && Rails.application.config.session_store)
   end
 
   def returning_from_cas?
