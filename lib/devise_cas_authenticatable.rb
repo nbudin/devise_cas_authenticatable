@@ -89,5 +89,5 @@ end
 Devise.add_module(:bushido_authenticatable,
   :strategy => true,
   :controller => :cas_sessions,
-  :route => :bushido_authenticatable,
+  :route => :session,
   :model => 'devise_cas_authenticatable/model')
