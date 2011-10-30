@@ -1,4 +1,6 @@
 require 'devise/strategies/base'
+require 'net/http'
+require 'uri'
 
 module Devise
   module Strategies
@@ -14,6 +16,23 @@ module Devise
       # fail (if we're just returning from the CAS server, based on the referrer)
       # or attempt to redirect to the CAS server's login URL.
       def authenticate!
+        
+        #
+        #Check if there is an invite token
+        #
+        invite_token = params[:bushido_invite_token]
+        unless invite_token.nil?
+          puts "lets hit the invite proxy"
+          puts ::Devise.cas_login_url
+          uri = URI.parse(::Devise.cas_login_url)
+          http = Net::HTTP.new(uri.host, uri.port)
+          request = Net::HTTP::Post.new(uri.request_uri)
+          request.set_form_data({:invitation_token => invite_token})
+          response = http.request(request)
+          puts "OMG A RESPONES?"
+          puts response.inspect
+        end
+        
         ticket = read_ticket(params)
         if ticket
           if resource = mapping.to.authenticate_with_cas_ticket(ticket)
