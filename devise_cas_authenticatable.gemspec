@@ -32,5 +32,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency("capybara")
   s.add_development_dependency('crypt-isaac')
   s.add_development_dependency('launchy')
+  s.add_development_dependency('pry')
 end
 
