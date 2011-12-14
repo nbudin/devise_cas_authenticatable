@@ -1,4 +1,6 @@
 require 'devise/strategies/base'
+require 'net/http'
+require 'uri'
 
 module Devise
   module Strategies
@@ -15,22 +17,20 @@ module Devise
       # or attempt to redirect to the CAS server's login URL.
       def authenticate!
         ticket = read_ticket(params)
-        if ticket
-          if resource = mapping.to.authenticate_with_cas_ticket(ticket)
-            # Store the ticket in the session for later usage
-            if ::Devise.cas_enable_single_sign_out
-              session['cas_last_valid_ticket'] = ticket.ticket
-              session['cas_last_valid_ticket_store'] = true
-            end
-
-            success!(resource)
-          elsif ticket.is_valid?
-            username = ticket.respond_to?(:user) ? ticket.user : ticket.response.user
-            redirect!(::Devise.cas_unregistered_url(request.url, mapping), :username => username)
-            #fail!("The user #{ticket.response.user} is not registered with this site.  Please use a different account.")
-          else
-            fail!(:invalid)
+        fail!(:invalid) if not ticket
+        
+        if resource = mapping.to.authenticate_with_cas_ticket(ticket)
+          # Store the ticket in the session for later usage
+          if ::Devise.cas_enable_single_sign_out
+            session['cas_last_valid_ticket'] = ticket.ticket
+            session['cas_last_valid_ticket_store'] = true
           end
+
+          success!(resource)
+        elsif ticket.is_valid?
+          ido_id = ticket.respond_to?(:user) ? ticket.user : ticket.response.user
+          redirect!(::Devise.cas_unregistered_url(request.url, mapping), :ido_id => ido_id)
+          #fail!("The user #{ticket.response.user} is not registered with this site.  Please use a different account.")
         else
           fail!(:invalid)
         end
@@ -53,4 +53,4 @@ module Devise
   end
 end
 
-Warden::Strategies.add(:cas_authenticatable, Devise::Strategies::CasAuthenticatable)
+Warden::Strategies.add(:bushido_authenticatable, Devise::Strategies::CasAuthenticatable)

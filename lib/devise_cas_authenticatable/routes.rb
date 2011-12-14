@@ -1,10 +1,10 @@
-if ActionController::Routing.name =~ /ActionDispatch/
+if defined?(ActionDispatch)
   # Rails 3
   
   ActionDispatch::Routing::Mapper.class_eval do
     protected
   
-    def devise_cas_authenticatable(mapping, controllers)
+    def devise_bushido_authenticatable(mapping, controllers)
       # service endpoint for CAS server
       get "service", :to => "#{controllers[:cas_sessions]}#service", :as => "service"
       post "service", :to => "#{controllers[:cas_sessions]}#single_sign_out", :as => "single_sign_out"
@@ -14,16 +14,16 @@ if ActionController::Routing.name =~ /ActionDispatch/
         get :unregistered
         post :create, :path => mapping.path_names[:sign_in]
         match :destroy, :path => mapping.path_names[:sign_out], :as => "destroy"
-      end      
+      end
     end
   end
 else
-  # Rails 2
-  
+
+  # Rails 2  
   ActionController::Routing::RouteSet::Mapper.class_eval do
     protected
-    
-    def cas_authenticatable(routes, mapping)
+
+    def bushido_authenticatable(routes, mapping)
       routes.with_options(:controller => 'devise/cas_sessions', :name_prefix => nil) do |session|
         session.send(:"#{mapping.name}_service", '/service', :action => 'service', :conditions => {:method => :get})
         session.send(:"#{mapping.name}_service", '/service', :action => 'single_sign_out', :conditions => {:method => :post})
