@@ -15,90 +15,24 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = [
     "README.md"
   ]
-  s.files = [
-    ".project",
-    "Gemfile",
-    "Gemfile.lock",
-    "README.md",
-    "Rakefile",
-    "VERSION",
-    "app/controllers/devise/cas_sessions_controller.rb",
-    "app/views/devise/cas_sessions/new.html.erb",
-    "app/views/devise/cas_sessions/unregistered.html.erb",
-    "app/views/devise/cas_sessions/unregistered.html.erb.old",
-    "devise_bushido_authenticatable.gemspec",
-    "devise_cas_authenticatable.gemspec",
-    "lib/devise_bushido_authenticatable.rb",
-    "lib/devise_cas_authenticatable.rb",
-    "lib/devise_cas_authenticatable/exceptions.rb",
-    "lib/devise_cas_authenticatable/model.rb",
-    "lib/devise_cas_authenticatable/routes.rb",
-    "lib/devise_cas_authenticatable/schema.rb",
-    "lib/devise_cas_authenticatable/strategy.rb",
-    "rails/init.rb",
-    "spec/routes_spec.rb",
-    "spec/scenario/.gitignore",
-    "spec/scenario/app/controllers/application_controller.rb",
-    "spec/scenario/app/controllers/home_controller.rb",
-    "spec/scenario/app/models/user.rb",
-    "spec/scenario/app/views/layouts/application.html.erb",
-    "spec/scenario/config.ru",
-    "spec/scenario/config/application.rb",
-    "spec/scenario/config/boot.rb",
-    "spec/scenario/config/castronaut.yml",
-    "spec/scenario/config/database.yml",
-    "spec/scenario/config/environment.rb",
-    "spec/scenario/config/environments/development.rb",
-    "spec/scenario/config/environments/production.rb",
-    "spec/scenario/config/environments/test.rb",
-    "spec/scenario/config/initializers/backtrace_silencers.rb",
-    "spec/scenario/config/initializers/devise.rb",
-    "spec/scenario/config/initializers/inflections.rb",
-    "spec/scenario/config/initializers/mime_types.rb",
-    "spec/scenario/config/initializers/secret_token.rb",
-    "spec/scenario/config/initializers/session_store.rb",
-    "spec/scenario/config/locales/en.yml",
-    "spec/scenario/config/routes.rb",
-    "spec/scenario/config/rubycas-server.yml",
-    "spec/scenario/db/migrate/20100401102949_create_tables.rb",
-    "spec/scenario/public/.gitkeep",
-    "spec/spec_helper.rb",
-    "spec/strategy_spec.rb",
-    "spec/support/migrations.rb"
-  ]
+  s.files = `git ls-files`.split("\n")
   s.homepage = %q{http://github.com/bushido/bushido_cas_authenticatable}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.6.2}
   s.summary = %q{Bushido SSO authentication module for Devise}
 
-  if s.respond_to? :specification_version then
-    s.specification_version = 3
 
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<devise>, [">= 0"])
-      s.add_development_dependency(%q<linecache>, ["= 0.43"])
-      s.add_development_dependency(%q<ruby-debug>, [">= 0"])
-      s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
-      s.add_development_dependency(%q<jeweler>, [">= 0"])
-      s.add_runtime_dependency(%q<devise>, [">= 1.0.6"])
-      s.add_runtime_dependency(%q<rubycas-client>, [">= 2.2.1"])
-    else
-      s.add_dependency(%q<devise>, [">= 0"])
-      s.add_dependency(%q<linecache>, ["= 0.43"])
-      s.add_dependency(%q<ruby-debug>, [">= 0"])
-      s.add_dependency(%q<ruby-debug19>, [">= 0"])
-      s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<devise>, [">= 1.0.6"])
-      s.add_dependency(%q<rubycas-client>, [">= 2.2.1"])
-    end
-  else
-    s.add_dependency(%q<devise>, [">= 0"])
-    s.add_dependency(%q<linecache>, ["= 0.43"])
-    s.add_dependency(%q<ruby-debug>, [">= 0"])
-    s.add_dependency(%q<ruby-debug19>, [">= 0"])
-    s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<devise>, [">= 1.0.6"])
-    s.add_dependency(%q<rubycas-client>, [">= 2.2.1"])
-  end
+  s.add_runtime_dependency(%q<devise>, [">= 1.0.6"])
+  s.add_runtime_dependency(%q<rubycas-client>, [">= 2.2.1"])
+
+  s.add_development_dependency("rspec")
+  s.add_development_dependency("mocha")
+  s.add_development_dependency("shoulda")
+  s.add_development_dependency("sqlite3-ruby")
+  s.add_development_dependency("sham_rack")
+  s.add_development_dependency("capybara")
+  s.add_development_dependency('crypt-isaac')
+  s.add_development_dependency('launchy')
+  s.add_development_dependency('pry')
 end
 

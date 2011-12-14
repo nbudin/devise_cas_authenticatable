@@ -1,3 +1,3 @@
 class User < ActiveRecord::Base
-  devise :cas_authenticatable, :rememberable
+  devise :bushido_authenticatable, :rememberable
 end

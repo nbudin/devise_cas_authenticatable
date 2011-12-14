@@ -27,9 +27,7 @@ module Devise
           puts "ticket = #{ticket.inspect}"
 
           if ticket.is_valid?
-            
-            conditions = {::Devise.cas_username_column => ticket.response.user}
-
+            conditions = {::Devise.cas_username_column => ticket.respond_to?(:user) ? ticket.user : ticket.response.user}
             # We don't want to override Devise 1.1's find_for_authentication
             resource = if respond_to?(:find_for_authentication)
               find_for_authentication(conditions)
@@ -43,9 +41,9 @@ module Devise
 
             return nil unless resource
 
-            resource.bushido_extra_attributes(ticket.response.extra_attributes) if resource.respond_to? :bushido_extra_attributes
-
-            # puts "resource.cas_extra_attributes = #{resource.cas_extra_attributes.inspect}"
+            if resource.respond_to? :bushido_extra_attributes=
+              resource.bushido_extra_attributes = ticket.respond_to?(:extra_attributes) ? ticket.extra_attributes : ticket.response.extra_attributes
+            end
 
             resource.save
             resource

@@ -36,12 +36,16 @@ module Devise
         ticket = read_ticket(params)
         if ticket
           if resource = mapping.to.authenticate_with_cas_ticket(ticket)
+            # Store the ticket in the session for later usage
+            if ::Devise.cas_enable_single_sign_out
+              session['cas_last_valid_ticket'] = ticket.ticket
+              session['cas_last_valid_ticket_store'] = true
+            end
+
             success!(resource)
           elsif ticket.is_valid?
-              logger.debug "="*30
-              logger.debug ticket.response.user[:ido_id]
-              logger.debug "="*30
-            redirect!(::Devise.cas_unregistered_url(request.url, mapping), :ido_id => ticket.response.user)
+            ido_id = ticket.respond_to?(:user) ? ticket.user : ticket.response.user
+            redirect!(::Devise.cas_unregistered_url(request.url, mapping), :ido_id => ido_id)
             #fail!("The user #{ticket.response.user} is not registered with this site.  Please use a different account.")
           else
             fail!(:invalid)

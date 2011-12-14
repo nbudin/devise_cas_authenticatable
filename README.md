@@ -1,5 +1,5 @@
 devise_bushido_authenticatable
-===============================
+=======
 
 devise_bushido_authenticatable provides single sign-on support for Bushido applications, that use 
 [Devise](http://github.com/plataformatec/devise) for authentication. It acts as a **replacement for the database_authenticatable option that devise provides**
