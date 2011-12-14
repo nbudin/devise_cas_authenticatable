@@ -67,7 +67,7 @@
  
     <section id="main">
       <h1>The user <%=h params[:username] %> is not registered with this site.  
-  Please <%= link_to "sign in using a different account", Devise.cas_client.logout_url(new_session_url(resource_name)) %>.</h1>
+  Please <%= link_to "sign in using a different account", Devise.cas_client.logout_url(new_session_path(resource_name)) %>.</h1>
     </section>
 
   </div> <!-- end of #ro0t --> 

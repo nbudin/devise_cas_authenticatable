@@ -21,7 +21,8 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
     @cas_login_url ||= begin
                          redirect_path = "/" if not redirect_path
                          uri = URI.parse(Devise.cas_base_url + "/login")
-                         uri.query = Rack::Utils.build_nested_query(:service => user_service_url)
+                         uri.query = "service=#{CGI.escape(user_service_url)}&redirect=#{redirect_path}"
+                         puts "URI CHECK #{uri.to_s}"
                          uri.to_s
                        end
   end
@@ -75,7 +76,6 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
   end
   
   it "should fail CAS login if user is unregistered and cas_create_user is false" do
-
     expect {
       TestAdapter.register_valid_user("newuser", "newpassword")
       Devise.cas_create_user = false

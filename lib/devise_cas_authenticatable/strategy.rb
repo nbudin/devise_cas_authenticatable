@@ -16,19 +16,6 @@ module Devise
       # fail (if we're just returning from the CAS server, based on the referrer)
       # or attempt to redirect to the CAS server's login URL.
       def authenticate!
-        
-        #
-        #Check if there is an invite token
-        #
-        invite_token = params[:bushido_invite_token]
-        unless invite_token.nil?
-          uri = URI.parse(::Devise.cas_login_url)
-          http = Net::HTTP.new(uri.host, uri.port)
-          request = Net::HTTP::Post.new(uri.request_uri)
-          request.set_form_data({:invitation_token => invite_token})
-          response = http.request(request)
-        end
-        
         ticket = read_ticket(params)
         fail!(:invalid) if not ticket
         

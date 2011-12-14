@@ -9,8 +9,16 @@ require 'devise_cas_authenticatable/schema'
 require 'devise_cas_authenticatable/routes'
 require 'devise_cas_authenticatable/strategy'
 require 'devise_cas_authenticatable/exceptions'
-
+require 'devise_cas_authenticatable/missing_session_helpers'
 require 'devise_cas_authenticatable/single_sign_out'
+
+ActiveSupport.on_load(:action_controller) do
+  include MissingSessionHelpers
+end
+
+ActiveSupport.on_load(:action_view) do
+  include MissingSessionHelpers
+end
 
 if defined?(ActiveRecord::SessionStore)
   require 'devise_cas_authenticatable/single_sign_out/session_store/active_record'
