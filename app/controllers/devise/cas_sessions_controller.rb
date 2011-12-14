@@ -1,20 +1,25 @@
-class Devise::CasSessionsController < Devise::SessionsController  
+class Devise::CasSessionsController < Devise::SessionsController
   unloadable
-  
+
   def new
     unless returning_from_cas?
       redirect_to(cas_login_url)
     end
   end
-  
+
   def service
     warden.authenticate!(:scope => resource_name)
-    redirect_to after_sign_in_path_for(resource_name)
+
+    if params[:redirect]
+      return redirect_to params[:redirect]
+    end
+
+    return redirect_to after_sign_in_path_for(resource_name)
   end
-  
+
   def unregistered
   end
-  
+
   def destroy
     # Delete the ticket->session ID mapping if one exists for this session
     if ticket = session['cas_last_valid_ticket']
@@ -28,11 +33,7 @@ class Devise::CasSessionsController < Devise::SessionsController
     else
       reset_session
     end
-    destination = request.protocol
-    destination << request.host
-    destination << ":#{request.port.to_s}" unless request.port == 80
-    destination << after_sign_out_path_for(resource_name)
-    redirect_to(::Devise.cas_client.logout_url(destination))
+    redirect_to(::Devise.cas_client.logout_url)
   end
 
   def single_sign_out
@@ -88,9 +89,18 @@ class Devise::CasSessionsController < Devise::SessionsController
   def returning_from_cas?
     params[:ticket] || request.referer =~ /^#{::Devise.cas_client.cas_base_url}/
   end
-  
+
+  def cas_return_to_url
+    resource_or_scope = ::Devise.mappings.keys.first rescue 'user'
+    session["#{resource_or_scope}_return_to"].nil? ? '/' : session["#{resource_or_scope}_return_to"].to_s
+  end
+
   def cas_login_url
-    ::Devise.cas_client.add_service_to_login_url(::Devise.cas_service_url(request.url, devise_mapping))
+    login_url = ::Devise.cas_client.add_service_to_login_url(::Devise.cas_service_url(request.url, devise_mapping))
+
+    redirect_url = "&redirect=#{cas_return_to_url}"
+
+    return "#{login_url}#{redirect_url}"
   end
   helper_method :cas_login_url
 end

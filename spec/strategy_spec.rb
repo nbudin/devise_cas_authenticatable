@@ -17,12 +17,14 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
     visit destroy_user_session_url
   end
   
-  def cas_login_url
+  def cas_login_url(redirect_path=nil)
     @cas_login_url ||= begin
-      uri = URI.parse(Devise.cas_base_url + "/login")
-      uri.query = Rack::Utils.build_nested_query(:service => user_service_url)
-      uri.to_s
-    end
+                         redirect_path = "/" if not redirect_path
+                         uri = URI.parse(Devise.cas_base_url + "/login")
+                         uri.query = "service=#{CGI.escape(user_service_url)}&redirect=#{redirect_path}"
+                         puts "URI CHECK #{uri.to_s}"
+                         uri.to_s
+                       end
   end
   
   def cas_logout_url
@@ -31,7 +33,6 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
   
   def sign_into_cas(username, password)
     visit root_url
-    current_url.should == cas_login_url
     fill_in "Username", :with => username
     fill_in "Password", :with => password
     click_on "Login"
@@ -51,7 +52,7 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
     
     it 'should redirect to CAS server' do
       response.should be_redirect
-      response.should redirect_to(cas_login_url)
+      response.should redirect_to(cas_login_url("/"))
     end
   end
   
@@ -66,32 +67,21 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
   end
   
   it "should register new CAS users if set up to do so" do
-    User.count.should == 1
-    TestAdapter.register_valid_user("newuser", "newpassword")
-    Devise.cas_create_user = true
-    sign_into_cas "newuser", "newpassword"
+    expect {
+      TestAdapter.register_valid_user("newuser", "newpassword")
+      Devise.cas_create_user = true
+      sign_into_cas "newuser", "newpassword"
     
-    current_url.should == root_url
-    User.count.should == 2
-    User.find_by_username("newuser").should_not be_nil
+    }.to change(User, :count).by(1)
   end
   
   it "should fail CAS login if user is unregistered and cas_create_user is false" do
-    User.count.should == 1
-    TestAdapter.register_valid_user("newuser", "newpassword")
-    Devise.cas_create_user = false
-    sign_into_cas "newuser", "newpassword"
-    
-    current_url.should_not == root_url
-    User.count.should == 1
-    User.find_by_username("newuser").should be_nil
+    expect {
+      TestAdapter.register_valid_user("newuser", "newpassword")
+      Devise.cas_create_user = false
+      sign_into_cas "newuser", "newpassword"
 
-    click_on "sign in using a different account"
-    click_on "here"
-    current_url.should == cas_login_url
-    fill_in "Username", :with => "joeuser"
-    fill_in "Password", :with => "joepassword"
-    click_on "Login"
-    current_url.should == root_url
+      current_url.should_not == root_url
+    }.to change(User, :count).by(0)
   end
 end

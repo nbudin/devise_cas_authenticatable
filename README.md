@@ -1,111 +1,117 @@
-devise_cas_authenticatable [![Build Status](https://secure.travis-ci.org/nbudin/devise_cas_authenticatable.png)](http://travis-ci.org/nbudin/devise_cas_authenticatable)
-==========================
+devise_bushido_authenticatable
+=======
 
-Written by Nat Budin<br/>
-Taking a lot of inspiration from [devise_ldap_authenticatable](http://github.com/cschiewek/devise_ldap_authenticatable)
+devise_bushido_authenticatable provides single sign-on support for Bushido applications, that use 
+[Devise](http://github.com/plataformatec/devise) for authentication. It acts as a **replacement for the database_authenticatable option that devise provides**
 
-devise_cas_authenticatable is [CAS](http://www.jasig.org/cas) single sign-on support for
-[Devise](http://github.com/plataformatec/devise) applications.  It acts as a replacement for
-database_authenticatable.  It builds on [rubycas-client](http://github.com/gunark/rubycas-client)
-and should support just about any conformant CAS server (although I have personally tested it
-using [rubycas-server](http://github.com/gunark/rubycas-server)).
+For applications running on Bushido, the authentication server provides the following user data:
+
+* ido_id - a string that is unique to the user
+* email - user's email address
+* first_name - user's first name
+* last_name - user's last name
+* locale - user's locale
+
 
 Requirements
 ------------
 
 - Rails 2.3 or 3.0
 - Devise 1.0 or greater
-- rubycas-client
 
 Installation
 ------------
 
-    gem install --pre devise_cas_authenticatable
+    gem install --pre devise_bushido_authenticatable
     
-and in your config/environment.rb (on Rails 2.3):
-
-    config.gem 'devise', :version => '~> 1.0.6'
-    config.gem 'devise_cas_authenticatable'
-
-or Gemfile (Rails 3.0):
+### Rails 3.x: Add the following to your Gemfile
 
     gem 'devise'
-    gem 'devise_cas_authenticatable'
+    gem 'devise_bushido_authenticatable'
 
-Example
--------
+This has been tested with 3.1 rc5 too. So feel safe to use it :)
 
-I've modified the devise_example application to work with this gem.  You can find the results
-[here](http://github.com/nbudin/devise_cas_example).
+### Rails 2.3: Add the following in your config/environment.rb
     
+    config.gem 'devise', :version => '~> 1.0.6'
+    config.gem 'devise_bushido_authenticatable'
+
+
 Setup
 -----
 
-Once devise\_cas\_authenticatable is installed, add the following to your user model:
+### 1.) Add the following to your devise model
 
-    devise :cas_authenticatable
+    devise :bushido_authenticatable
     
-You can also add other modules such as token_authenticatable, trackable, etc.  Please do not
-add database_authenticatable as this module is intended to replace it.
+You can add other modules like trackable, but **do not use database_authenticatable**. bushido_authenticatable is a replacement for that.
 
-You'll also need to set up the database schema for this:
+### 2.) Modify schema migration
+
+Add the field required for the auth to work. For example, if the devise model is called User, add *bushido_authenticatable* to the schema like below.
 
     create_table :users do |t|
-      t.cas_authenticatable
+      t.bushido_authenticatable
     end
 
-and, optionally, indexes:
+That will add a string field called *ido_id*, which is unique to each Bushido user.
 
-    add_index :users, :username, :unique => true
 
-Finally, you'll need to add some configuration to your config/initializers/devise.rb in order
-to tell your app how to talk to your CAS server:
+### 3.) [OPTIONAL] Add ido_id to be indexed
 
-    Devise.setup do |config|
-      ...
-      config.cas_base_url = "https://cas.myorganization.com"
-      
-      # you can override these if you need to, but cas_base_url is usually enough
-      # config.cas_login_url = "https://cas.myorganization.com/login"
-      # config.cas_logout_url = "https://cas.myorganization.com/logout"
-      # config.cas_validate_url = "https://cas.myorganization.com/serviceValidate"
-      
-      # By default, devise_cas_authenticatable will create users.  If you would rather
-      # require user records to already exist locally before they can authenticate via
-      # CAS, uncomment the following line.
-      # config.cas_create_user = false  
-    end
+    add_index :users, :ido_id, :unique => true
 
+   
 Extra attributes
 ----------------
 
-If your CAS server passes along extra attributes you'd like to save in your user records,
-using the CAS extra_attributes parameter, you can define a method in your user model called
-cas_extra_attributes= to accept these.  For example:
+When the user is authenticated, Bushido passed along the following extra attributes:
+
+* email - user's email address
+* first_name - user's first name
+* last_name - user's last name
+* locale - user's locale
+
+If you find any of these attributes useful and want to capture them, add a bushido_extra_attributes method to your User model (or whichever is your devise model). Below is an example that saves the email and the locale of a user.
 
     class User < ActiveRecord::Base
-      devise :cas_authenticatable
+      devise :bushido_authenticatable
       
-      def cas_extra_attributes=(extra_attributes)
+      def bushido_extra_attributes(extra_attributes)
         extra_attributes.each do |name, value|
           case name.to_sym
-          when :fullname
-            self.fullname = value
           when :email
             self.email = value
+          when :locale
+            self.locale = value
           end
         end
       end
     end
 
+The example above assumes that you have created fields called "email" and "locale" to save the attributes to. This gem doesn't create that for you. It has to be created manually and are optional.
+
+__Note that these attributes might change anytime and are hence passed on as extra attributes. If defined, this method is called whenever the user logs into your app (starts a session). So when any of these are changed, your application will be able to capture those.__
+
+**It is not advisable to use the user's email address to identify the user. Use the ido_id field for that purpose.**
+
+Credits
+--------
+Based on [devise_cas_authenticatable](http://github.com/nbudin/devise_cas_authenticatable) by Nat Budin.
+
+#### Tweaks by:
+
+* Sean Grove
+* Akash Manohar
+
+[When contributing, add your name above and commit]
+
 See also
 --------
 
-* [CAS](http://www.jasig.org/cas)
-* [rubycas-server](http://github.com/gunark/rubycas-server)
-* [rubycas-client](http://github.com/gunark/rubycas-client)
 * [Devise](http://github.com/plataformatec/devise)
 * [Warden](http://github.com/hassox/warden)
+
 
 TODO
 ----
