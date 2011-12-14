@@ -1,4 +1,4 @@
-if ActionController::Routing.name =~ /ActionDispatch/
+if defined?(ActionDispatch)
   # Rails 3
   
   ActionDispatch::Routing::Mapper.class_eval do

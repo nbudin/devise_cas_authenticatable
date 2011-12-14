@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Devise::Strategies::BushidoAuthenticatable, :type => "acceptance" do
+describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
   include RSpec::Rails::RequestExampleGroup
   
   before do    

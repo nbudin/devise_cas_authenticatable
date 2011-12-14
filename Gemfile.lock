@@ -139,7 +139,7 @@ GEM
       rspec (~> 2.7.0)
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
-    rubycas-client (2.3.7)
+    rubycas-client (2.2.1)
       activesupport
     rubyzip (0.9.5)
     selenium-webdriver (2.15.0)
