@@ -32,7 +32,8 @@ class Devise::CasSessionsController < Devise::SessionsController
     destination << request.host
     destination << ":#{request.port.to_s}" unless request.port == 80
     destination << after_sign_out_path_for(resource_name)
-    redirect_to(::Devise.cas_client.logout_url(destination))
+    follow_url = destination
+    redirect_to(::Devise.cas_client.logout_url(destination, follow_url))
   end
 
   def single_sign_out
