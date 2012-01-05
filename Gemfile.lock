@@ -14,7 +14,7 @@ GIT
 PATH
   remote: .
   specs:
-    devise_cas_authenticatable (1.0.0.alpha12)
+    devise_cas_authenticatable (1.0.0.alpha13)
       devise (>= 1.0.6)
       rubycas-client (>= 2.2.1)
 
@@ -64,7 +64,7 @@ GEM
       ffi (~> 1.0.6)
     coderay (0.9.8)
     crypt-isaac (0.9.1)
-    devise (1.5.0)
+    devise (1.5.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
       warden (~> 1.1)
@@ -140,7 +140,7 @@ GEM
       rspec (~> 2.7.0)
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
-    rubycas-client (2.3.5)
+    rubycas-client (2.3.8)
       activesupport
     rubyzip (0.9.4)
     selenium-webdriver (2.13.0)
@@ -183,6 +183,7 @@ DEPENDENCIES
   castronaut!
   crypt-isaac
   devise_cas_authenticatable!
+  json
   launchy
   mocha
   pry
