@@ -16,11 +16,14 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
   
   def destroy
+    follow_url = nil
+    destination_url = nil
+    
     # Delete the ticket->session ID mapping if one exists for this session
     if ticket = session['cas_last_valid_ticket']
       ::DeviseCasAuthenticatable::SingleSignOut::Strategies.current_strategy.delete_session_index(ticket)
     end
-
+    
     # if :cas_create_user is false a CAS session might be open but not signed_in
     # in such case we destroy the session here
     if signed_in?(resource_name)
@@ -28,12 +31,30 @@ class Devise::CasSessionsController < Devise::SessionsController
     else
       reset_session
     end
-    destination = request.protocol
-    destination << request.host
-    destination << ":#{request.port.to_s}" unless request.port == 80
-    destination << after_sign_out_path_for(resource_name)
-    follow_url = destination
-    redirect_to(::Devise.cas_client.logout_url(destination, follow_url))
+
+    if ::Devise.cas_logout_url_param == 'destination'
+      if !::Devise.cas_destination_url.blank?
+        destination_url = Devise.cas_destination_url
+      else
+        destination_url = request.protocol
+        destination_url << request.host
+        destination_url << ":#{request.port.to_s}" unless request.port == 80
+        destination_url << after_sign_out_path_for(resource_name)
+      end
+    end
+    
+    if ::Devise.cas_logout_url_param == 'follow'
+      if !::Devise.cas_follow_url.blank?
+        follow_url = Devise.cas_follow_url
+      else
+        follow_url = request.protocol
+        follow_url << request.host
+        follow_url << ":#{request.port.to_s}" unless request.port == 80
+        follow_url << after_sign_out_path_for(resource_name)
+      end
+    end
+    
+    redirect_to(::Devise.cas_client.logout_url(destination_url, follow_url))
   end
 
   def single_sign_out
