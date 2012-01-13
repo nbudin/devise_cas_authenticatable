@@ -2,9 +2,7 @@ class Devise::CasSessionsController < Devise::SessionsController
   unloadable
   
   def new
-    unless returning_from_cas?
-      redirect_to(cas_login_url)
-    end
+    redirect_to(cas_login_url)
   end
   
   def service
