@@ -7,14 +7,6 @@ require 'devise_cas_authenticatable/exceptions'
 
 require 'devise_cas_authenticatable/single_sign_out'
 
-if defined?(ActiveRecord::SessionStore)
-  require 'devise_cas_authenticatable/single_sign_out/session_store/active_record'
-end
-
-if defined?(Redis::Store)
-  require 'devise_cas_authenticatable/single_sign_out/session_store/redis'
-end
-
 require 'rubycas-client'
 
 # Register as a Rails engine if Rails::Engine exists
