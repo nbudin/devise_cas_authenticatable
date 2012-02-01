@@ -7,7 +7,7 @@ require 'devise_cas_authenticatable/exceptions'
 
 require 'devise_cas_authenticatable/single_sign_out'
 
-if defined?(ActiveRecord::SessionStore)
+if defined?(ActiveRecord) && defined?(ActiveRecord::SessionStore)
   require 'devise_cas_authenticatable/single_sign_out/session_store/active_record'
 end
 
