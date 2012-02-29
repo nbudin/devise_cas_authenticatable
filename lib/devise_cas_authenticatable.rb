@@ -102,9 +102,17 @@ module Devise
     u = URI.parse(base_url)
     u.query = nil
     u.path = if mapping.respond_to?(:fullpath)
-      mapping.fullpath
+      if ENV['RAILS_RELATIVE_URL_ROOT']
+        ENV['RAILS_RELATIVE_URL_ROOT'] + mapping.fullpath
+      else
+        mapping.fullpath
+      end
     else
-      mapping.raw_path
+      if ENV['RAILS_RELATIVE_URL_ROOT']
+        ENV['RAILS_RELATIVE_URL_ROOT'] + mapping.raw_path
+      else
+        mapping.raw_path
+      end
     end
     u.path << "/"
     u.path << action
