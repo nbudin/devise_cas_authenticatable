@@ -70,9 +70,9 @@ to tell your app how to talk to your CAS server:
       # config.cas_logout_url = "https://cas.myorganization.com/logout"
       # config.cas_validate_url = "https://cas.myorganization.com/serviceValidate"
       
-      # The CAS scepification allows for the passing of a follow url to be displayed when
-      # a user logs out on the CAS server. RubyCas-Server also supports redirecting to a
-      # url via the setination param. Set either of these urls and specify either nil,
+      # The CAS specification allows for the passing of a follow URL to be displayed when
+      # a user logs out on the CAS server. RubyCAS-Server also supports redirecting to a
+      # URL via the destination param. Set either of these urls and specify either nil,
       # 'destination' or 'follow' as the logout_url_param. If the urls are blank but
       # logout_url_param is set, a default will be detected for the service.
       # config.cas_destination_url = 'https://cas.myorganization.com'
