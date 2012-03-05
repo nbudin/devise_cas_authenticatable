@@ -114,7 +114,7 @@ module Devise
         mapping.raw_path
       end
     end
-    u.path << "/"
+    u.path << "/" unless u.path =~ /\/$/
     u.path << action
     u.to_s
   end
