@@ -72,7 +72,10 @@ to tell your app how to talk to your CAS server:
       # config.cas_destination_url = 'https://cas.myorganization.com'
       # config.cas_follow_url = 'https://cas.myorganization.com'
       # config.cas_logout_url_param = nil
-
+      
+      # you can force the CAS to generate service url with 'https' scheme (default is false)
+      # config.cas_force_ssl_service = true
+      
       # By default, devise_cas_authenticatable will create users.  If you would rather
       # require user records to already exist locally before they can authenticate via
       # CAS, uncomment the following line.
