@@ -45,12 +45,17 @@ add database_authenticatable as this module is intended to replace it.
 You'll also need to set up the database schema for this:
 
     create_table :users do |t|
-      t.cas_authenticatable
+      t.string :username, :null => false
     end
 
-and, optionally, indexes:
+We also recommend putting a unique index on the `username` column:
 
     add_index :users, :username, :unique => true
+
+(Note: previously, devise\_cas\_authenticatable recommended using a `t.cas_authenticatable` method call to update the
+schema.  Devise 2.0 has deprecated this type of schema building method, so we now recommend just adding the `username`
+string column as above.  As of this writing, `t.cas_authenticatable` still works, but throws a deprecation warning in
+Devise 2.0.)
 
 Finally, you'll need to add some configuration to your config/initializers/devise.rb in order
 to tell your app how to talk to your CAS server:
