@@ -9,6 +9,8 @@ require 'devise_cas_authenticatable/single_sign_out'
 
 require 'rubycas-client'
 
+require 'devise_cas_authenticatable/railtie' if defined?(Rails::Railtie)
+
 # Register as a Rails engine if Rails::Engine exists
 begin
   Rails::Engine

@@ -5,23 +5,6 @@ module DeviseCasAuthenticatable
       defined?(::Rails) && ::Rails::VERSION::MAJOR == 3
     end
 
-    module StoreSessionIdFilter
-      extend ActiveSupport::Concern
-
-      included do
-        before_filter :store_session_id_for_cas_ticket
-      end
-
-      def store_session_id_for_cas_ticket
-        if session['cas_last_valid_ticket_store']
-          sid = env['rack.session.options'][:id]
-          Rails.logger.info "Storing sid #{sid} for ticket #{session['cas_last_valid_ticket']}"
-          ::DeviseCasAuthenticatable::SingleSignOut::Strategies.current_strategy.store_session_id_for_index(session['cas_last_valid_ticket'], sid)
-          session['cas_last_valid_ticket_store'] = false
-        end
-      end
-    end
-
     # Supports destroying sessions by ID for ActiveRecord and Redis session stores
     module DestroySession
       def session_store_class
@@ -70,3 +53,4 @@ end
 require 'devise_cas_authenticatable/single_sign_out/strategies'
 require 'devise_cas_authenticatable/single_sign_out/strategies/base'
 require 'devise_cas_authenticatable/single_sign_out/strategies/rails_cache'
+require 'devise_cas_authenticatable/single_sign_out/rack'
