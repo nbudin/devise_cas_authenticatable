@@ -17,7 +17,13 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
 
   def service
-    redirect_to after_sign_in_path_for(warden.authenticate!(:scope => resource_name))
+    if cookies[:auth_token].present?
+      return_url = (params[:return_to] || Techbang::AppSetting[:techbang_game_app_url])
+      redirect_to user_omniauth_authorize_path(:facebook, :return_to => return_url)
+    else
+      warden.authenticate!(:scope => resource_name)
+      redirect_to after_sign_in_path_for(resource_name)
+    end
   end
 
   def unregistered
@@ -27,6 +33,7 @@ class Devise::CasSessionsController < Devise::SessionsController
     # if :cas_create_user is false a CAS session might be open but not signed_in
     # in such case we destroy the session here
     if signed_in?(resource_name)
+      cookies.delete :auth_token
       sign_out(resource_name)
     else
       reset_session
