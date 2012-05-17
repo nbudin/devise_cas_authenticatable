@@ -13,13 +13,13 @@ class Devise::CasSessionsController < Devise::SessionsController
       raise "memcache is down, can't get session data from it"
     end
 
+    store_return_to_location
     redirect_to(cas_login_url)
   end
 
   def service
     if cookies[:auth_token].present?
-      return_url = (params[:return_to] || Techbang::AppSetting[:techbang_game_app_url])
-      redirect_to user_omniauth_authorize_path(:facebook, :return_to => return_url)
+      redirect_to user_omniauth_authorize_path(:facebook)
     else
       warden.authenticate!(:scope => resource_name)
       redirect_to after_sign_in_path_for(resource_name)
@@ -34,6 +34,7 @@ class Devise::CasSessionsController < Devise::SessionsController
     # in such case we destroy the session here
     if signed_in?(resource_name)
       cookies.delete :auth_token, :domain => ".techbang.com"
+      store_return_to_location
       sign_out(resource_name)
     else
       reset_session
@@ -130,5 +131,9 @@ class Devise::CasSessionsController < Devise::SessionsController
 
   def memcache_checker
     @memcache_checker ||= DeviseCasAuthenticatable::MemcacheChecker.new(Rails.configuration)
+  end
+
+  def store_return_to_location
+    session[:return_to] = URI.parse(request.referer).path if request.referer
   end
 end
