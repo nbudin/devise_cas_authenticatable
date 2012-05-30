@@ -35,7 +35,8 @@ class Devise::CasSessionsController < Devise::SessionsController
     # if :cas_create_user is false a CAS session might be open but not signed_in
     # in such case we destroy the session here
     if signed_in?(resource_name)
-      cookies.delete :auth_token, :domain => ".techbang.com"
+      cookies.delete :_trm, :domain => request.host.slice(/(staging.)*techbang.com$/)
+      cookies.delete :_tun, :domain => request.host.slice(/(staging.)*techbang.com$/)
       store_return_to_location
       sign_out(resource_name)
     else
