@@ -32,7 +32,7 @@ module DeviseCasAuthenticatable
       end
 
       def destroy_session_by_id(sid)
-        if session_store_class == ActiveRecord::SessionStore
+        if session_store_class.name =~ /ActiveRecord::SessionStore/
           session = current_session_store::Session.find_by_session_id(sid)
           session.destroy if session
           true
