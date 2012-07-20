@@ -119,3 +119,9 @@ TODO
 ----
 
 * Test on non-ActiveRecord ORMs
+
+License
+-------
+
+`devise_cas_authenticatable` is released under the terms and conditions of the MIT license.  See the LICENSE file for more
+information.
