@@ -1,6 +1,9 @@
 class Devise::CasSessionsController < Devise::SessionsController  
+  include DeviseCasAuthenticatable::SingleSignOut::DestroySession
   unloadable
-  
+
+  skip_before_filter :verify_authenticity_token, :only => [:single_sign_out]
+
   def new
     unless returning_from_cas?
       redirect_to(cas_login_url)
@@ -16,14 +19,6 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
   
   def destroy
-    follow_url = nil
-    destination_url = nil
-    
-    # Delete the ticket->session ID mapping if one exists for this session
-    if ticket = session['cas_last_valid_ticket']
-      ::DeviseCasAuthenticatable::SingleSignOut::Strategies.current_strategy.delete_session_index(ticket)
-    end
-    
     # if :cas_create_user is false a CAS session might be open but not signed_in
     # in such case we destroy the session here
     if signed_in?(resource_name)
@@ -90,21 +85,12 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
 
   def destroy_cas_session(session_id, session_index)
-    if session_store && session_store.respond_to?(:destroy_session)
-      if session_store.destroy_session(session_id)
-        logger.debug "Destroyed session #{session_id} corresponding to service ticket #{session_index}."
-      else
-        logger.debug "Data for session #{session_id} was not found. It may have already been cleared by a local CAS logout request."
-      end
-    else
-      logger.warn "A single sign out request was received for ticket #{session_index} but the Rails session_store is not a type supported for single-sign-out by devise_cas_authenticatable."
+    logger.debug "Destroying cas session #{session_id} for ticket #{session_index}"
+    if destroy_session_by_id(session_id)
+      logger.debug "Destroyed session #{session_id} corresponding to service ticket #{session_index}."
     end
 
     ::DeviseCasAuthenticatable::SingleSignOut::Strategies.current_strategy.delete_session_index(session_index)
-  end
-  
-  def session_store
-  	@session_store ||= (Rails.respond_to?(:application) && Rails.application.config.session_store)
   end
 
   def returning_from_cas?
