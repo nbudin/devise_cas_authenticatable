@@ -27,7 +27,7 @@ module Devise
               find(:first, :conditions => conditions)
             end
             
-            resource = new(conditions) if (resource.nil? and ( resource.respond_to? :cas_create_user? ? resource.cas_create_user? : ::Devise.cas_create_user? ) )
+            resource = new(conditions) if (resource.nil? and should_create_cas_users?)
             return nil unless resource
             
             if resource.respond_to? :cas_extra_attributes=
@@ -36,6 +36,11 @@ module Devise
             resource.save
             resource
           end
+        end
+
+        private
+        def should_create_cas_users?
+          respond_to?(:cas_create_user?) ? cas_create_user? : ::Devise.cas_create_user?
         end
       end
     end
