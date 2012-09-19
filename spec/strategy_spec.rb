@@ -75,6 +75,29 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
     User.count.should == 2
     User.find_by_username("newuser").should_not be_nil
   end
+
+  it "should register new CAS users if we're overriding the cas_create_user? method" do
+    begin
+      class << User
+        def cas_create_user?
+          true
+        end
+      end
+
+      User.count.should == 1
+      TestAdapter.register_valid_user("newuser", "newpassword")
+      Devise.cas_create_user = false
+      sign_into_cas "newuser", "newpassword"
+      
+      current_url.should == root_url
+      User.count.should == 2
+      User.find_by_username("newuser").should_not be_nil
+    ensure
+      class << User
+        remove_method :cas_create_user?
+      end
+    end
+  end
   
   it "should fail CAS login if user is unregistered and cas_create_user is false" do
     User.count.should == 1
