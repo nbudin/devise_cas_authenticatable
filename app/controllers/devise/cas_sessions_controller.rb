@@ -108,7 +108,7 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
 
   def returning_from_cas?
-    params[:ticket] || request.referer =~ /^#{::Devise.cas_client.cas_base_url}/
+    params[:ticket] || request.referer =~ /^#{::Devise.cas_client.cas_base_url}/ || request.referer =~ /^#{url_for :action => "service"}/
   end
   
   def cas_login_url

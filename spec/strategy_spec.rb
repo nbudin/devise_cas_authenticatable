@@ -64,6 +64,19 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
     sign_into_cas "invaliduser", "invalidpassword"
     current_url.should_not == root_url
   end
+
+  describe "with a deactivated user" do
+    before do 
+      @user = User.first
+      @user.deactivated = true
+      @user.save!
+    end
+
+    it "should fail to sign in" do
+      sign_into_cas "joeuser", "joepassword"
+      current_url.should == new_user_session_url
+    end
+  end
   
   it "should register new CAS users if set up to do so" do
     User.count.should == 1
