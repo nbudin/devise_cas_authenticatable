@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency(%q<rubycas-client>, [">= 2.2.1"])
     
   s.add_development_dependency("rails", ">= 3.0.7")
-  s.add_development_dependency("rspec-rails", ">= 2.6.1")
+  s.add_development_dependency("rspec-rails")
   s.add_development_dependency("mocha")
   s.add_development_dependency("shoulda")
   s.add_development_dependency("sqlite3-ruby")
