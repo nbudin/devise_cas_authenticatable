@@ -2,5 +2,12 @@ rvm:
   - 1.8.7 # (current default)
   - 1.9.2
 gemfile:
-  - Gemfile
+  - Gemfile.devise10
+  - Gemfile.devise11
+  - Gemfile.devise12
+  - Gemfile.devise13
+  - Gemfile.devise14
+  - Gemfile.devise15
+  - Gemfile.devise20
+  - Gemfile.devise21
 script: "bundle exec rake spec"
