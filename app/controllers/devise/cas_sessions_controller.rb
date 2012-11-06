@@ -8,8 +8,7 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
   
   def service
-    warden.authenticate!(:scope => resource_name)
-    redirect_to after_sign_in_path_for(resource_name)
+    redirect_to after_sign_in_path_for(warden.authenticate!(:scope => resource_name))
   end
   
   def unregistered
