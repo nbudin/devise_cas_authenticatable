@@ -5,6 +5,7 @@ gemspec
 
 gem 'rails', '~> 2.3.14'
 gem 'devise', '~> 1.0.0'
+gem 'rspec-rails', '~> 1.2.0'
 
 group :test do
   gem 'castronaut', :git => 'https://github.com/nbudin/castronaut.git', :branch => 'dam5s-merge'
