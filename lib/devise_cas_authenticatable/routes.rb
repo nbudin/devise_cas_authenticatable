@@ -13,7 +13,7 @@ if ActionController::Routing.name =~ /ActionDispatch/
         get :new, :path => mapping.path_names[:sign_in], :as => "new"
         get :unregistered
         post :create, :path => mapping.path_names[:sign_in]
-        match :destroy, :path => mapping.path_names[:sign_out], :as => "destroy"
+        match :destroy, :path => mapping.path_names[:sign_out], :as => "destroy", :via => [:get, :post]
       end      
     end
   end
