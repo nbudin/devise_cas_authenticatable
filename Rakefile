@@ -4,7 +4,12 @@ require 'bundler/gem_tasks'
 Bundler.setup
 
 require 'rake'
-require 'rdoc/task'
+begin
+  require 'rdoc/task'
+rescue LoadError
+  require 'rake/rdoctask'
+end
+
 require 'rspec/mocks/version'
 require 'rspec/core/rake_task'
 
