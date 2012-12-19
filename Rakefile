@@ -4,7 +4,7 @@ require 'bundler/gem_tasks'
 Bundler.setup
 
 require 'rake'
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'rspec/mocks/version'
 require 'rspec/core/rake_task'
 
