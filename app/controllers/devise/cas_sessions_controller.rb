@@ -113,11 +113,6 @@ class Devise::CasSessionsController < Devise::SessionsController
   def returning_from_cas?
     params[:ticket] || request.referer =~ /^#{::Devise.cas_client.cas_base_url}/ || request.referer =~ /^#{url_for :action => "service"}/
   end
-  
-  def cas_logout_url
-    ::Devise.cas_client.add_service_to_login_url(::Devise.cas_service_url(request.url, devise_mapping))
-  end
-  helper_method :cas_login_url
 
   def cas_login_url
     ::Devise.cas_client.add_service_to_login_url(::Devise.cas_service_url(request.url, devise_mapping))
