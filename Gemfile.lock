@@ -14,7 +14,7 @@ GIT
 PATH
   remote: .
   specs:
-    devise_cas_authenticatable (1.1.2)
+    devise_cas_authenticatable (1.1.3)
       devise (>= 1.0.6)
       rubycas-client (>= 2.2.1)
 
@@ -64,11 +64,11 @@ GEM
       ffi (~> 1.0.6)
     coderay (0.9.8)
     crypt-isaac (0.9.1)
-    devise (2.1.0)
+    devise (2.1.2)
       bcrypt-ruby (~> 3.0)
-      orm_adapter (~> 0.0.7)
+      orm_adapter (~> 0.1)
       railties (~> 3.1)
-      warden (~> 1.1.1)
+      warden (~> 1.2.1)
     diff-lcs (1.1.3)
     erubis (2.7.0)
     ffi (1.0.11)
@@ -90,7 +90,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.3.5)
     nokogiri (1.5.0)
-    orm_adapter (0.0.7)
+    orm_adapter (0.4.0)
     polyglot (0.3.3)
     pry (0.9.7.3)
       coderay (~> 0.9.8)
@@ -141,7 +141,7 @@ GEM
       rspec (~> 2.7.0)
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
-    rubycas-client (2.3.8)
+    rubycas-client (2.3.9)
       activesupport
     rubyzip (0.9.4)
     selenium-webdriver (2.13.0)
@@ -171,7 +171,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.31)
-    warden (1.1.1)
+    warden (1.2.1)
       rack (>= 1.0)
     xpath (0.1.4)
       nokogiri (~> 1.3)
