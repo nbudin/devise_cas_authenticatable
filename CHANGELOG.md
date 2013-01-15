@@ -1,5 +1,10 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.1.3 - January 15, 2013
+
+* Rails 4 compatibility fixes (thanks [Aaron Patterson](https://github.com/tenderlove)!)
+* Support the service_url parameter in rubycas-client on logout (thanks [Kyle Ginavan](https://github.com/kylejginavan)!)
+
 ## Version 1.1.2 - May 23, 2012
 
 * Only do schema stuff if using Devise 2.0.x or below
