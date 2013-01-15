@@ -57,9 +57,11 @@ class Devise::CasSessionsController < Devise::SessionsController
     service_url << request.host
     service_url << ":#{request.port.to_s}" unless request.port == 80
 
-    logout_url = case ::Devise.cas_client.method(:logout_url).arity
-    when 3 then ::Devise.cas_client.logout_url(destination_url, follow_url, ::Devise.cas_service_url(service_url, devise_mapping))
-    else ::Devise.cas_client.logout_url(destination_url, follow_url)
+    logout_url = begin
+      ::Devise.cas_client.logout_url(destination_url, follow_url, ::Devise.cas_service_url(service_url, devise_mapping))
+    rescue ArgumentError
+      # Older rubycas-clients don't accept a service_url
+      ::Devise.cas_client.logout_url(destination_url, follow_url)
     end
       
     redirect_to(logout_url)

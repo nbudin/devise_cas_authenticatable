@@ -188,7 +188,7 @@ DEPENDENCIES
   mocha
   pry
   rails (>= 3.0.7)
-  rspec-rails (>= 2.6.1)
+  rspec-rails
   sham_rack
   shoulda
   sqlite3-ruby
