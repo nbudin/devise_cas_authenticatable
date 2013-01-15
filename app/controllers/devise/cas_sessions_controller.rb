@@ -53,7 +53,11 @@ class Devise::CasSessionsController < Devise::SessionsController
       end
     end
     
-    redirect_to(::Devise.cas_client.logout_url(destination_url, follow_url))
+    service_url = request.protocol
+    service_url << request.host
+    service_url << ":#{request.port.to_s}" unless request.port == 80
+
+    redirect_to(::Devise.cas_client.logout_url(destination_url, follow_url, ::Devise.cas_service_url(service_url, devise_mapping)))
   end
 
   def single_sign_out
@@ -109,7 +113,7 @@ class Devise::CasSessionsController < Devise::SessionsController
   def returning_from_cas?
     params[:ticket] || request.referer =~ /^#{::Devise.cas_client.cas_base_url}/ || request.referer =~ /^#{url_for :action => "service"}/
   end
-  
+
   def cas_login_url
     ::Devise.cas_client.add_service_to_login_url(::Devise.cas_service_url(request.url, devise_mapping))
   end
