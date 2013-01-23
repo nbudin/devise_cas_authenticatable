@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
   include RSpec::Rails::RequestExampleGroup
+  include Capybara::DSL
   
   before do    
     Devise.cas_base_url = "http://www.example.com/cas_server"
@@ -123,7 +124,6 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
     User.find_by_username("newuser").should be_nil
 
     click_on "sign in using a different account"
-    click_on "here"
     current_url.should == cas_login_url
     fill_in "Username", :with => "joeuser"
     fill_in "Password", :with => "joepassword"
