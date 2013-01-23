@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.1.4 - January 23, 2013
+
+* Bug fix: don't modify request.protocol when generating a logout_url (thanks [Tse-Ching Ho](https://github.com/tsechingho)!)
+
 ## Version 1.1.3 - January 15, 2013
 
 * Rails 4 compatibility fixes (thanks [Aaron Patterson](https://github.com/tenderlove)!)
