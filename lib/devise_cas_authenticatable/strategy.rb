@@ -27,7 +27,6 @@ module Devise
           elsif ticket.is_valid?
             username = ticket.respond_to?(:user) ? ticket.user : ticket.response.user
             redirect!(::Devise.cas_unregistered_url(request.url, mapping), :username => username)
-            #fail!("The user #{ticket.response.user} is not registered with this site.  Please use a different account.")
           else
             fail!(:invalid)
           end
