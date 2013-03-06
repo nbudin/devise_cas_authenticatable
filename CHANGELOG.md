@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.2.0 - March 6, 2013
+
+* Rewrite of the single sign-out module to improve compatibility with newer Devise versions, other ORMs, and be less complex overall (thanks [Jeremy Haile](https://github.com/jeremyhaile) and [Endel Dreyer](https://github.com/endel)!)
+
 ## Version 1.1.4 - January 23, 2013
 
 * Bug fix: don't modify request.protocol when generating a logout_url (thanks [Tse-Ching Ho](https://github.com/tsechingho)!)
