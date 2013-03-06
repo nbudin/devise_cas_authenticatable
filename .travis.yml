@@ -12,3 +12,4 @@ gemfile:
   - Gemfile.devise20
   - Gemfile.devise21
 script: "bundle exec rake spec"
+
