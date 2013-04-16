@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.2.1 - April 16, 2013
+
+* Bug fix: use Devise.sign_out_via to configure the HTTP verb sign_out will accept.
+
 ## Version 1.2.0 - March 6, 2013
 
 * Rewrite of the single sign-out module to improve compatibility with newer Devise versions, other ORMs, and be less complex overall (thanks [Jeremy Haile](https://github.com/jeremyhaile) and [Endel Dreyer](https://github.com/endel)!)
