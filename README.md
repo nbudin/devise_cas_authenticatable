@@ -81,7 +81,16 @@ to tell your app how to talk to your CAS server:
       # By default, devise_cas_authenticatable will create users.  If you would rather
       # require user records to already exist locally before they can authenticate via
       # CAS, uncomment the following line.
-      # config.cas_create_user = false  
+      # config.cas_create_user = false
+
+      # If you want to use the Devise Timeoutable module with single sign out, 
+      # uncommenting this will redirect timeouts to the logout url, so that the CAS can
+      # take care of signing out the other serviced applocations. Note that each
+      # application manages timeouts independently, so one application timing out will 
+      # kill the session on all applications serviced by the CAS.
+      # config.warden do |manager|
+      #   manager.failure_app = DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp
+      # end
     end
 
 Extra attributes
