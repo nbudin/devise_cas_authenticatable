@@ -3,13 +3,13 @@ $:.unshift File.dirname(__FILE__)
 $:.unshift File.expand_path('../../lib', __FILE__)
 
 require "scenario/config/environment"
-require "rails/test_help"
 require 'rspec/rails'
 require 'sham_rack'
 require 'capybara/rspec'
+require 'timecop'
 
-RSpec.configure do |config| 
-  config.mock_with :mocha 
+RSpec.configure do |config|
+  config.mock_with :mocha
 end
 
 ShamRack.at('www.example.com') do |env|
