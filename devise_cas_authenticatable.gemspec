@@ -34,5 +34,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency('crypt-isaac')
   s.add_development_dependency('launchy')
   s.add_development_dependency('timecop')
+  s.add_development_dependency('pry')
 end
 
