@@ -2,8 +2,6 @@
 # so that a single_sign_out request can be initiated
 class DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp < Devise::FailureApp
 
-  alias :standard_scope_path :scope_path
-
   # You need to override respond to eliminate recall
   def respond
     if http_auth?
@@ -31,12 +29,12 @@ class DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp < Devise::Failur
       flash[:timedout] = true
       Devise.cas_client.logout_url
     else
-      scope_path
+      if respond_to?(:scope_path)
+        scope_path
+      else
+        super
+      end
     end
-  end
-
-  def scope_path
-    standard_scope_path
   end
     
 end
