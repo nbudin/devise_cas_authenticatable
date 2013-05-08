@@ -18,6 +18,11 @@ rescue
 else
   module DeviseCasAuthenticatable
     class Engine < Rails::Engine
+      initializer "devise_cas_authenticatable.single_sign_on.warden_failure_app" do |app|
+        # requiring this here because the parent class calls Rails.application, which
+        # isn't set up until after bundler has required the modules in this engine 
+        require 'devise_cas_authenticatable/single_sign_out/warden_failure_app'
+      end
     end
   end
 end
