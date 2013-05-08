@@ -1,9 +1,8 @@
 rvm:
-  - 1.8.7 # (current default)
+  - 1.8.7
   - 1.9.3
   - 2.0.0
 gemfile:
-  - Gemfile.devise10
   - Gemfile.devise11
   - Gemfile.devise12
   - Gemfile.devise13
