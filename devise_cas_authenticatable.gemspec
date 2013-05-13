@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.5.0}
   s.summary = %q{CAS authentication module for Devise}
 
-  s.add_runtime_dependency(%q<devise>, [">= 1.1.0"])
+  s.add_runtime_dependency(%q<devise>, [">= 1.2.0"])
   s.add_runtime_dependency(%q<rubycas-client>, [">= 2.2.1"])
     
   s.add_development_dependency("rails", ">= 3.0.7")
