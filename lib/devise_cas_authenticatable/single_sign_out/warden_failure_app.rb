@@ -36,5 +36,11 @@ class DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp < Devise::Failur
       end
     end
   end
-    
+  
+  # Devise < 2.0 doesn't have this method, which we want to use
+  unless instance_methods.include?(:warden_message)
+    define_method :warden_message do
+      @message ||= warden.message || warden_options[:message]
+    end
+  end
 end
