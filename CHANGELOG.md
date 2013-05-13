@@ -1,5 +1,10 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.3.0 - May 12, 2013
+
+* Drop support for Rails 2.3, Devise 1.0 and 1.1
+* Custom failure class for optional redirecting to logout url upon timeout (thanks to @geoffroh and @kylejginavan)
+
 ## Version 1.2.1 - April 16, 2013
 
 * Bug fix: use Devise.sign_out_via to configure the HTTP verb sign_out will accept.
