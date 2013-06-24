@@ -149,7 +149,7 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
 
   def request_referer_path
-    URI.parse(request.referer).path
+    URI.parse(request.referer).path if request.referer
   end
 
 end
