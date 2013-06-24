@@ -15,7 +15,7 @@ class Devise::CasSessionsController < Devise::SessionsController
       raise "memcache is down, can't get session data from it"
     end
 
-    store_return_to_location
+    store_location!
     redirect_to(cas_login_url)
   end
 
@@ -38,7 +38,9 @@ class Devise::CasSessionsController < Devise::SessionsController
       cookies.delete :auth_token, :domain => auth_token_domain
       cookies.delete :_trm, :domain => request.host.slice(/(staging.)*techbang.(com|dev)$/)
       cookies.delete :_tun, :domain => request.host.slice(/(staging.)*techbang.(com|dev)$/)
-      store_return_to_location
+
+      store_location!
+
       sign_out(resource_name)
     else
       reset_session
@@ -141,7 +143,13 @@ class Devise::CasSessionsController < Devise::SessionsController
     @memcache_checker ||= DeviseCasAuthenticatable::MemcacheChecker.new(Rails.configuration)
   end
 
-  def store_return_to_location
-    session[:return_to] = URI.parse(request.referer).path if request.referer
+  # Set `session[:user_return_to]` to the referer path unless it is already set.
+  def store_location!
+    session["#{resource_name}_return_to"] = stored_location_for(resource_name) || request_referer_path
   end
+
+  def request_referer_path
+    URI.parse(request.referer).path
+  end
+
 end
