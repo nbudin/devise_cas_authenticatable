@@ -1,6 +1,9 @@
-class Devise::CasSessionsController < Devise::SessionsController  
+class Devise::CasSessionsController < Devise::SessionsController
   include DeviseCasAuthenticatable::SingleSignOut::DestroySession
-  unloadable
+
+  unless Rails.version =~/^4/
+    unloadable
+  end
 
   skip_before_filter :verify_authenticity_token, :only => [:single_sign_out]
 
