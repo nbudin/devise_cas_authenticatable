@@ -1,5 +1,5 @@
-if ActionController::Routing.name =~ /ActionDispatch/
-  # Rails 3
+if defined? ActionDispatch::Routing
+  # Rails 3, 4
   
   ActionDispatch::Routing::Mapper.class_eval do
     protected
