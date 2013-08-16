@@ -1,5 +1,4 @@
 rvm:
-  - 1.8.7
   - 1.9.3
   - 2.0.0
 gemfile:
@@ -9,5 +8,6 @@ gemfile:
   - Gemfile.devise15
   - Gemfile.devise20
   - Gemfile.devise21
+  - Gemfile.devise30
 script: "bundle exec rake spec"
 
