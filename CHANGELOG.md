@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.3.2 - August 16, 2013
+
+* Rails 4 deprecation warning fix (thanks to @reidmix)
+
 ## Version 1.3.1 - July 29, 2013
 
 * Rails 4 compatibility fix (thanks to @McRipper)
