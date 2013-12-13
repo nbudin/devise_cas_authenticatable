@@ -39,7 +39,8 @@ class Devise::CasSessionsController < Devise::SessionsController
         logger.debug "Intercepted single-sign-out request for CAS session #{session_index}."
         session_id = ::DeviseCasAuthenticatable::SingleSignOut::Strategies.current_strategy.find_session_id_by_index(session_index)
         if session_id
-          destroy_cas_session(session_id, session_index)
+          logger.debug "Found Session ID #{session_id} with index key #{session_index}"
+          destroy_cas_session(session_index, session_id)
         end
       else
         logger.warn "Ignoring CAS single-sign-out request as no session index could be parsed from the parameters."
@@ -64,12 +65,10 @@ class Devise::CasSessionsController < Devise::SessionsController
     end
   end
 
-  def destroy_cas_session(session_id, session_index)
-    logger.debug "Destroying cas session #{session_id} for ticket #{session_index}"
+  def destroy_cas_session(session_index, session_id)
     if destroy_session_by_id(session_id)
       logger.debug "Destroyed session #{session_id} corresponding to service ticket #{session_index}."
     end
-
     ::DeviseCasAuthenticatable::SingleSignOut::Strategies.current_strategy.delete_session_index(session_index)
   end
 

@@ -1,8 +1,8 @@
 module DeviseCasAuthenticatable
   module SingleSignOut
 
-    def self.rails3?
-      defined?(::Rails) && ::Rails::VERSION::MAJOR == 3
+    def self.rails3_or_greater?
+      defined?(::Rails) && ::Rails::VERSION::MAJOR >= 3
     end
 
     # Supports destroying sessions by ID for ActiveRecord and Redis session stores
@@ -10,8 +10,8 @@ module DeviseCasAuthenticatable
       def session_store_class
         @session_store_class ||=
           begin
-            if ::DeviseCasAuthenticatable::SingleSignOut.rails3?
-              # => Rails 3
+            # Rails 3 & 4 session store
+            if ::DeviseCasAuthenticatable::SingleSignOut.rails3_or_greater?
               Rails.configuration.session_store
               ::Rails.application.config.session_store
             else
