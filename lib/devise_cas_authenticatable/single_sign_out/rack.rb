@@ -18,7 +18,14 @@ module DeviseCasAuthenticatable
       def store_session_id_for_cas_ticket(env)
         request = Rack::Request.new(env)
         session = request.session
-        session_id = request.session.id
+
+        if session.respond_to?(:id)
+          # Rack > 1.5
+          session_id = session.id
+        else
+          # Compatible with old Rack requests
+          session_id = env['rack.session.options'][:id]
+        end
         cas_ticket_store = session[CAS_TICKET_STORE]
 
         if cas_ticket_store
