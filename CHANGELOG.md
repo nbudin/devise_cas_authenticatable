@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.3.3 - December 13, 2013
+
+* Bug fix for single sign out when using Rack >= 1.5 (thanks to @activars)
+
 ## Version 1.3.2 - August 16, 2013
 
 * Rails 4 deprecation warning fix (thanks to @reidmix)
