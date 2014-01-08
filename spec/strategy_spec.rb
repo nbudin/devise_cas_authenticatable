@@ -27,7 +27,7 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
   end
   
   def cas_logout_url
-    @cas_logout_url ||= Devise.cas_base_url + "/logout"
+    @cas_logout_url ||= Devise.cas_base_url + "/logout?service"
   end
   
   def sign_into_cas(username, password)
@@ -75,7 +75,7 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
 
     it "should fail to sign in" do
       sign_into_cas "joeuser", "joepassword"
-      current_url.should == new_user_session_url
+      current_url.should == cas_logout_url
     end
   end
   

@@ -22,6 +22,18 @@ describe DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp do
 
       end
 
+      describe "resulting from an inactive" do
+
+        before do
+          @failure_app.stubs(:warden_message).returns(:inactive)
+        end
+
+        it "returns the logout url" do
+          @failure_app.send(:redirect_url).should match(/#{cas_logout_url}/)
+        end
+
+      end
+
       describe "resulting from a generic warden :throw error" do
 
         before do

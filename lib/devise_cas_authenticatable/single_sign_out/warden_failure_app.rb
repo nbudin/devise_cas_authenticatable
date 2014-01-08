@@ -25,8 +25,8 @@ class DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp < Devise::Failur
   protected
 
   def redirect_url
-    if warden_message == :timeout
-      flash[:timedout] = true
+    if [:timeout, :inactive].include? warden_message
+      flash[:timedout] = true if warden_message == :timeout
       Devise.cas_client.logout_url
     else
       if respond_to?(:scope_path)
