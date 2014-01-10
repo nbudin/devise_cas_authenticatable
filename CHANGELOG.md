@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.3.4 - January 10, 2014
+
+* Redirect to CAS logout URL when Warden receives the :inactive status, which should allow using active_for_authentication? (thanks to @bentoncreation)
+
 ## Version 1.3.3 - December 13, 2013
 
 * Bug fix for single sign out when using Rack >= 1.5 (thanks to @activars)
