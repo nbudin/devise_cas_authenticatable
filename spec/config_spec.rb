@@ -8,13 +8,13 @@ end
 
 describe Devise do
   before do
-    Devise.cas_base_url = "http://www.example.com/cas_server"
+    Devise.cas_base_url = "http://www.example.com/cas"
   end
   
   after { Devise.reset_cas_client! }
   
   it "should figure out the base URL correctly" do
-    Devise.cas_client.cas_base_url.should == "http://www.example.com/cas_server"
+    Devise.cas_client.cas_base_url.should == "http://www.example.com/cas"
   end
   
   it 'should accept extra options for the CAS client object' do

@@ -1,0 +1,6 @@
+# Times are in seconds.
+maximum_unused_login_ticket_lifetime: 300
+maximum_unused_service_ticket_lifetime: 300
+
+authenticator:
+  class: TestAdapter

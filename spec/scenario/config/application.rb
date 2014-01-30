@@ -4,8 +4,9 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-require 'castronaut'
-class TestAdapter
+require 'cassy'
+
+class TestAdapter < Cassy::Authenticators::Base
   def self.reset_valid_users!
     @@valid_users = {
       "joeuser" => "joepassword"
@@ -17,19 +18,14 @@ class TestAdapter
     @@valid_users[username] = password
   end
   
-  def self.authenticate(username, password)
-    error_message = if @@valid_users[username] == password
-      nil
+  def self.find_user(credentials)
+    if @@valid_users[credentials[:username]] == credentials[:password]
+      credentials[:username]
     else
-      "Invalid password"
+      nil
     end
-    
-    Castronaut::AuthenticationResult.new(username, error_message)
   end  
 end
-
-Castronaut::Adapters.register("test_adapter", TestAdapter)
-Castronaut.config = Castronaut::Configuration.load(File.expand_path(File.join(File.dirname(__FILE__), "castronaut.yml")))
 
 module Scenario
   class Application < Rails::Application

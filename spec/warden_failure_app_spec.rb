@@ -5,7 +5,7 @@ describe DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp do
   describe "#redirect_url" do
 
       before do
-        Devise.cas_base_url = "http://www.example.com/cas_server"
+        Devise.cas_base_url = "http://www.example.com/cas"
         @failure_app = DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp.new
         @failure_app.stubs(:flash).returns({})
       end

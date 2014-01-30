@@ -7,7 +7,7 @@ describe DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp do
   describe "A logged in user with a timed out session" do
 
     before do      
-      Devise.cas_base_url = "http://www.example.com/cas_server"
+      Devise.cas_base_url = "http://www.example.com/cas"
       User.delete_all
       @user = User.create!(:username => "joeuser")
     end

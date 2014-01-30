@@ -5,7 +5,7 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
   include Capybara::DSL
   
   before do    
-    Devise.cas_base_url = "http://www.example.com/cas_server"
+    Devise.cas_base_url = "http://www.example.com/cas"
     TestAdapter.reset_valid_users!
 
     User.delete_all

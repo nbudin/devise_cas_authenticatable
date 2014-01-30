@@ -14,9 +14,9 @@ end
 
 ShamRack.at('www.example.com') do |env|
   request = Rack::Request.new(env)
-  request.path_info = request.path_info.sub(/^\/cas_server/, '')
+  #request.path_info = request.path_info.sub(/^\/cas/, '')
   
-  Castronaut::Application.call(request.env)
+  Scenario::Application.call(env)
 end
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
