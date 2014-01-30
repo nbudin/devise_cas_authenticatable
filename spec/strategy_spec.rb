@@ -124,8 +124,6 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
     User.find_by_username("newuser").should be_nil
 
     click_on "sign in using a different account"
-    click_on "here"
-    current_url.should == cas_login_url
     fill_in "Username", :with => "joeuser"
     fill_in "Password", :with => "joepassword"
     click_on "Login"

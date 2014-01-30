@@ -8,9 +8,7 @@ class Devise::CasSessionsController < Devise::SessionsController
   skip_before_filter :verify_authenticity_token, :only => [:single_sign_out]
 
   def new
-    unless returning_from_cas?
-      redirect_to(cas_login_url)
-    end
+    redirect_to(cas_login_url)
   end
 
   def service
@@ -70,10 +68,6 @@ class Devise::CasSessionsController < Devise::SessionsController
       logger.debug "Destroyed session #{session_id} corresponding to service ticket #{session_index}."
     end
     ::DeviseCasAuthenticatable::SingleSignOut::Strategies.current_strategy.delete_session_index(session_index)
-  end
-
-  def returning_from_cas?
-    params[:ticket] || request.referer =~ /^#{::Devise.cas_client.cas_base_url}/ || request.referer =~ /^#{url_for :action => "service"}/
   end
 
   def cas_login_url
