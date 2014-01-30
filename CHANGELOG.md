@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.3.5 - January 30, 2014
+
+* Don't redirect to the (probably useless) Devise login page when the user is unauthorized - this is the CAS server's responsibility. (thanks to @kylejginavan)
+
 ## Version 1.3.4 - January 10, 2014
 
 * Redirect to CAS logout URL when Warden receives the :inactive status, which should allow using active_for_authentication? (thanks to @bentoncreation)
