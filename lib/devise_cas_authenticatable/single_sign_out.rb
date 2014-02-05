@@ -39,6 +39,10 @@ module DeviseCasAuthenticatable
           session = session_store_class::Session.find_by_session_id(sid)
           session.destroy if session
           true
+        elsif session_store_class.name =~ /ActionDispatch::Session::ActiveRecordStore/
+          session = current_session_store.session_class.find_by_session_id(sid)
+          session.destroy if session
+          true
         elsif session_store_class.name =~ /Redis/
           current_session_store.instance_variable_get(:@pool).del(sid)
           true

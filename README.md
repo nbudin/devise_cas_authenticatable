@@ -87,8 +87,7 @@ to tell your app how to talk to your CAS server:
       # CAS, uncomment the following line.
       # config.cas_create_user = false
 
-      # You can enable Single Sign Out, which by default is disabled. Currently it only
-      # works with cache storage
+      # You can enable Single Sign Out, which by default is disabled.
       # config.cas_enable_single_sign_out = true
 
       # If you want to use the Devise Timeoutable module with single sign out, 
