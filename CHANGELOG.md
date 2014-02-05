@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.3.6 - February 5, 2014
+
+* Better single sign-out support for ActiveRecord session store users and README fixes (thanks to @fernandomantoan)
+
 ## Version 1.3.5 - January 30, 2014
 
 * Don't redirect to the (probably useless) Devise login page when the user is unauthorized - this is the CAS server's responsibility. (thanks to @kylejginavan)
