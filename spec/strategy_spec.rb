@@ -129,4 +129,14 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
     click_on "Login"
     current_url.should == root_url
   end
+  
+  it "should work correctly with Devise trackable" do
+    user = User.first
+    user.update_attributes!(:last_sign_in_at => 1.day.ago, :last_sign_in_ip => "1.2.3.4", :sign_in_count => 41)
+    sign_into_cas "joeuser", "joepassword"
+    
+    user.reload
+    user.last_sign_in_at.should >= 1.hour.ago
+    user.sign_in_count.should == 42
+  end
 end
