@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency("shoulda", "~> 3.4.0")
   s.add_development_dependency("sqlite3-ruby")
   s.add_development_dependency("sham_rack")
-  s.add_development_dependency("capybara", "~> 1.1.4")
+  s.add_development_dependency("capybara")
   s.add_development_dependency('crypt-isaac')
   s.add_development_dependency('launchy')
   s.add_development_dependency('timecop')
