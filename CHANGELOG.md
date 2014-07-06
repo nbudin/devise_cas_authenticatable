@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.0.1 - July 6, 2014
+
+* Backport the 1.1.x series' logout_url features to the 1.0.x series for super-old apps
+
 ## Version 1.3.6 - February 5, 2014
 
 * Better single sign-out support for ActiveRecord session store users and README fixes (thanks to @fernandomantoan)
