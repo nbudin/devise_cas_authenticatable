@@ -28,12 +28,8 @@ class Devise::CasSessionsController < Devise::SessionsController
     else
       reset_session
     end
-    destination = request.protocol
-    destination << request.host
-    destination << ":#{request.port.to_s}" unless request.port == 80
-    destination << after_sign_out_path_for(resource_name)
-    follow_url = destination
-    redirect_to(::Devise.cas_client.logout_url(destination, follow_url))
+
+    redirect_to(logout_url)
   end
 
   def single_sign_out
@@ -94,4 +90,45 @@ class Devise::CasSessionsController < Devise::SessionsController
     ::Devise.cas_client.add_service_to_login_url(::Devise.cas_service_url(request.url, devise_mapping))
   end
   helper_method :cas_login_url
+  
+  def request_url
+    return @request_url if @request_url
+    @request_url = request.protocol.dup
+    @request_url << request.host
+    @request_url << ":#{request.port.to_s}" unless request.port == 80
+    @request_url
+  end
+  
+  def destination_url
+    return unless ::Devise.cas_logout_url_param == 'destination'
+    if !::Devise.cas_destination_url.blank?
+      url = Devise.cas_destination_url
+    else
+      url = request_url.dup
+      url << after_sign_out_path_for(resource_name)
+    end
+  end
+
+  def follow_url
+    return unless ::Devise.cas_logout_url_param == 'follow'
+    if !::Devise.cas_follow_url.blank?
+      url = Devise.cas_follow_url
+    else
+      url = request_url.dup
+      url << after_sign_out_path_for(resource_name)
+    end
+  end
+  
+  def service_url
+    ::Devise.cas_service_url(request_url.dup, devise_mapping)
+  end
+
+  def logout_url
+    begin
+      ::Devise.cas_client.logout_url(destination_url, follow_url, service_url)
+    rescue ArgumentError
+      # Older rubycas-clients don't accept a service_url
+      ::Devise.cas_client.logout_url(destination_url, follow_url)
+    end
+  end
 end
