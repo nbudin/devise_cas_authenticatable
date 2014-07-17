@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.3.7 - July 17, 2014
+
+* Be less verbose in the log during single sign-out (thanks to @liudangyi)
+
 ## Version 1.0.1 - July 6, 2014
 
 * Backport the 1.1.x series' logout_url features to the 1.0.x series for super-old apps
