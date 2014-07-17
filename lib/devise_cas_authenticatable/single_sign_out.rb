@@ -33,7 +33,7 @@ module DeviseCasAuthenticatable
       end
 
       def destroy_session_by_id(sid)
-        logger.debug "Single Sign Out from session store: #{current_session_store.inspect}"
+        logger.debug "Single Sign Out from session store: #{current_session_store.class}"
 
         if session_store_class.name =~ /ActiveRecord::SessionStore/
           session = session_store_class::Session.find_by_session_id(sid)
