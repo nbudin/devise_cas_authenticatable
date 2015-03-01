@@ -18,6 +18,10 @@ if defined? ActionDispatch::Routing
         match :destroy, :path => mapping.path_names[:sign_out], :as => "destroy", :via => sign_out_via
       end      
     end
+
+    def raise_no_secret_key #:nodoc:
+      # Devise_cas_authenticatable does not store passwords, so does not need a secret!
+    end
   end
 else
   # Rails 2
