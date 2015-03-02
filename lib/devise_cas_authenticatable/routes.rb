@@ -21,6 +21,18 @@ if defined? ActionDispatch::Routing
 
     def raise_no_secret_key #:nodoc:
       # Devise_cas_authenticatable does not store passwords, so does not need a secret!
+      logger.warn <<-WARNING
+      Devise_cas_authenticatable has suppressed an exception from being raised for missing Devise.secret_key.
+      If devise_cas_authenticatable is the only devise module you are using for authentication you can safely ignore this warning.
+      However, if you use another module that requires the secret_key please follow these instructions from Devise:
+
+      Devise.secret_key was not set. Please add the following to your Devise initializer:
+  
+          config.secret_key = '#{SecureRandom.hex(64)}'
+      
+      Please ensure you restarted your application after installing Devise or setting the key.
+WARNING
+
     end
   end
 else
