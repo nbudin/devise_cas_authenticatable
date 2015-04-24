@@ -8,5 +8,4 @@ gem 'devise', '~> 2.1.0'
 
 group :test do
   gem 'castronaut', :git => 'https://github.com/nbudin/castronaut.git', :branch => 'dam5s-merge'
-  gem "debugger"
 end
