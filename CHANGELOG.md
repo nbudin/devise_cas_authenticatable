@@ -1,5 +1,10 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.3.8 - April 24, 2015
+
+* Remove a deprecated dependency (thanks to @gmoore)
+* Fix a wrong variable name that could break debug logging (thanks again to @gmoore)
+
 ## Version 1.3.7 - July 17, 2014
 
 * Be less verbose in the log during single sign-out (thanks to @liudangyi)
