@@ -49,9 +49,9 @@ module DeviseCasAuthenticatable
         elsif session_store_class.name =~ /CacheStore/
           current_session_store.destroy_session({}, sid, {})
           true
-        else
+        else 
           logger.error "Cannot process logout request because this Rails application's session store is "+
-                " #{current_session_store.name.inspect} and is not a support session store type for Single Sign-Out."
+                " #{session_store_class.name} and is not a support session store type for Single Sign-Out."
           false
         end
       end
