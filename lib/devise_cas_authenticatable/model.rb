@@ -28,9 +28,14 @@ module Devise
               identifier = ticket_response.extra_attributes[::Devise.cas_user_identifier]
             end
 
-            # If cas_user_identifier isn't in extra_attributes, then we're done here
-            return nil if identifier.nil?
+            # If cas_user_identifier isn't in extra_attributes, or the value is blank, then we're done here
+            if identifier.nil?
+              logger.warn("Could not find a value for [#{::Devise.cas_user_identifier}] in cas_extra_attributes so we cannot find the User.")
+              logger.warn("Make sure config.cas_user_identifier is set to a field that appears in cas_extra_attributes")
+              return nil 
+            end
 
+            logger.debug("Using conditions {#{::Devise.cas_username_column} => #{identifier}} to find the User")
             conditions = {::Devise.cas_username_column => identifier} 
             # We don't want to override Devise 1.1's find_for_authentication
             resource = if respond_to?(:find_for_authentication)
