@@ -32,6 +32,9 @@ describe Devise::Models::CasAuthenticatable do
       User.expects(:find).with(:first, {:conditions => {:id => 10}})
 
       User.authenticate_with_cas_ticket(@ticket)
+
+      #Reset this otherwise it'll blow up other specs
+      Devise.cas_user_identifier = nil
     end
 
     it "should authenticate as normal is config.cas_user_identifier is not set" do
@@ -46,6 +49,9 @@ describe Devise::Models::CasAuthenticatable do
       Devise.cas_username_column = :username   
       User.expects(:find).never
       User.authenticate_with_cas_ticket(@ticket).should be_nil 
+
+      #Reset this otherwise it'll blow up other specs
+      Devise.cas_user_identifier = nil
     end
   end
 end
