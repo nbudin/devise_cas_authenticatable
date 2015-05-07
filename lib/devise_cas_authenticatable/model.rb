@@ -19,7 +19,16 @@ module Devise
           ::Devise.cas_client.validate_service_ticket(ticket) unless ticket.has_been_validated?
           
           if ticket.is_valid?
-           conditions = {::Devise.cas_username_column => ticket.respond_to?(:user) ? ticket.user : ticket.response.user} 
+           condition = nil
+           ticket_response = ticket.respond_to?(:user) ? ticket : ticket.response
+
+           if ::Devise.cas_username_field.nil?
+              condition = ticket_response.user
+           else
+              condition = ticket_response.extra_attributes[::Devise.cas_username_field]
+           end
+
+           conditions = {::Devise.cas_username_column => condition} 
             # We don't want to override Devise 1.1's find_for_authentication
             resource = if respond_to?(:find_for_authentication)
               find_for_authentication(conditions)
@@ -31,7 +40,7 @@ module Devise
             return nil unless resource
             
             if resource.respond_to? :cas_extra_attributes=
-              resource.cas_extra_attributes = ticket.respond_to?(:extra_attributes) ? ticket.extra_attributes : ticket.response.extra_attributes
+              resource.cas_extra_attributes = ticket_response.extra_attributes
             end
             resource.save
             resource
