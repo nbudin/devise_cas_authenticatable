@@ -69,7 +69,7 @@ module Devise
   
   # The CAS reponse value used to find users in the local database
   # it is required that this field be in cas_extra_attributes
-  @@cas_username_field = :id
+  @@cas_user_identifier = nil
 
   # Name of the parameter passed in the logout query 
   @@cas_destination_logout_param_name = nil
@@ -77,7 +77,7 @@ module Devise
   # Additional options for CAS client object
   @@cas_client_config_options = {}
 
-  mattr_accessor :cas_base_url, :cas_login_url, :cas_logout_url, :cas_validate_url, :cas_destination_url, :cas_follow_url, :cas_logout_url_param, :cas_create_user, :cas_destination_logout_param_name, :cas_username_column, :cas_enable_single_sign_out, :cas_single_sign_out_mapping_strategy, :cas_username_field, :cas_client_config_options
+  mattr_accessor :cas_base_url, :cas_login_url, :cas_logout_url, :cas_validate_url, :cas_destination_url, :cas_follow_url, :cas_logout_url_param, :cas_create_user, :cas_destination_logout_param_name, :cas_username_column, :cas_enable_single_sign_out, :cas_single_sign_out_mapping_strategy, :cas_user_identifier, :cas_client_config_options
 
   def self.cas_create_user?
     cas_create_user
