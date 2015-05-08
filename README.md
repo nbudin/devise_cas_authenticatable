@@ -13,7 +13,7 @@ using [rubycas-server](http://github.com/gunark/rubycas-server)).
 Requirements
 ------------
 
-- Rails 2.3 or greater (works with 3.x versions as well)
+- Rails 2.3 or greater (works with 3.x and 4.x versions as well)
 - Devise 1.0 or greater
 - rubycas-client
 
@@ -81,7 +81,7 @@ to tell your app how to talk to your CAS server:
       # You can specify the name of the destination argument with the following option.
       # e.g. the following option will change it from 'destination' to 'url'
       # config.cas_destination_logout_param_name = 'url'
-
+      
       # By default, devise_cas_authenticatable will create users.  If you would rather
       # require user records to already exist locally before they can authenticate via
       # CAS, uncomment the following line.
@@ -89,6 +89,11 @@ to tell your app how to talk to your CAS server:
 
       # You can enable Single Sign Out, which by default is disabled.
       # config.cas_enable_single_sign_out = true
+      
+      # If you don't want to use the username returned from your CAS server as the unique
+      # identifier, but some other field passed in cas_extra_attributes, you can specify
+      # the field name here.
+      # config.cas_user_identifier = nil
 
       # If you want to use the Devise Timeoutable module with single sign out,
       # uncommenting this will redirect timeouts to the logout url, so that the CAS can

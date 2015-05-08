@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.4.0 - May 8, 2015
+
+* Allow changing the CAS response field used as the unique key for finding users (thanks once again to @gmoore!)
+
 ## Version 1.3.8 - April 24, 2015
 
 * Remove a deprecated dependency (thanks to @gmoore)
