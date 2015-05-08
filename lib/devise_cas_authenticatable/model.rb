@@ -19,7 +19,24 @@ module Devise
           ::Devise.cas_client.validate_service_ticket(ticket) unless ticket.has_been_validated?
           
           if ticket.is_valid?
-           conditions = {::Devise.cas_username_column => ticket.respond_to?(:user) ? ticket.user : ticket.response.user} 
+            identifier = nil
+            ticket_response = ticket.respond_to?(:user) ? ticket : ticket.response
+
+            if ::Devise.cas_user_identifier.blank?
+              identifier = ticket_response.user
+            else
+              identifier = ticket_response.extra_attributes[::Devise.cas_user_identifier]
+            end
+
+            # If cas_user_identifier isn't in extra_attributes, or the value is blank, then we're done here
+            if identifier.nil?
+              logger.warn("Could not find a value for [#{::Devise.cas_user_identifier}] in cas_extra_attributes so we cannot find the User.")
+              logger.warn("Make sure config.cas_user_identifier is set to a field that appears in cas_extra_attributes")
+              return nil 
+            end
+
+            logger.debug("Using conditions {#{::Devise.cas_username_column} => #{identifier}} to find the User")
+            conditions = {::Devise.cas_username_column => identifier} 
             # We don't want to override Devise 1.1's find_for_authentication
             resource = if respond_to?(:find_for_authentication)
               find_for_authentication(conditions)
@@ -31,7 +48,7 @@ module Devise
             return nil unless resource
             
             if resource.respond_to? :cas_extra_attributes=
-              resource.cas_extra_attributes = ticket.respond_to?(:extra_attributes) ? ticket.extra_attributes : ticket.response.extra_attributes
+              resource.cas_extra_attributes = ticket_response.extra_attributes
             end
             resource.save
             resource
