@@ -7,6 +7,8 @@ require 'devise_cas_authenticatable/exceptions'
 
 require 'devise_cas_authenticatable/single_sign_out'
 
+require 'devise_cas_authenticatable/cas_action_url_factory_base'
+
 require 'rubycas-client'
 
 require 'devise_cas_authenticatable/railtie' if defined?(Rails::Railtie)
@@ -111,24 +113,11 @@ module Devise
   
   private
   def self.cas_action_url(base_url, mapping, action)
-    u = URI.parse(base_url)
-    u.query = nil
-    u.path = if mapping.respond_to?(:fullpath)
-      if ENV['RAILS_RELATIVE_URL_ROOT']
-        ENV['RAILS_RELATIVE_URL_ROOT'] + mapping.fullpath
-      else
-        mapping.fullpath
-      end
-    else
-      if ENV['RAILS_RELATIVE_URL_ROOT']
-        ENV['RAILS_RELATIVE_URL_ROOT'] + mapping.raw_path
-      else
-        mapping.raw_path
-      end
-    end
-    u.path << "/" unless u.path =~ /\/$/
-    u.path << action
-    u.to_s
+    cas_action_url_factory_class.new(base_url, mapping, action).call
+  end
+
+  def self.cas_action_url_factory_class
+    @cas_action_url_factory_class ||= CasActionUrlFactoryBase.prepare_class
   end
 end
 
