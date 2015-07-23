@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.4.1 - July 23, 2015
+
+* Internal refactor to avoid conflicting with common route names, specifically logout_url (thanks to @eturino!)
+
 ## Version 1.4.0 - May 8, 2015
 
 * Allow changing the CAS response field used as the unique key for finding users (thanks once again to @gmoore!)
