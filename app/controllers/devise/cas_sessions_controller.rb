@@ -27,7 +27,7 @@ class Devise::CasSessionsController < Devise::SessionsController
       reset_session
     end
 
-    redirect_to(logout_url)
+    redirect_to(cas_logout_url)
   end
 
   def single_sign_out
@@ -83,7 +83,7 @@ class Devise::CasSessionsController < Devise::SessionsController
     @request_url
   end
 
-  def destination_url
+  def cas_destination_url
     return unless ::Devise.cas_logout_url_param == 'destination'
     if !::Devise.cas_destination_url.blank?
       url = Devise.cas_destination_url
@@ -93,7 +93,7 @@ class Devise::CasSessionsController < Devise::SessionsController
     end
   end
 
-  def follow_url
+  def cas_follow_url
     return unless ::Devise.cas_logout_url_param == 'follow'
     if !::Devise.cas_follow_url.blank?
       url = Devise.cas_follow_url
@@ -103,16 +103,16 @@ class Devise::CasSessionsController < Devise::SessionsController
     end
   end
 
-  def service_url
+  def cas_service_url
     ::Devise.cas_service_url(request_url.dup, devise_mapping)
   end
 
-  def logout_url
+  def cas_logout_url
     begin
-      ::Devise.cas_client.logout_url(destination_url, follow_url, service_url)
+      ::Devise.cas_client.logout_url(cas_destination_url, cas_follow_url, cas_service_url)
     rescue ArgumentError
       # Older rubycas-clients don't accept a service_url
-      ::Devise.cas_client.logout_url(destination_url, follow_url)
+      ::Devise.cas_client.logout_url(cas_destination_url, cas_follow_url)
     end
   end
 end
