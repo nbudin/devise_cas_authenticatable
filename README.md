@@ -13,21 +13,14 @@ using [rubycas-server](http://github.com/gunark/rubycas-server)).
 Requirements
 ------------
 
-- Rails 2.3 or greater (works with 3.x and 4.x versions as well)
-- Devise 1.0 or greater
+- Rails 3.0 or greater (works with 4.x versions as well)
+- Devise 1.2 or greater
 - rubycas-client
 
 Installation
 ------------
 
-    gem install --pre devise_cas_authenticatable
-
-and in your config/environment.rb (on Rails 2.3):
-
-    config.gem 'devise', :version => '~> 1.0.6'
-    config.gem 'devise_cas_authenticatable'
-
-or Gemfile (Rails 3.x):
+Add to your Gemfile:
 
     gem 'devise'
     gem 'devise_cas_authenticatable'
