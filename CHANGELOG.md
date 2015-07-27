@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.5.0 - July 27, 2015
+
+* Generation of cas_action_url is now done by a customizable class, so you can use Rails routes to provide this (thanks to @eturino again!)
+
 ## Version 1.4.1 - July 23, 2015
 
 * Internal refactor to avoid conflicting with common route names, specifically logout_url (thanks to @eturino!)
