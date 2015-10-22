@@ -94,7 +94,7 @@ module Devise
         :login_url => @@cas_login_url,
         :logout_url => @@cas_logout_url,
         :validate_url => @@cas_validate_url,
-        :enable_single_sign_out => @@cas_enable_single_sign_out
+        :enable_single_sign_out => @@cas_enable_single_sign_out,
         :cas_single_sign_out_mapping_strategy => @@cas_single_sign_out_mapping_strategy
       }
       
