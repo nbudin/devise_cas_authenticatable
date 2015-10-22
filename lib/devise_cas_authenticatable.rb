@@ -95,6 +95,7 @@ module Devise
         :logout_url => @@cas_logout_url,
         :validate_url => @@cas_validate_url,
         :enable_single_sign_out => @@cas_enable_single_sign_out
+        :cas_single_sign_out_mapping_strategy => @@cas_single_sign_out_mapping_strategy
       }
       
       cas_options.merge!(@@cas_client_config_options) if @@cas_client_config_options
