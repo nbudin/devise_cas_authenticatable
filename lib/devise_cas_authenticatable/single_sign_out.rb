@@ -66,4 +66,5 @@ end
 require 'devise_cas_authenticatable/single_sign_out/strategies'
 require 'devise_cas_authenticatable/single_sign_out/strategies/base'
 require 'devise_cas_authenticatable/single_sign_out/strategies/rails_cache'
+require 'devise_cas_authenticatable/single_sign_out/strategies/mongo'
 require 'devise_cas_authenticatable/single_sign_out/rack'
