@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency(%q<devise>, [">= 1.2.0"])
   s.add_runtime_dependency(%q<rubycas-client>, [">= 2.2.1"])
-  s.add_runtime_dependency(%q<mongoid>, [">= 4.0.2"])
     
   s.add_development_dependency("rails", ">= 3.0.7")
   s.add_development_dependency("rspec-rails")

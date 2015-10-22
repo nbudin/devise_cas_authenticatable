@@ -1,4 +1,4 @@
-class CasSession
+class MongoCasSession
   include Mongoid::Document
   include Mongoid::Timestamps
   field :cas_session_index, type: String
