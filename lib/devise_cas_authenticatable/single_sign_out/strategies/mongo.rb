@@ -15,7 +15,7 @@ module DeviseCasAuthenticatable
 
           def delete_session_index(session_index)
             logger.debug("Deleting index #{session_index} in mongo")
-            # TCT: Not sure if more than one regiter was created, so deleting them all
+            # TCT: Not sure if more than one register was created, so deleting them all
             MongoCasSession.where(cas_session_index: session_index).destroy_all
           end
 
