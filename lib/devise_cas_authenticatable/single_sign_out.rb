@@ -46,6 +46,9 @@ module DeviseCasAuthenticatable
         elsif session_store_class.name =~ /ActionDispatch::Session::DalliStore/
           current_session_store.send(:destroy_session, env, sid, drop: true)
           true
+        elsif session_store_class.name =~ /RedisSessionStore/
+          current_session_store.send(:destroy_session_from_sid, sid)
+          true
         elsif session_store_class.name =~ /Redis/
           current_session_store.instance_variable_get(:@pool).del(sid)
           true
