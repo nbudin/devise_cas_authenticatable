@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.6.1 - December 18, 2015
+
+* Allow single sign-out code to find the app's session store when NewRelic is in the middleware stack (thanks @brendancarney!)
+
 ## Version 1.6.0 - October 21, 2015
 
 * Add support for the Dalli session store (thanks @bonyiii!)
