@@ -1,5 +1,10 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.7.0 - December 18, 2015
+
+* Support RedisSessionStore (thanks @dandyn!)
+* Suppress warnings about `Devise.secret_key` not being set in production mode (thanks @joraff!)
+
 ## Version 1.6.1 - December 18, 2015
 
 * Allow single sign-out code to find the app's session store when NewRelic is in the middleware stack (thanks @brendancarney!)
