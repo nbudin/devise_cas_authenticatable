@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.7.1 - February 2, 2016
+
+* Work around weird `#try` behavior on older Rails versions
+
 ## Version 1.7.0 - December 18, 2015
 
 * Support RedisSessionStore (thanks @dandyn!)
