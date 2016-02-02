@@ -5,7 +5,10 @@ module Devise
     def self.prepare_class
       Class.new(self) do
         include Rails.application.routes.url_helpers
-        include Rails.application.routes.mounted_helpers if Rails.application.routes.try(:mounted_helpers)
+
+        if Rails.application.routes.respond_to?(:mounted_helpers) && Rails.application.routes.mounted_helpers
+          include Rails.application.routes.mounted_helpers
+        end
       end
     end
 
