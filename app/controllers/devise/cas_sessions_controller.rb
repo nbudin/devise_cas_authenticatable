@@ -8,6 +8,10 @@ class Devise::CasSessionsController < Devise::SessionsController
   skip_before_filter :verify_authenticity_token, :only => [:single_sign_out]
 
   def new
+    if session_store_memcache? && !memcache_alive?
+      raise "memcache is dead!"
+    end
+
     redirect_to(cas_login_url)
   end
 
@@ -51,6 +55,23 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
 
   private
+
+  def session_store_memcache?
+    Rails.configuration.session_store && ActionDispatch::Session::MemCacheStore
+  end
+
+  def memcache_alive?
+    memcache_servers = Rails.configuration.session_options[:memcache_server] || ["127.0.0.1:11211"]
+    memcache_servers.each do |server|
+      host, port = server.split(":")
+      begin
+        Net::Telnet.new("Host" => host, "Port" => port, "Timeout" => 1)
+        return true
+      rescue Errno::ECONNREFUSED
+        return false
+      end
+    end
+  end
 
   def read_session_index
     if request.headers['CONTENT_TYPE'] =~ %r{^multipart/}
