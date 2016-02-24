@@ -23,6 +23,26 @@ describe DeviseCasAuthenticatable::MemcacheChecker do
       it { expect(session_store_memcache?).to eq false  }
     end
   end
+
+  describe 'alive?' do
+    context "when memcache is down" do
+      let(:conf_double) { stub(session_options: {memcache_server: ['127.0.0.1:11223']}) }
+      subject(:alive?) { described_class.new(conf_double).alive? }
+
+      it { expect(alive?).to eq false }
+    end
+
+    context "when memcache is running" do
+      let(:conf_double) { stub(session_options: {memcache_server: ['127.0.0.1:11214']}) }
+      subject(:alive?) { described_class.new(conf_double).alive? }
+
+      before do
+        Net::Telnet.stubs(:new)
+      end
+
+      it { expect(alive?).to eq true }
+    end
+  end
 end
 
 class FakeMemcacheStore
