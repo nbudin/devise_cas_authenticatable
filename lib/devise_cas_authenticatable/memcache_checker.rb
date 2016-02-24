@@ -9,7 +9,7 @@ module DeviseCasAuthenticatable
     end
 
     def session_store_memcache?
-      session_store_class.name =~ /memcache/i
+      !!(session_store_class.name =~ /memcache/i)
     end
 
     def alive?
