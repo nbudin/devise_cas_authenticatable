@@ -7,31 +7,6 @@ module DeviseCasAuthenticatable
 
     # Supports destroying sessions by ID for ActiveRecord and Redis session stores
     module DestroySession
-      def session_store_class
-        @session_store_class ||=
-          begin
-            # Rails 3 & 4 session store
-            if ::DeviseCasAuthenticatable::SingleSignOut.rails3_or_greater?
-              Rails.configuration.session_store
-              ::Rails.application.config.session_store
-            else
-              # => Rails 2
-              ActionController::Base.session_store
-            end
-          rescue NameError => e
-            # for older versions of Rails (prior to 2.3)
-            ActionController::Base.session_options[:database_manager]
-          end
-      end
-
-      def current_session_store
-        app = Rails.application.app
-        begin
-          app = (app.instance_variable_get(:@backend) || app.instance_variable_get(:@app) || app.instance_variable_get(:@target))
-        end until app.nil? or app.class == session_store_class
-        app
-      end
-
       def destroy_session_by_id(sid)
         logger.debug "Single Sign Out from session store: #{current_session_store.class}"
 
@@ -60,6 +35,18 @@ module DeviseCasAuthenticatable
                 " #{session_store_class.name} and is not a support session store type for Single Sign-Out."
           false
         end
+      end
+
+      def session_store_identifier
+        @session_store_identifier ||= DeviseCasAuthenticatable::SessionStoreIdentifier.new
+      end
+
+      def current_session_store
+        session_store_identifier.current_session_store
+      end
+
+      def session_store_class
+        session_store_identifier.session_store_class
       end
     end
 
