@@ -9,7 +9,7 @@ class Devise::CasSessionsController < Devise::SessionsController
 
   def new
     if memcache_checker.session_store_memcache? && !memcache_checker.alive?
-      raise "memcache is dead!"
+      raise "memcache is down, can't get session data from it"
     end
 
     redirect_to(cas_login_url)
