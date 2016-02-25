@@ -15,4 +15,5 @@ gemfile:
   - Gemfile.devise21
   - Gemfile.devise30
 script: "bundle exec rake spec"
-
+sudo: required
+dist: trusty
