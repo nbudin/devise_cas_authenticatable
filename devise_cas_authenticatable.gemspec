@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency("rails", ">= 3.0.7")
   s.add_development_dependency("rspec-rails")
+  s.add_development_dependency("test-unit", "~> 3.0")
   s.add_development_dependency("mocha")
   s.add_development_dependency("shoulda")
   s.add_development_dependency("sqlite3")
