@@ -8,6 +8,10 @@ class Devise::CasSessionsController < Devise::SessionsController
   skip_before_filter :verify_authenticity_token, :only => [:single_sign_out]
 
   def new
+    if memcache_checker.session_store_memcache? && !memcache_checker.alive?
+      raise "memcache is down, can't get session data from it"
+    end
+
     redirect_to(cas_login_url)
   end
 
@@ -114,5 +118,9 @@ class Devise::CasSessionsController < Devise::SessionsController
       # Older rubycas-clients don't accept a service_url
       ::Devise.cas_client.logout_url(cas_destination_url, cas_follow_url)
     end
+  end
+
+  def memcache_checker
+    @memcache_checker ||= DeviseCasAuthenticatable::MemcacheChecker.new(Rails.configuration)
   end
 end

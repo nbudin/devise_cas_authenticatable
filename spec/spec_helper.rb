@@ -7,6 +7,7 @@ require 'rspec/rails'
 require 'sham_rack'
 require 'capybara/rspec'
 require 'timecop'
+require 'pry'
 
 RSpec.configure do |config|
   config.mock_with :mocha
@@ -15,7 +16,7 @@ end
 ShamRack.at('www.example.com') do |env|
   request = Rack::Request.new(env)
   request.path_info = request.path_info.sub(/^\/cas_server/, '')
-  
+
   Castronaut::Application.call(request.env)
 end
 
