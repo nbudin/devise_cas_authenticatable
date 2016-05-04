@@ -1,5 +1,10 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.8.0 - May 4, 2016
+
+* May the 4th be with you!
+* Prevent redirect loops when using memcached as a session store (thanks @fabioperrella!)
+
 ## Version 1.7.1 - February 2, 2016
 
 * Work around weird `#try` behavior on older Rails versions
