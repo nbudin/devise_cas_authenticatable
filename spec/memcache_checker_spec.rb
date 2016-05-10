@@ -37,7 +37,7 @@ describe DeviseCasAuthenticatable::MemcacheChecker do
       subject(:alive?) { described_class.new(conf_double).alive? }
 
       before do
-        Net::Telnet.stubs(:new)
+        DeviseCasAuthenticatable::MemcacheChecker.any_instance.stubs(:try_connect)
       end
 
       it { expect(alive?).to eq true }

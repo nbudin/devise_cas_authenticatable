@@ -1,4 +1,5 @@
-require 'net/telnet'
+require 'socket'
+require 'timeout'
 
 module DeviseCasAuthenticatable
   class MemcacheChecker
@@ -17,11 +18,18 @@ module DeviseCasAuthenticatable
       memcache_servers.each do |server|
         host, port = server.split(":")
         begin
-          Net::Telnet.new("Host" => host, "Port" => port, "Timeout" => 1)
+          try_connect host, port
+
           return true
-        rescue Errno::ECONNREFUSED
+        rescue Errno::ECONNREFUSED, Timeout::Error
           return false
         end
+      end
+    end
+
+    def try_connect(host, port)
+      Timeout::timeout(1) do
+        TCPSocket.open(host, port)
       end
     end
 
