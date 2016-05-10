@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.9.0 - May 10, 2016
+
+* No longer requires net/telnet in order to work properly, so Ruby 2.3 can work out-of-the-box
+
 ## Version 1.8.0 - May 4, 2016
 
 * May the 4th be with you!
