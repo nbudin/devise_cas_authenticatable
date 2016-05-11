@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.9.1 - May 11, 2016
+
+* Remove Gemfile symlink from built gem; hopefully this will make installation easier on Windows
+
 ## Version 1.9.0 - May 10, 2016
 
 * No longer requires net/telnet in order to work properly, so Ruby 2.3 can work out-of-the-box
