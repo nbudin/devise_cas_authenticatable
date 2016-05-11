@@ -7,3 +7,4 @@ spec/scenario/tmp/*
 log/*
 db/*
 Gemfile.*lock
+Gemfile
