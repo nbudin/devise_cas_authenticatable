@@ -2,8 +2,8 @@ module DeviseCasAuthenticatable
   module SingleSignOut
     module Strategies
       class RedisCache < Base
-        include DeviseCasAuthenticatable::SingleSignOut::DestroySession
-current_session_store.inst
+        include ::DeviseCasAuthenticatable::SingleSignOut::DestroySession
+
         def store_session_id_for_index(session_index, session_id)
           logger.debug("Storing #{session_id} for index #{session_index}")
           current_session_store.instance_variable_get(:@pool).set(
