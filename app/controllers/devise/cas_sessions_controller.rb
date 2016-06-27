@@ -22,9 +22,9 @@ class Devise::CasSessionsController < Devise::SessionsController
   def service
     if cookies[:auth_token].present?
       if /buy.(staging.)?techbang/.match(request.host).present?
-        redirect_to cas_user_omniauth_authorize_path(:facebook)
+        redirect_to cas_user_facebook_omniauth_authorize_path
       else
-        redirect_to user_omniauth_authorize_path(:facebook)
+        redirect_to user_facebook_omniauth_authorize_path
       end
     else
       warden.authenticate!(:scope => resource_name)
