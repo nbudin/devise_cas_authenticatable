@@ -4,8 +4,6 @@ rvm:
   - 2.1.2
   - 2.2.4
   - 2.3.0
-before_install:
-  - gem update bundler
 gemfile:
   - Gemfile.devise12
   - Gemfile.devise13
@@ -14,6 +12,26 @@ gemfile:
   - Gemfile.devise20
   - Gemfile.devise21
   - Gemfile.devise30
+
+# Exclude unsupported Ruby/Rails combinations
+exclude:
+  - rvm: 1.9.3
+    gemfile: Gemfile.devise30
+  - rvm: 2.0.0
+    gemfile: Gemfile.devise30
+  - rvm: 2.1.2
+    gemfile: Gemfile.devise30
+  - rvm: 2.2.4
+    gemfile: Gemfile.devise12
+  - rvm: 2.2.4
+    gemfile: Gemfile.devise13
+  - rvm: 2.3.0
+    gemfile: Gemfile.devise12
+  - rvm: 2.3.0
+    gemfile: Gemfile.devise13
+
+before_install:
+  - gem update bundler
 script: "bundle exec rake spec"
 sudo: required
 dist: trusty
