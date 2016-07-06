@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.9.2 - July 6, 2016
+
+* Fix middleware syntax for Rails 5 compatibility (thanks @drobny!)
+
 ## Version 1.9.1 - May 11, 2016
 
 * Remove Gemfile symlink from built gem; hopefully this will make installation easier on Windows
