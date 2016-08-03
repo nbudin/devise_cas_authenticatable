@@ -115,7 +115,7 @@ class Devise::CasSessionsController < Devise::SessionsController
     if !::Devise.cas_destination_url.blank?
       url = Devise.cas_destination_url
     else
-      url = request_url.dup
+      url = !!(session["#{resource_name}_return_to"] =~ URI::regexp) ? "" : request_url.dup
       url << after_sign_out_path_for(resource_name)
     end
   end
@@ -149,11 +149,15 @@ class Devise::CasSessionsController < Devise::SessionsController
 
   # Set `session[:user_return_to]` to the referer path unless it is already set.
   def store_location!
-    session["#{resource_name}_return_to"] = stored_location_for(resource_name) || request_referer_path
+    session["#{resource_name}_return_to"] = referer_from_pcadv_url || stored_location_for(resource_name) || request_referer_path
   end
 
   def request_referer_path
     URI.parse(request.referer).path if request.referer
+  end
+
+  def referer_from_pcadv_url
+    request.referer if request.referer && request.referer.match(/pcadv((\.|\-)staging)?\.techbang\.(dev|com)/)
   end
 
 end
