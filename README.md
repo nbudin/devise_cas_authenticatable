@@ -6,7 +6,7 @@ Taking a lot of inspiration from [devise_ldap_authenticatable](http://github.com
 
 devise_cas_authenticatable is [CAS](http://www.jasig.org/cas) single sign-on support for
 [Devise](http://github.com/plataformatec/devise) applications.  It acts as a replacement for
-database_authenticatable.  It builds on [rubycas-client](http://github.com/gunark/rubycas-client)
+database_authenticatable.  It builds on [rubycas-client](https://github.com/rubycas/rubycas-client)
 and should support just about any conformant CAS server (although I have personally tested it
 using [rubycas-server](http://github.com/gunark/rubycas-server)).
 
