@@ -5,7 +5,7 @@ class Devise::CasSessionsController < Devise::SessionsController
     unloadable
   end
 
-  skip_before_filter :verify_authenticity_token, :only => [:single_sign_out]
+  skip_before_filter :verify_authenticity_token, :only => [:single_sign_out], :raise => false
 
   def new
     if memcache_checker.session_store_memcache? && !memcache_checker.alive?
