@@ -12,6 +12,7 @@ gemfile:
   - Gemfile.devise20
   - Gemfile.devise21
   - Gemfile.devise30
+  - Gemfile.devise42
 
 # Exclude unsupported Ruby/Rails combinations
 matrix:
@@ -22,6 +23,12 @@ matrix:
       gemfile: Gemfile.devise30
     - rvm: 2.1.2
       gemfile: Gemfile.devise30
+    - rvm: 1.9.3
+      gemfile: Gemfile.devise42
+    - rvm: 2.0.0
+      gemfile: Gemfile.devise42
+    - rvm: 2.1.2
+      gemfile: Gemfile.devise42
     - rvm: 2.2.4
       gemfile: Gemfile.devise12
     - rvm: 2.2.4
