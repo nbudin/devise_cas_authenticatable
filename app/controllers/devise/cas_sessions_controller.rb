@@ -5,7 +5,11 @@ class Devise::CasSessionsController < Devise::SessionsController
     unloadable
   end
 
-  skip_before_action :verify_authenticity_token, :only => [:single_sign_out], :raise => false
+  if Rails.version =~ /^5/
+    skip_before_action :verify_authenticity_token, :only => [:single_sign_out], :raise => false
+  else
+    skip_before_filter :verify_authenticity_token, :only => [:single_sign_out], :raise => false
+  end
 
   def new
     if memcache_checker.session_store_memcache? && !memcache_checker.alive?
