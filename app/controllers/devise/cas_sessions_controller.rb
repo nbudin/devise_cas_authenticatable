@@ -2,14 +2,11 @@ class Devise::CasSessionsController < Devise::SessionsController
   include DeviseCasAuthenticatable::SingleSignOut::DestroySession
 
   if Rails::VERSION::MAJOR < 4
-    unloadable
-  end
-
-  if Rails.version =~ /^5/
+    unloadable # Rails 5 no longer requires this
+    skip_before_filter :verify_authenticity_token, :only => [:single_sign_out], :raise => false
+  else
     skip_before_action :verify_authenticity_token, :only => [:single_sign_out], :raise => false
   else
-    skip_before_filter :verify_authenticity_token, :only => [:single_sign_out], :raise => false
-  end
 
   def new
     if memcache_checker.session_store_memcache? && !memcache_checker.alive?
