@@ -1,5 +1,10 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.10.0 - February 6, 2017
+
+* Support Redis as a single sign-out store (thanks @tubsandcans!)
+* More Rails 5 compatibility fixes (thanks @debborafernandess and @drobny!)
+
 ## Version 1.9.2 - July 6, 2016
 
 * Fix middleware syntax for Rails 5 compatibility (thanks @drobny!)
