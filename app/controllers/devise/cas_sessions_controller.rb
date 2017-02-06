@@ -1,7 +1,7 @@
 class Devise::CasSessionsController < Devise::SessionsController
   include DeviseCasAuthenticatable::SingleSignOut::DestroySession
 
-  unless Rails.version =~/^4/
+  if Rails::VERSION::MAJOR < 4
     unloadable
   end
 
