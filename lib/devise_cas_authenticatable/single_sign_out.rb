@@ -28,7 +28,12 @@ module DeviseCasAuthenticatable
           current_session_store.instance_variable_get(:@pool).del(sid)
           true
         elsif session_store_class.name =~ /CacheStore/
-          current_session_store.destroy_session({}, sid, {})
+          if current_session_store.respond_to?(:delete_session)  # Rails 5 and up
+            current_session_store.delete_session({}, sid, {})
+          else
+            current_session_store.destroy_session({}, sid, {})
+          end
+
           true
         else
           logger.error "Cannot process logout request because this Rails application's session store is "+
