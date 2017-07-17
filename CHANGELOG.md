@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.10.1 - July 17, 2017
+
+* Yet another Rails 5 compatibility fix with single sign-out (CacheStore's API for destroying sessions changed)
+
 ## Version 1.10.0 - February 6, 2017
 
 * Support Redis as a single sign-out store (thanks @tubsandcans!)
