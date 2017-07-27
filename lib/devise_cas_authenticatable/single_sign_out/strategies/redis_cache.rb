@@ -13,7 +13,7 @@ module DeviseCasAuthenticatable
         end
         def find_session_id_by_index(session_index)
           sid = current_session_store.instance_variable_get(:@pool).get(cache_key(session_index))
-          logger.debug("Found session id #{sid} for index #{session_index}")
+          logger.debug("Found session id #{sid} for index #{session_index}") if sid
           sid
         end
         def delete_session_index(session_index)
