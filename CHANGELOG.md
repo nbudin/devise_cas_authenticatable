@@ -1,5 +1,10 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.10.2 - July 28, 2017
+
+* Correct an issue where the single sign-out logs would incorrectly state the session was found (thanks @hugohernani!)
+* Document how to change the SSO strategy (thanks again @hugohernani!)
+
 ## Version 1.10.1 - July 17, 2017
 
 * Yet another Rails 5 compatibility fix with single sign-out (CacheStore's API for destroying sessions changed)
