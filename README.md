@@ -96,6 +96,14 @@ to tell your app how to talk to your CAS server:
       # config.warden do |manager|
       #   manager.failure_app = DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp
       # end
+      
+      # You can also set another single sign out strategy so that you won't be attached to rails_cache.
+      # Be aware that to do so you also need to set the session_store.
+      # Example for setting redis_cache.
+      # There are some gems the help with it. One of them is called redis-rails and it can easily be set like this:
+      # Rails.application.config.session_store :redis_store, servers: ["redis://localhost:6379/0/session"]
+      # This is specially useful when you need to share session id accross apps (i.e. in a distributed environment)
+      # config.cas_single_sign_out_mapping_strategy = :redis_cache
 
       # If you need to specify some extra configs for rubycas-client, you can do this via:
       # config.cas_client_config_options = {
