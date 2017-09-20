@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.10.3 - July 28, 2017
+
+* Rails 5.1 deprecation fix (thanks @jamgregory!)
+
 ## Version 1.10.2 - July 28, 2017
 
 * Correct an issue where the single sign-out logs would incorrectly state the session was found (thanks @hugohernani!)
