@@ -1,10 +1,12 @@
 class Devise::CasSessionsController < Devise::SessionsController
   include DeviseCasAuthenticatable::SingleSignOut::DestroySession
 
-  if Rails::VERSION::MAJOR < 4
+  if Rails::VERSION::MAJOR < 5
     unloadable # Rails 5 no longer requires this
-    skip_before_filter :verify_authenticity_token, :only => [:single_sign_out], :raise => false
+    skip_before_action :sync_fb_user
+    skip_before_action :verify_authenticity_token, :only => [:single_sign_out]
   else
+    skip_before_action :sync_fb_user, :raise => false
     skip_before_action :verify_authenticity_token, :only => [:single_sign_out], :raise => false
   end
 
@@ -13,11 +15,21 @@ class Devise::CasSessionsController < Devise::SessionsController
       raise "memcache is down, can't get session data from it"
     end
 
+    store_location!
     redirect_to(cas_login_url)
   end
 
   def service
-    redirect_to after_sign_in_path_for(warden.authenticate!(:scope => resource_name))
+    if cookies[:auth_token].present?
+      if /buy.(staging.)?techbang/.match(request.host).present?
+        redirect_to cas_user_facebook_omniauth_authorize_path
+      else
+        redirect_to user_facebook_omniauth_authorize_path
+      end
+    else
+      warden.authenticate!(:scope => resource_name)
+      redirect_to after_sign_in_path_for(resource_name)
+    end
   end
 
   def unregistered
@@ -27,6 +39,12 @@ class Devise::CasSessionsController < Devise::SessionsController
     # if :cas_create_user is false a CAS session might be open but not signed_in
     # in such case we destroy the session here
     if signed_in?(resource_name)
+      cookies.delete :auth_token, :domain => auth_token_domain
+      cookies.delete :_trm, :domain => request.host.slice(/(staging.)*techbang.(com|dev)$/)
+      cookies.delete :_tun, :domain => request.host.slice(/(staging.)*techbang.(com|dev)$/)
+
+      store_location!
+
       sign_out(resource_name)
     else
       reset_session
@@ -56,6 +74,10 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
 
   private
+
+  def auth_token_domain
+    Rails.env.development? ? ".techbang.dev" : ".techbang.com"
+  end
 
   def read_session_index
     if request.headers['CONTENT_TYPE'] =~ %r{^multipart/}
@@ -93,7 +115,7 @@ class Devise::CasSessionsController < Devise::SessionsController
     if !::Devise.cas_destination_url.blank?
       url = Devise.cas_destination_url
     else
-      url = request_url.dup
+      url = !!(session["#{resource_name}_return_to"] =~ URI::regexp) ? "" : request_url.dup
       url << after_sign_out_path_for(resource_name)
     end
   end
@@ -124,4 +146,18 @@ class Devise::CasSessionsController < Devise::SessionsController
   def memcache_checker
     @memcache_checker ||= DeviseCasAuthenticatable::MemcacheChecker.new(Rails.configuration)
   end
+
+  # Set `session[:user_return_to]` to the referer path unless it is already set.
+  def store_location!
+    session["#{resource_name}_return_to"] = referer_from_pcadv_url || stored_location_for(resource_name) || request_referer_path
+  end
+
+  def request_referer_path
+    URI.parse(request.referer).path if request.referer
+  end
+
+  def referer_from_pcadv_url
+    request.referer if request.referer && request.referer.match(/pcadv((\.|\-)staging)?\.techbang\.(dev|com)/)
+  end
+
 end

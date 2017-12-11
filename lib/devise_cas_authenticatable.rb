@@ -115,6 +115,7 @@ module Devise
 
   private
   def self.cas_action_url(base_url, mapping, action)
+    return base_url if base_url =~ /sync/
     cas_action_url_factory_class.new(base_url, mapping, action).call
   end
 
