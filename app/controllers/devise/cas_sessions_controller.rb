@@ -13,11 +13,11 @@ class Devise::CasSessionsController < Devise::SessionsController
       raise "memcache is down, can't get session data from it"
     end
 
-    redirect_to(cas_login_url)
+    redirect_to(cas_login_url, allow_other_host: true)
   end
 
   def service
-    redirect_to after_sign_in_path_for(warden.authenticate!(:scope => resource_name))
+    redirect_to(after_sign_in_path_for(warden.authenticate!(:scope => resource_name)), allow_other_host: true)
   end
 
   def unregistered
@@ -32,7 +32,7 @@ class Devise::CasSessionsController < Devise::SessionsController
       reset_session
     end
 
-    redirect_to(cas_logout_url)
+    redirect_to(cas_logout_url, allow_other_host: true)
   end
 
   def single_sign_out
