@@ -43,7 +43,7 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
 
     it 'should redirect to sign-in' do
       response.should be_redirect
-      response.should redirect_to(new_user_session_url, allow_other_host: true)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -52,7 +52,7 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
 
     it 'should redirect to CAS server' do
       response.should be_redirect
-      response.should redirect_to(cas_login_url, allow_other_host: true)
+      response.should redirect_to(cas_login_url)
     end
   end
 
