@@ -1,5 +1,9 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 1.10.4 - April 26, 2019
+
+* Fixes for single sign out on Redis session store using newer Redis gems (thanks @ledestin!)
+
 ## Version 1.10.3 - July 28, 2017
 
 * Rails 5.1 deprecation fix (thanks @jamgregory!)
