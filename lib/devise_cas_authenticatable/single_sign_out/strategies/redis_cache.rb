@@ -1,18 +1,23 @@
+require 'devise_cas_authenticatable/single_sign_out/with_conn'
+
 module DeviseCasAuthenticatable
   module SingleSignOut
     module Strategies
       class RedisCache < Base
         include ::DeviseCasAuthenticatable::SingleSignOut::DestroySession
+        include ::DeviseCasAuthenticatable::SingleSignOut::WithConn
 
         def store_session_id_for_index(session_index, session_id)
           logger.debug("Storing #{session_id} for index #{session_index}")
-          current_session_store.instance_variable_get(:@pool).set(
-            cache_key(session_index),
-            session_id
-          )
+          with_conn do |conn|
+            conn.set(
+              cache_key(session_index),
+              session_id
+            )
+          end
         end
         def find_session_id_by_index(session_index)
-          sid = current_session_store.instance_variable_get(:@pool).get(cache_key(session_index))
+          sid = with_conn { |conn| conn.get(cache_key(session_index)) }
           logger.debug("Found session id #{sid} for index #{session_index}") if sid
           sid
         end
