@@ -1,3 +1,5 @@
+require 'devise_cas_authenticatable/single_sign_out/with_conn'
+
 module DeviseCasAuthenticatable
   module SingleSignOut
 
@@ -7,6 +9,8 @@ module DeviseCasAuthenticatable
 
     # Supports destroying sessions by ID for ActiveRecord and Redis session stores
     module DestroySession
+      include ::DeviseCasAuthenticatable::SingleSignOut::WithConn
+
       def destroy_session_by_id(sid)
         logger.debug "Single Sign Out from session store: #{current_session_store.class}"
 
@@ -25,7 +29,7 @@ module DeviseCasAuthenticatable
           current_session_store.send(:destroy_session, env, sid, drop: true)
           true
         elsif session_store_class.name =~ /Redis/
-          current_session_store.instance_variable_get(:@pool).del(sid)
+          with_conn { |conn| conn.del(sid) }
           true
         elsif session_store_class.name =~ /CacheStore/
           if current_session_store.respond_to?(:delete_session)  # Rails 5 and up
