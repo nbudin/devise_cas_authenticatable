@@ -19,7 +19,7 @@ class DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp < Devise::Failur
     else
       flash[:alert] = i18n_message
     end
-    redirect_to redirect_url
+    redirect_to(redirect_url, allow_other_host: true)
   end
 
   protected
@@ -36,7 +36,7 @@ class DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp < Devise::Failur
       end
     end
   end
-  
+
   # Devise < 2.0 doesn't have this method, which we want to use
   unless instance_methods.include?(:warden_message)
     define_method :warden_message do
