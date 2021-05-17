@@ -15,7 +15,7 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
   end
 
   after do
-    visit destroy_user_session_url
+    page.driver.submit :delete, destroy_user_session_url, {}
   end
 
   def cas_login_url
@@ -124,6 +124,7 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
     User.find_by_username("newuser").should be_nil
 
     click_on "sign in using a different account"
+    save_and_open_page
     fill_in "Username", :with => "joeuser"
     fill_in "Password", :with => "joepassword"
     click_on "Login"

@@ -16,16 +16,16 @@ class TestAdapter
   def self.register_valid_user(username, password)
     @@valid_users[username] = password
   end
-  
+
   def self.authenticate(username, password)
     error_message = if @@valid_users[username] == password
       nil
     else
       "Invalid password"
     end
-    
+
     Castronaut::AuthenticationResult.new(username, error_message)
-  end  
+  end
 end
 
 Castronaut::Adapters.register("test_adapter", TestAdapter)
