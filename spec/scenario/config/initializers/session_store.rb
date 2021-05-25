@@ -6,3 +6,4 @@
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rake db:sessions:create")
 Scenario::Application.config.session_store :active_record_store
+Rails.logger.class.include ActiveSupport::LoggerSilence
