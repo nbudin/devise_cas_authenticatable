@@ -1,4 +1,4 @@
-devise_cas_authenticatable [![Build Status](https://secure.travis-ci.org/nbudin/devise_cas_authenticatable.png)](http://travis-ci.org/nbudin/devise_cas_authenticatable)
+devise_cas_authenticatable [![Ruby](https://github.com/nbudin/devise_cas_authenticatable/actions/workflows/ruby.yml/badge.svg)](https://github.com/nbudin/devise_cas_authenticatable/actions/workflows/ruby.yml) [![Gem Version](https://badge.fury.io/rb/devise_cas_authenticatable.svg)](https://badge.fury.io/rb/devise_cas_authenticatable)
 ==========================
 
 Written by Nat Budin<br/>
