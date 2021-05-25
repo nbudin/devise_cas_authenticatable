@@ -1,4 +1,4 @@
-class AddDeactivatedFlagToUsers < ActiveRecord::Migration
+class AddDeactivatedFlagToUsers < ActiveRecord::Migration[4.2]
   def self.up
     add_column :users, :deactivated, :boolean
   end
