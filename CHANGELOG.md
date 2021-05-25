@@ -1,5 +1,10 @@
 # Changelog for devise\_cas\_authenticatable
 
+## Version 2.0.0.alpha1 - TBD
+
+* Switch from RubyCAS-client, which is deprecated, to rack-cas
+* Remove Devise.cas_client and cas_client_config_options as a result of this change
+
 ## Version 1.10.4 - April 26, 2019
 
 * Fixes for single sign out on Redis session store using newer Redis gems (thanks @ledestin!)

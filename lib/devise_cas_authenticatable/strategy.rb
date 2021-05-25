@@ -5,18 +5,21 @@ module Devise
     class CasAuthenticatable < Base
       # True if the mapping supports authenticate_with_cas_ticket.
       def valid?
-        mapping.to.respond_to?(:authenticate_with_cas_ticket) && params[:ticket]
+        request = Rack::Request.new(env)
+        mapping.to.respond_to?(:authenticate_with_cas_details) && request.session['cas']
       end
-      
+
       # Try to authenticate a user using the CAS ticket passed in params.
       # If the ticket is valid and the model's authenticate_with_cas_ticket method
       # returns a user, then return success.  If the ticket is invalid, then either
       # fail (if we're just returning from the CAS server, based on the referrer)
       # or attempt to redirect to the CAS server's login URL.
       def authenticate!
-        ticket = read_ticket(params)
-        if ticket
-          if resource = mapping.to.authenticate_with_cas_ticket(ticket)
+        request = Rack::Request.new(env)
+        cas_details = request.session['cas']
+        if cas_details
+          resource = mapping.to.authenticate_with_cas_details(cas_details)
+          if resource
             # Store the ticket in the session for later usage
             if ::Devise.cas_enable_single_sign_out
               session['cas_last_valid_ticket'] = ticket.ticket
@@ -24,28 +27,15 @@ module Devise
             end
 
             success!(resource)
-          elsif ticket.is_valid?
-            username = ticket.respond_to?(:user) ? ticket.user : ticket.response.user
-            redirect!(::Devise.cas_unregistered_url(request.url, mapping), :username => username)
           else
-            fail!(:invalid)
+            username = cas_details['user']
+            redirect!(::Devise.cas_unregistered_url(request.url, mapping), :username => username)
           end
         else
-          fail!(:invalid)
-        end
-      end
-      
-      protected
-      
-      def read_ticket(params)
-        ticket = params[:ticket]
-        return nil unless ticket
-        
-        service_url = ::Devise.cas_service_url(request.url, mapping)
-        if ticket =~ /^PT-/
-          ::CASClient::ProxyTicket.new(ticket, service_url, params[:renew])
-        else
-          ::CASClient::ServiceTicket.new(ticket, service_url, params[:renew])
+          # Throw to rack-cas to initiate a login
+          rack_cas_authenticate_response = Rack::Response.new(nil, 401)
+          custom!(rack_cas_authenticate_response.to_a)
+          throw :warden
         end
       end
     end

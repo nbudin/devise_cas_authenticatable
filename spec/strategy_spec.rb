@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
+describe Devise::Strategies::CasAuthenticatable, :type => 'acceptance' do
   include RSpec::Rails::RequestExampleGroup
   include Capybara::DSL
 
   before do
-    Devise.cas_base_url = "http://www.example.com/cas_server"
-    TestAdapter.reset_valid_users!
+    RackCAS.config.server_url = 'http://www.example.com/'
+    RackCAS.config.service = '/users/service'
 
     User.delete_all
     User.create! do |u|
-      u.username = "joeuser"
+      u.username = 'joeuser'
     end
   end
 
@@ -18,76 +18,39 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
     page.driver.submit :delete, destroy_user_session_url, {}
   end
 
-  def cas_login_url
-    @cas_login_url ||= begin
-      uri = URI.parse(Devise.cas_base_url + "/login")
-      uri.query = Rack::Utils.build_nested_query(:service => user_service_url)
-      uri.to_s
-    end
-  end
-
   def cas_logout_url
-    @cas_logout_url ||= Devise.cas_base_url + "/logout?service"
+    @cas_logout_url ||= Devise.cas_base_url + '/logout?service'
   end
 
   def sign_into_cas(username, password)
-    visit root_url
-    current_url.should == cas_login_url
-    fill_in "Username", :with => username
-    fill_in "Password", :with => password
-    click_on "Login"
+    visit '/users/sign_in'
+    fill_in 'username', with: username
+    fill_in 'password', with: password
+    click_button 'Login'
   end
 
-  describe "GET /protected/resource" do
+  describe 'GET /protected/resource' do
     before { get '/' }
 
     it 'should redirect to sign-in' do
-      response.should be_redirect
-      response.should redirect_to(new_user_session_url)
+      expect(response).to be_redirect
+      expect(response).to redirect_to(new_user_session_url)
     end
   end
 
-  describe "GET /users/sign_in" do
-    before { get new_user_session_url }
-
-    it 'should redirect to CAS server' do
-      response.should be_redirect
-      response.should redirect_to(cas_login_url)
-    end
+  it 'should sign in with valid user' do
+    sign_into_cas 'joeuser', 'joepassword'
+    expect(current_url).to eq(root_url)
   end
 
-  it "should sign in with valid user" do
-    sign_into_cas "joeuser", "joepassword"
-    current_url.should == root_url
-  end
-
-  it "should fail to sign in with an invalid user" do
-    sign_into_cas "invaliduser", "invalidpassword"
-    current_url.should_not == root_url
-  end
-
-  describe "with a deactivated user" do
-    before do
-      @user = User.first
-      @user.deactivated = true
-      @user.save!
-    end
-
-    it "should fail to sign in" do
-      sign_into_cas "joeuser", "joepassword"
-      current_url.should == cas_logout_url
-    end
-  end
-
-  it "should register new CAS users if set up to do so" do
-    User.count.should == 1
-    TestAdapter.register_valid_user("newuser", "newpassword")
+  it 'should register new CAS users if set up to do so' do
+    expect(User.count).to eq(1)
     Devise.cas_create_user = true
-    sign_into_cas "newuser", "newpassword"
+    sign_into_cas 'newuser', 'newpassword'
 
-    current_url.should == root_url
-    User.count.should == 2
-    User.find_by_username("newuser").should_not be_nil
+    expect(current_url).to eq(root_url)
+    expect(User.count).to eq(2)
+    expect(User.find_by_username('newuser')).not_to be_nil
   end
 
   it "should register new CAS users if we're overriding the cas_create_user? method" do
@@ -98,14 +61,13 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
         end
       end
 
-      User.count.should == 1
-      TestAdapter.register_valid_user("newuser", "newpassword")
+      expect(User.count).to eq(1)
       Devise.cas_create_user = false
-      sign_into_cas "newuser", "newpassword"
+      sign_into_cas 'newuser', 'newpassword'
 
-      current_url.should == root_url
-      User.count.should == 2
-      User.find_by_username("newuser").should_not be_nil
+      expect(current_url).to eq(root_url)
+      expect(User.count).to eq(2)
+      expect(User.find_by(username: 'newuser')).not_to be_nil
     ensure
       class << User
         remove_method :cas_create_user?
@@ -113,30 +75,29 @@ describe Devise::Strategies::CasAuthenticatable, :type => "acceptance" do
     end
   end
 
-  it "should fail CAS login if user is unregistered and cas_create_user is false" do
-    User.count.should == 1
-    TestAdapter.register_valid_user("newuser", "newpassword")
+  it 'should fail CAS login if user is unregistered and cas_create_user is false' do
+    expect(User.count).to eq(1)
     Devise.cas_create_user = false
-    sign_into_cas "newuser", "newpassword"
+    sign_into_cas 'newuser', 'newpassword'
 
-    current_url.should_not == root_url
-    User.count.should == 1
-    User.find_by_username("newuser").should be_nil
+    expect(current_url).not_to eq(root_url)
+    expect(User.count).to eq(1)
+    expect(User.find_by(username: 'newuser')).to be_nil
 
-    click_on "sign in using a different account"
-    fill_in "Username", :with => "joeuser"
-    fill_in "Password", :with => "joepassword"
-    click_on "Login"
-    current_url.should == root_url
+    click_on 'sign in using a different account'
+    fill_in 'Username', with: 'joeuser'
+    fill_in 'Password', with: 'joepassword'
+    click_on 'Login'
+    expect(current_url).to eq(root_url)
   end
 
-  it "should work correctly with Devise trackable" do
+  it 'should work correctly with Devise trackable' do
     user = User.first
-    user.update_attributes!(:last_sign_in_at => 1.day.ago, :last_sign_in_ip => "1.2.3.4", :sign_in_count => 41)
-    sign_into_cas "joeuser", "joepassword"
+    user.update!(last_sign_in_at: 1.day.ago, last_sign_in_ip: '1.2.3.4', sign_in_count: 41)
+    sign_into_cas 'joeuser', 'joepassword'
 
     user.reload
-    user.last_sign_in_at.should >= 1.hour.ago
-    user.sign_in_count.should == 42
+    expect(user.last_sign_in_at).to be >= 1.hour.ago
+    expect(user.sign_in_count).to eq(42)
   end
 end
