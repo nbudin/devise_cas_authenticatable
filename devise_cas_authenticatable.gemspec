@@ -19,20 +19,14 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.5.0'
   s.summary = 'CAS authentication module for Devise'
 
-  s.add_runtime_dependency('devise', ['>= 1.2.0'])
+  s.add_runtime_dependency('devise', ['>= 4.8.0'])
   s.add_runtime_dependency('rack-cas')
 
   s.add_development_dependency('capybara')
-  s.add_development_dependency('crypt-isaac')
   s.add_development_dependency('database_cleaner-active_record')
   s.add_development_dependency('launchy')
-  s.add_development_dependency('mocha')
   s.add_development_dependency('pry')
-  s.add_development_dependency('rails', '>= 3.0.7')
+  s.add_development_dependency('rails')
   s.add_development_dependency('rspec-rails')
-  s.add_development_dependency('sham_rack')
-  s.add_development_dependency('shoulda')
   s.add_development_dependency('sqlite3')
-  s.add_development_dependency('test-unit', '~> 3.0')
-  s.add_development_dependency('timecop')
 end

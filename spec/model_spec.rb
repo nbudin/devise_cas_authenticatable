@@ -31,7 +31,6 @@ describe Devise::Models::CasAuthenticatable do
     it 'should return nil if cas_user_identifier is not in cas_extra_attributes' do
       Devise.cas_user_identifier = :unknown_ticket_field
       Devise.cas_username_column = :username
-      User.expects(:find).never
       expect(
         User.authenticate_with_cas_details(
           {
