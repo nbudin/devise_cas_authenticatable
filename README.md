@@ -74,7 +74,7 @@ to tell your app how to talk to your CAS server:
       # You can specify the name of the destination argument with the following option.
       # e.g. the following option will change it from 'destination' to 'url'
       # config.cas_destination_logout_param_name = 'url'
-      
+
       # By default, devise_cas_authenticatable will create users.  If you would rather
       # require user records to already exist locally before they can authenticate via
       # CAS, uncomment the following line.
@@ -82,7 +82,7 @@ to tell your app how to talk to your CAS server:
 
       # You can enable Single Sign Out, which by default is disabled.
       # config.cas_enable_single_sign_out = true
-      
+
       # If you don't want to use the username returned from your CAS server as the unique
       # identifier, but some other field passed in cas_extra_attributes, you can specify
       # the field name here.
@@ -96,7 +96,7 @@ to tell your app how to talk to your CAS server:
       # config.warden do |manager|
       #   manager.failure_app = DeviseCasAuthenticatable::SingleSignOut::WardenFailureApp
       # end
-      
+
       # You can also set another single sign out strategy so that you won't be attached to rails_cache.
       # Be aware that to do so you also need to set the session_store.
       # Example for setting redis_cache.
@@ -104,11 +104,6 @@ to tell your app how to talk to your CAS server:
       # Rails.application.config.session_store :redis_store, servers: ["redis://localhost:6379/0/session"]
       # This is specially useful when you need to share session id accross apps (i.e. in a distributed environment)
       # config.cas_single_sign_out_mapping_strategy = :redis_cache
-
-      # If you need to specify some extra configs for rubycas-client, you can do this via:
-      # config.cas_client_config_options = {
-      #     logger: Rails.logger
-      # }
     end
 
 Extra attributes
