@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.5.0'
   s.summary = 'CAS authentication module for Devise'
 
-  s.add_runtime_dependency('devise', ['>= 4.8.0'])
+  s.add_runtime_dependency('devise', ['>= 4.0.0'])
   s.add_runtime_dependency('rack-cas')
 
   s.add_development_dependency('capybara')
