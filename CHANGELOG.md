@@ -1,9 +1,10 @@
 # Changelog for devise\_cas\_authenticatable
 
-## Version 2.0.0.alpha1 - TBD
+## Version 2.0.0.alpha1 - May 25, 2021
 
 * Switch from RubyCAS-client, which is deprecated, to rack-cas
-* Remove Devise.cas_client and cas_client_config_options as a result of this change
+* Remove Devise.cas_client, Devise.cas_login_url, Devise.cas_logout_url, Devise.cas_validate_url, and cas_client_config_options as a result of this change
+* Remove single sign out support (since rack-cas supports it natively)
 
 ## Version 1.10.4 - April 26, 2019
 
