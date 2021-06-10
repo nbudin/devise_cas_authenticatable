@@ -67,6 +67,10 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
 
   def cas_logout_url
+    if RackCAS.config.server_url.blank?
+      return fallback_logout_url
+    end
+
     server = RackCAS::Server.new(RackCAS.config.server_url)
     destination_url = cas_destination_url
     follow_url = cas_follow_url
@@ -79,5 +83,18 @@ class Devise::CasSessionsController < Devise::SessionsController
     else
       server.logout_url(service: service_url).to_s
     end
+  end
+
+  def fallback_logout_url
+    unless Rails.env.test?
+      logger.warn(<<-MSG.squish)
+        RackCAS server URL not configured. This is acceptable in the test
+        environment or when RackCAS's Fake CAS is included in your middleware
+        stack. Set `config.rack_cas.server_url` to your CAS server's
+        URL in `config/application.rb` or in your environment file.
+      MSG
+    end
+
+    return '/logout'
   end
 end
