@@ -34,7 +34,7 @@ describe Devise::Strategies::CasAuthenticatable, :type => 'acceptance' do
 
     it 'should redirect to sign-in' do
       expect(response).to be_redirect
-      expect(response).to redirect_to(new_user_session_url)
+      expect(response).to redirect_to(new_user_session_url, allow_other_host: true)
     end
   end
 
