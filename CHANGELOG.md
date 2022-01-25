@@ -1,5 +1,9 @@
 # Changelog for devise_cas_authenticatable
 
+## Version 2.0.1 - January 3, 2022
+
+- Rails 7 compatibility fixes (thanks @francesco-loreti!)
+
 ## Version 2.0.0 - January 3, 2022
 
 - No changes from 2.0.0.alpha1. This version has been successfully tested by two developers in
