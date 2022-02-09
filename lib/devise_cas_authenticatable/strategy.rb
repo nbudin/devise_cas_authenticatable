@@ -20,12 +20,6 @@ module Devise
         if cas_details
           resource = mapping.to.authenticate_with_cas_details(cas_details)
           if resource
-            # Store the ticket in the session for later usage
-            if ::Devise.cas_enable_single_sign_out
-              session['cas_last_valid_ticket'] = ticket.ticket
-              session['cas_last_valid_ticket_store'] = true
-            end
-
             success!(resource)
           else
             username = cas_details['user']
