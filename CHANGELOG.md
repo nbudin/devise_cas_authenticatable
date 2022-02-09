@@ -1,5 +1,11 @@
 # Changelog for devise_cas_authenticatable
 
+## Version 2.0.2 - Febuary 8, 2022
+
+- Remove the mistakenly-left-in single sign out config options. (If you try to set them, devise_cas_authenticatable
+  will now give a warning and do nothing.)
+- Remove the mistakenly-left-in single sign out handling code in the Warden strategy (fixes #160)
+
 ## Version 2.0.1 - January 3, 2022
 
 - Rails 7 compatibility fixes (thanks @francesco-loreti!)
