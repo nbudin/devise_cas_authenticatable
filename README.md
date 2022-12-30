@@ -80,6 +80,15 @@ config.rack_cas.server_url = "https://cas.myorganization.com" # replace with you
 config.rack_cas.service = "/users/service" # If your user model isn't called User, change this
 ```
 
+Rack-cas comes with a fake CAS server that it enables by default in the Rails test environment. This will log in any
+username and password combination you use, and more information can be found in the
+[rack-cas README](https://github.com/biola/rack-cas). If you want to enable Fake CAS in development as well, add this
+to your Rails development config:
+
+```ruby
+config.rack_cas.fake = true
+```
+
 Finally, you may need to add some configuration to your config/initializers/devise.rb in order
 to tell your app how to talk to your CAS server.  This isn't always required.  Here's an example:
 
