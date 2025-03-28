@@ -135,6 +135,53 @@ class User < ActiveRecord::Base
 end
 ```
 
+Using without a database
+------------------------
+
+You don't have to save your user model to the database - you can simply store it in the session as is.
+You can follow the following approach (inspired by [this article](https://4trabes.com/2012/10/31/remote-authentication-with-devise/)):
+
+```ruby
+require 'active_model'
+
+class User
+  attr_accessor :id, :extra_attributes
+
+  include ActiveModel::Validations
+  extend ActiveModel::Callbacks
+  extend Devise::Models
+  define_model_callbacks :validation
+
+  class << self
+    # override these methods to work nicely with Devise
+    def serialize_from_session(id, _)
+      return nil if id.nil?
+      self.new(id: id)
+    end
+
+    def serialize_into_session(record)
+      [record.id, '']
+    end
+
+    def logger
+      ActiveRecord::Base.logger # e.g. assuming you are using Rails
+    end
+
+    # Overload of default callback to ensure we don't try to create any database records.
+    def authenticate_with_cas_details(cas_details)
+      self.new(cas_details['extra_attributes'])
+    end
+  end
+  
+  def initialize(extra_attributes: nil, id: nil)
+    self.extra_attributes = extra_attributes
+    self.id = id
+  end
+
+  devise :cas_authenticatable
+end
+```
+
 See also
 --------
 
