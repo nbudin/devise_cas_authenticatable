@@ -18,10 +18,6 @@ describe Devise::Strategies::CasAuthenticatable, :type => 'acceptance' do
     page.driver.submit :delete, destroy_user_session_url, {}
   end
 
-  def cas_logout_url
-    @cas_logout_url ||= Devise.cas_base_url + '/logout?service'
-  end
-
   def sign_into_cas(username, password)
     visit '/users/sign_in'
     fill_in 'username', with: username
